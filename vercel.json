@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/privacy-policy", "destination": "https://app.auctixtech.com/privacy", "permanent": true },
+    { "source": "/privacy", "destination": "https://app.auctixtech.com/privacy", "permanent": true }
+  ]
+}

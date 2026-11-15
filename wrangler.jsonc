@@ -1,0 +1,12 @@
+// Cloudflare Workers static site (Workers Builds runs `npx wrangler deploy` on every push to main).
+// "name" must match the Worker you connected in the Cloudflare dashboard.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "auctix-website",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get started with AUCTIX</title>
+<meta name="description" content="Tell us how your back office runs today. We'll come back within one business day with a plan for moving it onto one platform, and what it would cost.">
+<link rel="canonical" href="https://auctixtech.com/get-started">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUCTIX">
+<meta property="og:title" content="Get started with AUCTIX">
+<meta property="og:description" content="Three short steps. We reply within one business day.">
+<meta property="og:url" content="https://auctixtech.com/get-started">
+<meta property="og:image" content="https://auctixtech.com/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/get-started.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Auctix home"><img src="/assets/img/auctix-logo.png" alt="Auctix" width="151" height="38"></a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="/#platform">Platform</a>
+      <a href="/nonprofits">Nonprofits</a>
+      <a href="/pricing">Pricing</a>
+    </nav>
+    <div class="header-actions">
+      <a class="signin" href="https://app.auctixtech.com">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="gs">
+  <div class="container">
+    <aside class="gs-aside">
+      <h1 class="h2--sm" style="font-size:clamp(32px,3.6vw,42px);line-height:1.08">Get started with AUCTIX</h1>
+      <p class="lead">Tell us how your back office runs today. We'll come back with a plan for moving it onto one platform, and what it would cost.</p>
+      <div class="gs-steps">
+        <div><b>1</b><div><strong>Takes about three minutes</strong><span>Three short steps. No credit card.</span></div></div>
+        <div><b>2</b><div><strong>We reply within one business day</strong><span>From a real person in Nebraska.</span></div></div>
+        <div><b>3</b><div><strong>A 30-minute walkthrough</strong><span>Your setup, mapped onto AUCTIX.</span></div></div>
+      </div>
+      <p class="offer">Founding offer: the first 5 organizations in each edition get 50% off for 12 months.</p>
+    </aside>
+
+    <div class="gs-card">
+      <!-- data-endpoint: the AUCTIX web-form address. Leave empty until it exists; the form then offers to send the answers by email instead. -->
+      <form id="gs-form" novalidate data-endpoint="">
+        <ol class="progress" aria-label="Progress">
+          <li data-step="1">1. About you</li>
+          <li data-step="2">2. Today</li>
+          <li data-step="3">3. Your goals</li>
+        </ol>
+
+        <fieldset class="gs-step" data-step="1">
+          <legend><h2>About you</h2><p class="hint">So we know who to get back to.</p></legend>
+          <div class="fields">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-phone">Phone <span class="optional">(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="f-org">Organization name</label><input id="f-org" name="organization" type="text" autocomplete="organization" required></div>
+            <div class="field"><label for="f-type">Type of organization</label>
+              <select id="f-type" name="org_type" required>
+                <option value="">Choose one</option>
+                <option value="nonprofit">Nonprofit</option>
+                <option value="retail">Retail or restaurant</option>
+                <option value="construction">Construction or trades</option>
+                <option value="cpa">Accounting or CPA firm</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+            <div class="field"><label for="f-size">People who'd use it</label>
+              <select id="f-size" name="team_size">
+                <option value="">Choose one</option>
+                <option>1 to 2</option><option>3 to 5</option><option>6 to 15</option><option>16 or more</option>
+              </select>
+            </div>
+          </div>
+          <div class="hp" aria-hidden="true"><label for="f-website">Leave this empty</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        </fieldset>
+
+        <fieldset class="gs-step" data-step="2" hidden>
+          <legend><h2>What you use today</h2><p class="hint">Check everything your team relies on, even if it's a spreadsheet.</p></legend>
+          <div class="checkgrid">
+            <label class="check"><input type="checkbox" name="tools" value="accounting"><span><b>Accounting software</b><small>QuickBooks, Xero, Aplos</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="crm"><span><b>Donor or customer database</b><small>A CRM or a spreadsheet of contacts</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="payments"><span><b>Online giving or payments</b><small>Donation forms, card payments</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="invoicing"><span><b>Invoicing</b><small>Sending bills or donation requests</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="expenses"><span><b>Expense reports and receipts</b><small>Reimbursements, mileage</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="email"><span><b>Email marketing</b><small>Newsletters and appeals</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="events"><span><b>Event or volunteer sign-ups</b><small>Forms, shifts, waivers</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="inventory"><span><b>Inventory tracking</b><small>Stock, lots, supplies</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="pos"><span><b>Point of sale</b><small>Register or card reader</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="payroll"><span><b>Payroll</b><small>Paying staff</small></span></label>
+            <label class="check"><input type="checkbox" name="tools" value="sheets"><span><b>Spreadsheets doing a software job</b><small>Trackers, logs, reconciliations</small></span></label>
+          </div>
+          <div class="fields">
+            <div class="field"><label for="f-acct">Accounting today</label>
+              <select id="f-acct" name="accounting">
+                <option value="">Choose one</option>
+                <option>QuickBooks Online</option><option>QuickBooks Desktop</option><option>Xero</option><option>Aplos</option><option>Wave</option><option>Spreadsheets</option><option>An outside bookkeeper</option><option>Nothing yet</option><option>Other</option>
+              </select>
+            </div>
+            <div class="field"><label for="f-spend">Monthly software spend, roughly ($)</label><input id="f-spend" name="monthly_spend" type="number" min="0" step="10" inputmode="numeric"></div>
+            <div class="field"><label for="f-hours">Hours a week on admin and books</label>
+              <select id="f-hours" name="admin_hours">
+                <option value="">Choose one</option>
+                <option>Under 2</option><option>2 to 5</option><option>5 to 10</option><option>10 to 20</option><option>More than 20</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="gs-step" data-step="3" hidden>
+          <legend><h2>What would change your back office</h2><p class="hint">Pick what matters most. We'll build the walkthrough around it.</p></legend>
+          <div class="checkgrid">
+            <label class="check"><input type="checkbox" name="goals" value="Stop entering the same data twice"><span><b>Stop entering the same data twice</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="Close the books faster each month"><span><b>Close the books faster each month</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="Send receipts and invoices automatically"><span><b>Send receipts and invoices automatically</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="Clear reports for our board or owners"><span><b>Clear reports for our board or owners</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="One login for the whole team"><span><b>One login for the whole team</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="Plan events and inventory in one place"><span><b>Plan events and inventory in one place</b></span></label>
+            <label class="check"><input type="checkbox" name="goals" value="Spend less on software"><span><b>Spend less on software</b></span></label>
+          </div>
+          <div class="field"><label for="f-change">If your back office ran itself tomorrow, what would you do with that time?</label><textarea id="f-change" name="time_back"></textarea></div>
+          <div class="field" style="max-width:360px"><label for="f-when">When would you like to switch?</label>
+            <select id="f-when" name="timeline">
+              <option value="">Choose one</option>
+              <option>As soon as possible</option><option>In 1 to 3 months</option><option>In 3 to 6 months</option><option>At our next fiscal year</option><option>Just researching</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <p class="form-error" id="gs-error" role="alert" hidden></p>
+
+        <div class="form-nav">
+          <button type="button" class="btn btn--outline" id="gs-back" hidden>Back</button>
+          <span class="spacer"></span>
+          <button type="button" class="btn btn--primary" id="gs-next">Continue</button>
+          <button type="submit" class="btn btn--primary" id="gs-submit" hidden>Submit</button>
+        </div>
+      </form>
+
+      <section class="result" id="gs-result" hidden aria-live="polite">
+        <div class="result-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0D459F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+          <h2 id="gs-title">Thanks.</h2>
+        </div>
+        <p class="sent-note" id="gs-sent"></p>
+        <div class="stats">
+          <div class="stat"><small>Tools you use today</small><strong id="r-tools">0</strong></div>
+          <div class="stat"><small>Software spend you told us</small><strong id="r-spend">Not given</strong></div>
+          <div class="stat"><small>Admin hours a week</small><strong id="r-hours">Not given</strong></div>
+        </div>
+        <div class="rec">
+          <div class="eyebrow">Where we'd start</div>
+          <div class="plan-title"><span id="r-plan-name"></span> <span id="r-plan-price"></span></div>
+          <p id="r-plan-why"></p>
+          <div id="r-covered-wrap" hidden>
+            <p style="font-weight:700;color:var(--ink);font-size:15px;margin-bottom:8px">Moves into AUCTIX:</p>
+            <ul class="covered" id="r-covered"></ul>
+          </div>
+          <p id="r-savings" style="font-weight:700;color:var(--ink)" hidden></p>
+          <p id="r-payroll" style="font-size:14px;color:var(--muted)" hidden>Payroll is coming to AUCTIX soon. Until then, keep your current payroll provider.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn--primary" id="gs-mail" href="mailto:info@auctixtech.com" hidden>Email these answers to Auctix</a>
+          <a class="btn btn--outline" href="/pricing">Compare plans</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="brandline"><img src="/assets/img/auctix-logo-white.png" alt="Auctix" width="111" height="28"><span>© 2026 Auctix LLC · info@auctixtech.com · (402) 682-8676</span></div>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://app.auctixtech.com/privacy">Privacy policy</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
