@@ -9,6 +9,7 @@ Marketing site for AUCTIX by Auctix LLC. Plain static HTML, CSS and a little Jav
 | `/` | `index.html` |
 | `/nonprofits` | `nonprofits.html` |
 | `/pricing` | `pricing.html` |
+| `/demo` | `demo.html` (interactive click-through demo with sample data; one self-contained file) |
 | `/get-started` | `get-started.html` (three-step lead form, `assets/js/get-started.js`) |
 | any unknown URL | `404.html` |
 
@@ -32,4 +33,4 @@ Fields sent: name, email, phone, organization, org_type, team_size, tools[], acc
 
 ## Editing
 
-Edit the HTML directly; every page carries its own header and footer. When prices change, update `pricing.html`, the plan summary in `nonprofits.html` and `recommend()` in `assets/js/get-started.js`.
+Edit the HTML directly; every page carries its own header and footer. The demo is one file, `demo.html`: its screens, sample data and guided tours are all in the script at the bottom. The same file is also published as a Claude artifact (https://claude.ai/artifact/1sTEfjhdrLTn3L3Vum1nkX); keep the two in sync. When prices change, update `pricing.html`, the plan summary in `nonprofits.html` and `recommend()` in `assets/js/get-started.js`.

@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AUCTIX interactive demo</title>
+<meta name="description" content="Click through AUCTIX with sample data: a nonprofit, a café, a concrete contractor and a CPA firm running their books, people and payments in one platform.">
+<link rel="canonical" href="https://auctixtech.com/demo">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUCTIX">
+<meta property="og:title" content="Try AUCTIX: interactive demo">
+<meta property="og:description" content="See what running your organization on AUCTIX looks like. No sign-up, sample data.">
+<meta property="og:url" content="https://auctixtech.com/demo">
+<meta property="og:image" content="https://auctixtech.com/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a shipped product, calm and confident: the back office a small organization runs on
+   IDEA: the AUCTIX app itself, with a slim demo bar on top that switches business type and walks a guided tour
+   PICTURE: every screen is the working tool, opened mid-use with believable sample data
+   COLOUR and TYPE: Auctix navy #191B53, royal #0D459F, light blue #7FA3E0; Manrope, IBM Plex Mono for figures
+   LAYOUT: demo bar, navy sidebar, sticky header, content to 1240px; drawer nav under 900px, stacked tables under 600px */
+:root{color-scheme:light dark;
+--bg:light-dark(#F4F5F9,#0D0F2B);--sf:light-dark(#FFFFFF,#161939);--sf2:light-dark(#F7F8FC,#1C2047);
+--ink:light-dark(#161A2E,#E9ECF8);--mu:light-dark(#5A6072,#A6AECB);--ln:light-dark(#DCE0EA,#2B3062);--ln2:light-dark(#EDF0F6,#232750);
+--nv:#191B53;--ry:light-dark(#0D459F,#8DB0EE);--ryf:#0D459F;--lb:#7FA3E0;
+--okb:light-dark(#E5ECF9,#1F2D60);--ok:light-dark(#0D459F,#B4CBF3);
+--gnb:light-dark(#E2F3E9,#123826);--gn:light-dark(#176640,#86D8AC);
+--wnb:light-dark(#FDF0DC,#3A2B10);--wn:light-dark(#7A4A00,#F3C27A);
+--bdb:light-dark(#FDE7E5,#401818);--bd:light-dark(#B42318,#F5A097);
+--mub:light-dark(#EEF0F5,#252950)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif;overflow-x:clip}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--ry)}
+:focus-visible{outline:3px solid var(--lb);outline-offset:2px}
+.i{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.num,.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* demo bar */
+.demo{background:#0A0B26;color:#fff;display:flex;align-items:center;gap:14px;padding:8px 16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.01em;font-size:16px}
+.mark{width:28px;height:28px;border-radius:7px;background:#fff;display:grid;place-items:center}
+.brand small{font-weight:600;font-size:12px;color:#A9B4D6}
+.eds{display:flex;gap:4px;background:#17194A;border-radius:10px;padding:3px;overflow-x:auto;scrollbar-width:none}
+.eds button{flex:none;border:0;background:transparent;color:#C9D2EE;font-weight:700;font-size:13px;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;min-height:36px}
+.eds button[aria-pressed=true]{background:#fff;color:var(--nv)}
+.dright{margin-left:auto;display:flex;gap:8px}
+.dbtn.p{background:#fff;color:#191B53;border-color:#fff;display:inline-flex;align-items:center;text-decoration:none}
+.brand{color:#fff;text-decoration:none}
+.soon{margin-left:auto;font-size:10px;font-weight:800;color:#3A2400;background:#F2B33D;border-radius:4px;padding:1px 5px}
+.dbtn{border:1px solid #34387A;background:transparent;color:#fff;border-radius:8px;padding:0 12px;min-height:36px;font-weight:700;font-size:13px;cursor:pointer}
+
+/* shell */
+.shell{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:100vh}
+.side{background:var(--nv);color:#D3DBF0;position:sticky;top:0;height:100vh;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:14px;z-index:25}
+.org{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:10px;border:1px solid #343877;background:#23266A;color:#fff;text-align:left;cursor:pointer;min-height:52px}
+.badge{width:32px;height:32px;flex:none;border-radius:8px;color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center}
+.org b{display:block;font-size:13px;line-height:1.25}.org span span{font-size:12px;color:#A9B4D6}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav h3{margin:0;padding:12px 12px 4px;font-size:12px;font-weight:700;color:#8F9CC8}
+.nav a{display:flex;align-items:center;gap:11px;min-height:38px;padding:0 12px;border-radius:8px;color:#D3DBF0;font-weight:600;font-size:14px;text-decoration:none}
+.nav a:hover{background:#20236A}
+.nav a[aria-current=page]{background:#2A3A8F;color:#fff;font-weight:700}
+.nav a .i{color:#A9B4D6}.nav a[aria-current=page] .i{color:#9DBDF5}
+.cnt{margin-left:auto;font-size:11px;font-weight:800;color:var(--nv);background:#9DBDF5;border-radius:999px;padding:1px 7px}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:#23266A}
+.av{width:32px;height:32px;border-radius:50%;background:#3A4BA0;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+.me b{display:block;font-size:13px;color:#fff}.me span span{font-size:12px;color:#A9B4D6}
+.main{display:flex;flex-direction:column;min-width:0}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 28px;background:var(--sf);border-bottom:1px solid var(--ln)}
+.srch{flex:1 1 260px;max-width:480px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--ln);border-radius:10px;background:var(--sf2);color:var(--mu)}
+.card .srch,.content>.srch{flex:none}
+.srch input{border:0;background:transparent;outline:none;flex:1;font-size:15px;color:var(--ink)}
+.chip{font-size:12px;font-weight:700;color:var(--wn);background:var(--wnb);border-radius:999px;padding:4px 10px;white-space:nowrap}
+.ib{width:42px;height:42px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink)}
+.menu{display:none}
+.askb{display:flex;align-items:center;gap:7px;height:42px;padding:0 14px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);font-weight:700;font-size:14px;cursor:pointer;margin-left:auto;white-space:nowrap}
+.askb .i{color:var(--ry)}
+.content{padding:24px 28px 150px;max-width:1260px;width:100%;display:flex;flex-direction:column;gap:20px}
+
+/* page parts */
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px}
+.ph>div:first-child{flex:1 1 300px}
+.ph p{margin:0 0 3px;font-size:13px;font-weight:600;color:var(--mu)}
+.ph h1{margin:0;font-size:clamp(24px,3vw,30px);font-weight:800;letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.btn{min-height:42px;padding:0 15px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--lb)}
+.btn.p{background:var(--ryf);border-color:var(--ryf);color:#fff}
+.btn.s{min-height:34px;padding:0 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.kpi{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.kl{font-size:13px;font-weight:600;color:var(--mu)}
+.kv{font-size:clamp(22px,2.4vw,28px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15}
+.ks{font-size:13px;color:var(--mu)}.ks.up{color:var(--ry);font-weight:600}
+.bad{color:var(--bd);font-weight:700}.warn{color:var(--wn);font-weight:700}.good{color:var(--gn);font-weight:700}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.ch h2{margin:0;font-size:16px;font-weight:800}
+.ch .x{margin-left:auto;font-size:13px;font-weight:700;color:var(--ry);text-decoration:none;cursor:pointer;background:none;border:0;padding:4px 0}
+.sub{font-size:13px;color:var(--mu)}
+.g2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:start}
+.g11{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.g12{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px;align-items:start}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap;background:var(--mub);color:var(--mu)}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.gn{background:var(--gnb);color:var(--gn)}.pill.wn{background:var(--wnb);color:var(--wn)}.pill.bd{background:var(--bdb);color:var(--bd)}
+.tw{overflow-x:auto}
+.t{width:100%;border-collapse:collapse;font-size:14px}
+.t th{text-align:left;color:var(--mu);font-size:12px;font-weight:700;padding:8px;white-space:nowrap}
+.t td{padding:10px 8px;border-top:1px solid var(--ln2);vertical-align:middle}
+.t th:first-child,.t td:first-child{padding-left:0}.t th:last-child,.t td:last-child{padding-right:0}
+.t .r{text-align:right}
+.t tr.link{cursor:pointer}.t tr.link:hover td{background:var(--sf2)}
+.t tfoot td{font-weight:800;border-top:2px solid var(--ln)}
+.strong{font-weight:700}
+.list{display:flex;flex-direction:column}
+.li{display:flex;align-items:center;gap:12px;min-height:50px;padding:8px 0;border-top:1px solid var(--ln2);color:var(--ink);text-decoration:none;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;cursor:pointer;font-size:14px}
+.li:first-child{border-top:0}
+.li .f{flex:1;min-width:0}.li small{display:block;color:var(--mu);font-size:12px}
+.cntb{font-size:12px;font-weight:800;border-radius:6px;padding:3px 7px;min-width:28px;text-align:center}
+.mt{height:7px;border-radius:4px;background:var(--ln2);overflow:hidden}.mt i{display:block;height:100%;background:var(--ryf);border-radius:4px}
+.mt.w i{background:#D08A1A}.mt.b i{background:#C0392B}.mt.g i{background:#2F8A5B}
+.vb{display:flex;align-items:stretch;gap:6px;height:220px}
+.vbc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.vbw{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;border-bottom:1px solid var(--ln)}
+.vbb{width:62%;max-width:38px;border-radius:4px 4px 0 0;background:var(--lb);opacity:.75}
+.vbb.hl{background:var(--ryf);opacity:1}
+.vbv{font-size:12px;font-weight:700;white-space:nowrap}.vbl{font-size:11px;color:var(--mu);white-space:nowrap}
+.hb{display:flex;flex-direction:column;gap:10px}
+.hbr{display:grid;grid-template-columns:minmax(90px,150px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
+.hbt{height:10px;border-radius:5px;background:var(--ln2);position:relative}
+.hbt i{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:var(--ryf)}
+.cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--ln);background:var(--sf);display:grid;place-items:center;cursor:pointer;flex:none;padding:0;color:#fff}
+.cb.on{background:var(--ryf);border-color:var(--ryf)}
+.tog{width:44px;height:26px;border-radius:13px;border:0;background:var(--ln);position:relative;cursor:pointer;flex:none;padding:0}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.tog.on{background:var(--ryf)}.tog.on::after{left:21px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700}
+.inp{height:42px;border:1px solid var(--ln);border-radius:9px;background:var(--sf);padding:0 11px;font-size:16px;font-weight:500;width:100%}
+textarea.inp{height:auto;padding:10px 11px;resize:vertical;min-height:90px;line-height:1.45}
+.inp.sm{height:36px;font-size:15px;padding:0 8px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--ln);overflow-x:auto}
+.tabs button{border:0;background:none;padding:10px 14px;font-weight:700;font-size:14px;color:var(--mu);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ryf)}
+.note{font-size:13px;color:var(--mu);background:var(--sf2);border:1px dashed var(--ln);border-radius:10px;padding:10px 12px}
+.ai{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--ry)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--ln);background:var(--sf);border-radius:999px;padding:0 13px;min-height:36px;font-weight:700;font-size:13px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--nv);color:#fff;border-color:var(--nv)}
+.tl{display:flex;flex-direction:column}
+.tli{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--ln2)}
+.tli:first-child{border-top:0}
+.dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--okb);color:var(--ok)}
+.tli b{font-size:14px}.tli small{display:block;color:var(--mu);font-size:12px}
+.empty{padding:26px;text-align:center;color:var(--mu);font-size:14px}
+
+/* overlays */
+.ov{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px}
+.bdp{position:absolute;inset:0;background:rgba(8,10,35,.55)}
+.mdl{position:relative;background:var(--sf);border-radius:16px;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.mdl.wide{width:min(880px,100%)}
+.mdl h2{margin:0;font-size:20px;font-weight:800;letter-spacing:-.01em}
+.mdl .acts{justify-content:flex-end}
+.wel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.welc{border:1px solid var(--ln);border-radius:14px;padding:16px;background:var(--sf2);text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.welc:hover{border-color:var(--ryf)}
+.welc b{font-size:16px}.welc>span:last-child{font-size:13px;color:var(--mu)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--sf);z-index:55;box-shadow:-12px 0 40px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.drawer .dh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--ln)}
+.drawer .db{padding:18px;overflow:auto;display:flex;flex-direction:column;gap:12px;flex:1}
+.bub{background:var(--sf2);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;font-size:14px}
+.bub.me{background:var(--okb);border-color:transparent;align-self:flex-end;max-width:85%}
+.qbtn{text-align:left;border:1px solid var(--ln);background:var(--sf);border-radius:10px;padding:10px 12px;font-weight:600;font-size:14px;cursor:pointer}
+.tour{position:fixed;right:16px;bottom:16px;z-index:50;width:min(360px,calc(100vw - 32px));background:var(--nv);color:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 18px 50px rgba(10,12,40,.4);display:flex;flex-direction:column;gap:8px}
+.tour p{margin:0;font-size:14px;color:#D3DBF0;line-height:1.5}
+.tour h4{margin:0;font-size:16px;font-weight:800}
+.tour .tm{font-size:12px;font-weight:700;color:#9DBDF5;display:flex;align-items:center;gap:8px}
+.tour .tm button{margin-left:auto;background:none;border:0;color:#A9B4D6;cursor:pointer;font-weight:700;font-size:13px;padding:6px}
+.tour .row button{min-height:38px;border-radius:9px;padding:0 14px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid #3B3F86;background:transparent;color:#fff}
+.tour .row .nx{background:#fff;color:var(--nv);border-color:#fff;margin-left:auto}
+.tdots{display:flex;gap:4px}.tdots i{width:6px;height:6px;border-radius:3px;background:#3B3F86}.tdots i.on{background:#9DBDF5;width:16px}
+.tpill{position:fixed;right:16px;bottom:16px;z-index:50;background:var(--nv);color:#fff;border:0;border-radius:999px;padding:0 18px;min-height:46px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 10px 30px rgba(10,12,40,.35)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:70;background:#0A0B26;color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.3);transition:.25s;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* devices */
+.stage{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;justify-content:center}
+.phone{width:380px;height:780px;border-radius:44px;border:12px solid #0A0B26;background:#0A0B26;position:relative;flex:none;box-shadow:0 30px 60px rgba(10,12,40,.25)}
+.pscr{--pc:#0D459F;--pcl:#E5ECF9;position:absolute;inset:0;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;color-scheme:light;background:var(--bg);color:var(--ink)}
+.pbody{flex:1;overflow-y:auto;padding:14px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.pbar{padding:34px 16px 12px;background:var(--nv);color:#fff;display:flex;align-items:center;gap:10px}
+.pbar b{font-size:17px}
+.ptabs{display:flex;border-top:1px solid var(--ln);background:var(--sf)}
+.ptabs button{flex:1;border:0;background:none;padding:8px 0 14px;font-size:11px;font-weight:700;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.ptabs button[aria-selected=true]{color:var(--ryf)}
+.pcard{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.side-note{flex:1 1 280px;max-width:420px;display:flex;flex-direction:column;gap:12px}
+.browser{border-radius:14px;border:1px solid var(--ln);overflow:hidden;background:#fff;box-shadow:0 20px 50px rgba(10,12,40,.12)}
+.bbar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:light-dark(#ECEEF4,#22264F)}
+.bbar i{width:11px;height:11px;border-radius:50%;background:#C9CEDB}
+.bbar span{margin-left:10px;flex:1;max-width:460px;background:var(--sf);border-radius:8px;padding:5px 12px;font-size:13px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bbody{color-scheme:light;background:#fff;color:#1F1C1A}
+
+/* public pages */
+.pub{font-size:15px}
+.hero{padding:clamp(28px,5vw,56px) clamp(18px,5vw,56px);color:#fff}
+.hero h2{margin:0 0 8px;font-size:clamp(28px,4vw,42px);line-height:1.05;letter-spacing:-.02em;font-weight:800;text-wrap:balance}
+.hero p{margin:0;max-width:56ch;opacity:.9}
+.pubw{padding:clamp(18px,4vw,40px) clamp(18px,5vw,56px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}
+.amts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.amts button{min-height:52px;border-radius:10px;border:2px solid #E2DDD8;background:#fff;font-weight:800;font-size:17px;cursor:pointer;color:#1F1C1A}
+.amts button[aria-pressed=true]{border-color:var(--pc,#B4462B);background:var(--pcl,#FBEDE8);color:var(--pc,#B4462B)}
+.pbtn{min-height:52px;border:0;border-radius:12px;background:var(--pc,#B4462B);color:#fff;font-weight:800;font-size:17px;cursor:pointer;width:100%}
+.menuc{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.mi{border:1px solid #E7E1DB;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;background:#fff}
+.mi .ph2{height:76px;border-radius:9px}
+
+/* retail */
+.pos{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:16px;align-items:start}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.pbtn2{min-height:86px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);padding:10px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:6px;font-weight:700;font-size:14px}
+.pbtn2:hover{border-color:var(--ryf)}
+.pbtn2 .num{color:var(--mu);font-weight:500;font-size:13px}
+.kds{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.tk{background:var(--sf);border:1px solid var(--ln);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.tkh{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--nv);color:#fff;font-weight:800}
+.tkh.w{background:#A86A0C}.tkh.b{background:#A3271B}
+.tk ul{margin:0;padding:10px 14px 4px 30px;font-size:15px;font-weight:600;flex:1}
+.tk li{padding:3px 0}.tk li small{display:block;font-weight:500;color:var(--mu)}
+.floor{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tbl{border-radius:14px;border:2px solid var(--ln);background:var(--sf);min-height:92px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;text-align:left;font-size:13px}
+.tbl b{font-size:16px}
+.tbl.seated{background:var(--okb);border-color:var(--ryf)}
+.tbl.check{background:var(--wnb);border-color:#D08A1A}
+.tbl.dirty{background:var(--mub);border-style:dashed}
+.tbl.sug{outline:4px solid #2F8A5B;outline-offset:2px}
+.sched{display:grid;grid-template-columns:150px repeat(7,minmax(92px,1fr));min-width:860px;font-size:13px}
+.sched>div{border-top:1px solid var(--ln2);padding:7px 6px;min-height:46px}
+.sched .hd{font-weight:700;color:var(--mu);font-size:12px;border-top:0}
+.sh{display:block;border-radius:7px;padding:4px 7px;background:var(--okb);color:var(--ok);font-weight:700;font-size:12px;margin-bottom:3px;white-space:nowrap}
+.sh.w{background:var(--wnb);color:var(--wn)}.sh.g{background:var(--gnb);color:var(--gn)}.sh.b{background:var(--bdb);color:var(--bd)}
+/* flow */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0}
+.node{width:min(360px,100%);background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center}
+.node small{display:block;color:var(--mu);font-size:12px}
+.node.tr{border-color:var(--ryf);background:var(--okb)}
+.conn{width:2px;height:22px;background:var(--ln)}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:640px}
+.branch>div{display:flex;flex-direction:column;align-items:center}
+.lbl{font-size:12px;font-weight:700;color:var(--mu);padding:3px 0}
+.trace{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);gap:8px;align-items:center}
+.arrow{color:var(--mu);text-align:center;font-size:22px}
+.doc{border:1px solid var(--ln);border-radius:12px;background:#fff;color:#1F1C1A;color-scheme:light;padding:24px;font-size:14px;display:flex;flex-direction:column;gap:12px}
+.sw{width:38px;height:38px;border-radius:9px;border:1px solid var(--ln)}
+.ph2{display:block}
+
+@media(max-width:1100px){.g3{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.pubw{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:900px){
+ .shell{grid-template-columns:minmax(0,1fr)}
+ .side{position:fixed;left:0;top:0;bottom:0;width:270px;transform:translateX(-100%);transition:transform .2s;box-shadow:12px 0 40px rgba(0,0,0,.3)}
+ .shell.open .side{transform:none}
+ .scrim{position:fixed;inset:0;background:rgba(8,10,35,.45);z-index:24}
+ .menu{display:grid}
+ .top{padding:10px 14px}
+ .content{padding:18px 14px 150px}
+ .g2,.g11,.g12,.g3,.pos{grid-template-columns:minmax(0,1fr)}
+ .srch{display:none}
+ .floor{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .demo{padding:8px 10px;gap:8px}
+ .content{padding-bottom:230px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{padding:12px 14px}.kv{font-size:20px}.ks,.kl{font-size:12px}
+ .tour{left:8px;right:8px;bottom:8px;width:auto;padding:12px 14px;gap:6px}.tour p{font-size:13px;line-height:1.45}.tour h4{font-size:15px}.tdots{display:none}.tour .row button{min-height:36px}.eds{order:3;width:100%}.brand small{display:none}
+ .stack thead{display:none}.stack tr{display:grid;padding:8px 0;border-top:1px solid var(--ln2)}
+ .stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:4px 0;text-align:right}
+ .stack td::before{content:attr(data-l);color:var(--mu);font-size:12px;font-weight:700;text-align:left}
+ .stack td[data-l=""]::before{content:none}
+ .stack tfoot tr{border-top:2px solid var(--ln)}
+ .t th:first-child,.t td:first-child{padding-left:0}
+ .phone{width:100%;max-width:400px;height:720px;border-width:8px;border-radius:34px}
+ .wel{grid-template-columns:minmax(0,1fr)}
+ .chip{font-size:11px;padding:3px 8px}.dbtn.so{display:none}
+ .floor{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .trace{grid-template-columns:minmax(0,1fr)}.arrow{transform:rotate(90deg)}
+ .branch{grid-template-columns:minmax(0,1fr)}
+ .amts{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hbr{grid-template-columns:minmax(80px,110px) minmax(0,1fr) auto}
+ .askb span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+{
+/* ---------- helpers ---------- */
+const app = document.getElementById('app');
+const money = (n, d = 0) => (n < 0 ? '−' : '') + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+const m2 = n => money(n, 2);
+const sum = (a, f) => a.reduce((s, x) => s + (typeof f === 'function' ? f(x) : x[f]), 0);
+const pct = (n, d = 0) => (n * 100).toFixed(d) + '%';
+const IC = {
+  home: 'M3 12l9-8 9 8M5 10v10h14V10', inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6H3v-6z', check: 'M9 11l3 3 8-8M20 12v7H4V5h11',
+  people: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 11a3 3 0 1 0 0-6M22 20c0-3-2-5-5-5',
+  mega: 'M3 10v4l11 5V5L3 10zM14 8h1a4 4 0 0 1 0 8h-1M6 15l1 5h3l-1-4', funnel: 'M3 5h18l-7 8v6l-4-2v-4z', flow: 'M4 4h6v6H4zM14 14h6v6h-6zM7 10v3a1 1 0 0 0 1 1h6',
+  doc: 'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6', bank: 'M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18', cal: 'M4 6h16v15H4zM4 10h16M8 3v4M16 3v4',
+  box: 'M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10', trace: 'M4 5h5v5H4zM15 4h5v5h-5zM15 15h5v5h-5zM9 7.5h3v10h3M12 6.5h3', chart: 'M4 20V11M10 20V5M16 20v-7M2 20h20',
+  palette: 'M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.5S13 18 13 17s.7-1.5 1.5-1.5H17a4 4 0 0 0 4-4C21 6.9 17 3 12 3zM7.5 12h.01M10 7.5h.01M15 7.5h.01',
+  shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z', heart: 'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z',
+  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6', phone: 'M7 2h10v20H7zM11 18h2', register: 'M4 4h16v9H4zM2 17h20v4H2zM8 13v4M16 13v4',
+  menu: 'M4 6h16M4 12h16M4 18h10', globe: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
+  fire: 'M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 2 3 4', table: 'M3 9h18M5 9v9M19 9v9M8 5h8', card: 'M3 6h18v12H3zM3 10h18M7 15h3',
+  star: 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z', clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2',
+  hard: 'M3 18h18M5 18v-3a7 7 0 0 1 14 0v3M12 8V5M9 9l-1-3M15 9l1-3', calc: 'M6 3h12v18H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01',
+  bill: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6', swap: 'M7 7h13l-3-3M17 17H4l3 3', file: 'M7 3h7l5 5v13H7zM14 3v5h5M10 14h6',
+  lock: 'M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4', send: 'M3 11l18-8-8 18-2-8z', tax: 'M5 3h14v18H5zM9 15l6-6M9.5 9.5h.01M14.5 14.5h.01',
+  search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4', bell: 'M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 21h4', bars: 'M4 7h16M4 12h16M4 17h16',
+  spark: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z', x: 'M6 6l12 12M18 6L6 18',
+  scan: 'M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4M7 12h10', ok: 'M5 12l5 5L19 7', plus: 'M12 5v14M5 12h14', minus: 'M5 12h14', cam: 'M4 8h4l2-3h4l2 3h4v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z'
+};
+const ico = (k, s = 18) => `<svg class="i" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><path d="${IC[k] || ''}"/></svg>`;
+const head = (t, sub, acts = '') => `<div class="ph"><div><p>${sub}</p><h1>${t}</h1></div><div class="acts">${acts}</div></div>`;
+const B = (l, act, arg = '', cls = '', dis = false) => `<button type="button" class="btn ${cls}" data-act="${act}" data-arg="${arg}"${dis ? ' disabled' : ''}>${l}</button>`;
+const G = (l, to, cls = '') => `<button type="button" class="btn ${cls}" data-go="${to}">${l}</button>`;
+const X = (l, to) => `<button type="button" class="x" data-go="${to}">${l}</button>`;
+const XA = (l, act, arg = '') => `<button type="button" class="x" data-act="${act}" data-arg="${arg}">${l}</button>`;
+const kpi = (l, v, s = '', c = '') => `<div class="kpi"><span class="kl">${l}</span><span class="kv">${v}</span><span class="ks ${c}">${s}</span></div>`;
+const kpis = (...k) => `<section class="kpis">${k.join('')}</section>`;
+const card = (t, body, extra = '', cls = '') => `<section class="card ${cls}">${t ? `<div class="ch"><h2>${t}</h2>${extra}</div>` : ''}${body}</section>`;
+const pill = (t, c = '') => `<span class="pill ${c}">${t}</span>`;
+const meter = (p, c = '') => `<div class="mt ${c}"><i style="width:${Math.max(0, Math.min(100, p)).toFixed(1)}%"></i></div>`;
+const cb = (on, act, arg, label) => `<button type="button" class="cb ${on ? 'on' : ''}" role="checkbox" aria-checked="${on}" aria-label="${label}" data-act="${act}" data-arg="${arg}">${on ? ico('ok', 14) : ''}</button>`;
+const tog = (on, act, arg, label) => `<button type="button" class="tog ${on ? 'on' : ''}" role="switch" aria-checked="${on}" aria-label="${label}" data-act="${act}" data-arg="${arg}"></button>`;
+const sel = (id, opts, val, ch, arg = '', cls = '') => `<select class="inp ${cls}" id="${id}" ${ch ? `data-ch="${ch}"` : ''} data-arg="${arg}">${opts.map(o => `<option${o === val ? ' selected' : ''}>${o}</option>`).join('')}</select>`;
+const NW = new Set(['Date', 'Due', 'Sent', 'Last visit', 'When', 'Last gift', 'Number', 'Days']);
+const tbl = (cols, rows, o = {}) => `<div class="tw"><table class="t stack"><thead><tr>${cols.map(c => `<th${c.r ? ' class="r"' : ''}>${c.l}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.map((row, i) => `<tr${o.go ? ` class="link" data-go="${o.go(row, i)}"` : ''}${o.act ? ` class="link" data-act="${o.act}" data-arg="${i}"` : ''}>${cols.map(c => `<td data-l="${c.l}"${c.r ? ' class="r"' : ''}${NW.has(c.l) ? ' style="white-space:nowrap"' : ''}>${c.f ? c.f(row, i) : (row[c.k] ?? '')}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${cols.length}" class="empty">${o.empty || 'Nothing here'}</td></tr>`}</tbody>${o.foot ? `<tfoot><tr>${o.foot.map((f, i) => `<td data-l="${f === '' ? '' : (cols[i] || {}).l || ''}"${cols[i] && cols[i].r ? ' class="r"' : ''}>${f}</td>`).join('')}</tr></tfoot>` : ''}</table></div>`;
+const vbars = (data, fmt, hl = data.length - 1, label = 'Chart') => { const mx = Math.max(...data.map(d => d[1])); return `<div class="vb" role="img" aria-label="${label}">${data.map((d, i) => `<div class="vbc" title="${d[0]}: ${fmt(d[1])}"><div class="vbw"><span class="vbv">${i === hl ? fmt(d[1]) : ''}</span><div class="vbb ${i === hl ? 'hl' : ''}" style="height:${(d[1] / mx * 82).toFixed(1)}%"></div></div><span class="vbl">${d[0]}</span></div>`).join('')}</div>`; };
+const hbars = (data, fmt, max) => { const mx = max || Math.max(...data.map(d => d[1])); return `<div class="hb">${data.map(d => `<div class="hbr"><span>${d[0]}</span><div class="hbt"><i style="width:${(d[1] / mx * 100).toFixed(1)}%;${d[2] ? 'background:' + d[2] : ''}"></i></div><span class="num">${fmt(d[1])}</span></div>`).join('')}</div>`; };
+const field = (l, inner) => `<label class="fld">${l}${inner}</label>`;
+const inp = (id, val, extra = '') => `<input class="inp" id="${id}" value="${val}" ${extra}>`;
+const browser = (url, inner) => `<div class="browser"><div class="bbar"><i></i><i></i><i></i><span>${url}</span></div><div class="bbody">${inner}</div></div>`;
+const phone = (inner, label) => `<div class="phone" role="region" aria-label="${label}"><div class="pscr">${inner}</div></div>`;
+const val = id => { const e = document.getElementById(id); return e ? e.value : ''; };
+const statusPill = s => pill(s, { Paid: 'gn', Approved: 'gn', Signed: 'gn', Current: 'gn', Submitted: 'ok', Sent: 'ok', Viewed: 'ok', Scheduled: 'ok', Answered: 'gn', Active: 'gn', Published: 'gn', 'On track': 'gn', Overdue: 'bd', Missing: 'bd', Expired: 'bd', Short: 'bd', 'Pending GC': 'wn', Draft: '', Requested: 'wn', 'Waiting on client': 'wn', Ready: 'ok', 'On order': 'ok', OK: 'gn', 'Expiring': 'wn', 'Needed': 'wn' }[s] || '');
+let toastT;
+const toast = msg => { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 3200); };
+
+/* ---------- editions ---------- */
+const ED = {
+  np: { name: 'Nonprofit', launch: 'Launching Jan 2027',  org: 'Prairie Meals Alliance', place: 'Lincoln, NE · Core plan', badge: 'PM', color: '#B4462B', user: ['JL', 'Jordan Lee', 'Executive director'], home: 'np-overview',
+    blurb: 'A meal-packing nonprofit: donors, grants, fund accounting, volunteers and food inventory in one place.',
+    nav: [['np-overview', 'Overview', 'home'], ['h', 'Engage'], ['np-inbox', 'Inbox', 'inbox', () => S.np.threads.filter(t => t.unread).length], ['np-tasks', 'Tasks & calendar', 'check', () => S.np.tasks.filter(t => !t.done).length], ['np-crm', 'CRM', 'people'], ['np-marketing', 'Marketing', 'mega'], ['np-leads', 'Forms & leads', 'funnel', () => S.np.leads.filter(l => !l.conv).length], ['np-workflows', 'Workflows', 'flow'],
+      ['h', 'Operate'], ['np-requests', 'Donations & requests', 'doc'], ['np-finance', 'Finance', 'bank', () => S.np.tx.length + S.np.txMore], ['np-events', 'Events & volunteers', 'cal'], ['np-inventory', 'Inventory', 'box'], ['np-lots', 'Lot traceability', 'trace'],
+      ['h', 'Govern'], ['np-board', 'Board dashboard', 'chart'], ['np-settings', 'Templates & branding', 'palette'], ['np-website', 'Website & security', 'shield'],
+      ['h', 'Portals & apps'], ['np-give', 'Public giving page', 'heart'], ['np-donor', 'Donor portal', 'user'], ['np-mobile', 'Mobile apps', 'phone']],
+    tour: [
+      ['np-overview', 'Start every day here', 'Gifts, open donation requests, cash and meals packed, plus the short list of things that need you today. Click any item under Needs attention to jump straight to it.'],
+      ['np-give', 'A donor gives online', 'This is the organization’s own branded giving page. Pick an amount and press Donate: the gift lands in the books and the receipt goes out on its own.'],
+      ['np-crm', 'Every supporter in one CRM', 'Donors, volunteers, companies and foundations together, with segments and an engagement score. Click Dana Whitfield to open her profile.'],
+      ['np-requests', 'Ask for money, get paid online', 'Donation requests work like invoices for sponsors and pledges. Try Mark paid or create a new request.'],
+      ['np-finance', 'Books that keep themselves', 'Bank transactions arrive with a suggested account and fund. Accept them one at a time or all at once; no QuickBooks needed.'],
+      ['np-events', 'Events and volunteers', 'Shifts, waivers, check-in and the materials each packing event needs, pulled from inventory.'],
+      ['np-lots', 'Trace every lot', 'From ingredient lots in to the boxes shipped out, ready if a supplier ever issues a recall.'],
+      ['np-board', 'A board packet in one click', 'Statement of activities by restriction, program ratio, months of reserve and budget versus actual.'],
+      ['np-mobile', 'Staff and supporter apps', 'Sign in, check volunteers in at the door and receive deliveries with a scanner, on any phone.']],
+    ask: [['Who gave $1,000 or more this year and still needs a thank-you call?', 'Three supporters: Riverside Rotary Club ($3,000 on Nov 13), Great Plains Community Fund ($10,000 grant on Nov 10, acknowledgment due) and Hartley Family Foundation ($15,000 in August). I can create call tasks for Jordan for this week.'],
+      ['How long will the meal-ingredients fund last?', 'Meal ingredients (restricted) holds $23,950. Spending has averaged about $4,100 a month since July, so it covers roughly 5.8 months, into early May 2027.'],
+      ['Draft a short board update for November', 'November so far: $21,480 in gifts (up 9% on last November), 412,600 meals packed year to date, 4.2 months of operating reserve. The Holiday Meal Packing event on Nov 21 is 87% staffed; rice and meal bags are on order to cover the 30,000-meal goal.']] },
+  rt: { name: 'Retail & restaurant', launch: 'Coming spring 2027',  org: 'Copper Kettle Café & Market', place: 'Omaha, NE · 2 locations · Pro', badge: 'CK', color: '#B8642E', user: ['MC', 'Maya Chen', 'Owner'], home: 'rt-dash',
+    blurb: 'A café with a small market and merch: counter, online orders, tables, kitchen, loyalty, staff hours and books.',
+    nav: [['rt-dash', 'Dashboard', 'home'], ['h', 'Sell'], ['rt-register', 'Counter register', 'register'], ['rt-online', 'Online ordering', 'globe'], ['rt-paytable', 'Pay at table', 'card'],
+      ['h', 'Kitchen & floor'], ['rt-kds', 'Kitchen display', 'fire', () => S.rt.tickets.length], ['rt-floor', 'AI host station', 'table', () => S.rt.wait.length],
+      ['h', 'Manage'], ['rt-menu', 'Menu & products', 'menu'], ['rt-loyalty', 'Loyalty & guests', 'star'], ['rt-shifts', 'Shifts & hours', 'clock'], ['rt-books', 'Books & bank', 'bank', () => S.rt.tx.length + S.rt.txMore]],
+    tour: [
+      ['rt-dash', 'The owner’s morning view', 'Sales by hour, channel mix, labor as a share of sales and what’s running low, for one location or both.'],
+      ['rt-register', 'Ring up a sale', 'Tap a few items, then Charge. The card reader runs through Stripe and the drinks go straight to the kitchen display.'],
+      ['rt-kds', 'Kitchen display', 'Counter, online and table orders in one queue, colored by how long they’ve waited. Bump a ticket when it’s ready.'],
+      ['rt-online', 'Online ordering', 'The café’s own ordering page, no third-party commission. Place an order and it appears in the kitchen.'],
+      ['rt-floor', 'AI host station', 'Press Suggest a table: it balances covers across servers’ sections. It only balances seating and never moves tips.'],
+      ['rt-paytable', 'Pay at the table', 'Split the check, add a tip and tap to pay on a handheld, even if the internet drops.'],
+      ['rt-loyalty', 'Loyalty that runs itself', 'Points, rewards and a win-back message for guests who haven’t been in for a month.'],
+      ['rt-shifts', 'Shifts, hours and payroll', 'Build the schedule against forecast sales, approve timesheets and send hours to Gusto.'],
+      ['rt-books', 'The books, done', 'Card payouts, supplier bills and payroll land in the ledger with suggested accounts. Accept and move on.']],
+    ask: [['How did yesterday compare with last Sunday?', 'Sunday net sales were $5,912 across both locations, up 7% on the previous Sunday. Online orders grew fastest (+22%), mostly breakfast burritos and cold brew between 8 and 10 AM.'],
+      ['What should I reorder this week?', 'Oat milk (2 days left at Blackstone), 12 oz cups (about 3 days) and House blend whole bean (14 bags left, selling 6 a day). I can draft purchase orders to your usual suppliers.'],
+      ['Am I overstaffed on Tuesday?', 'Tuesday’s schedule is 58 hours against $3,900 forecast sales, which is 31% labor. Ending Grace’s 2–6 PM shift an hour early brings it to about 29%.']] },
+  cn: { name: 'Construction', launch: 'Pilot fall 2027',  org: 'Ridgeline Concrete Co.', place: 'Papillion, NE · Pro', badge: 'RC', color: '#3D4A5C', user: ['SO', 'Sam Ortega', 'Owner & project manager'], home: 'cn-jobs',
+    blurb: 'A concrete subcontractor: bids, job cost, pay applications with retainage, change orders, crews and compliance.',
+    nav: [['cn-jobs', 'Jobs', 'hard'], ['h', 'Win work'], ['cn-estimate', 'Estimates & bids', 'calc'], ['h', 'Run jobs'], ['cn-schedule', 'Crew & pour schedule', 'cal'], ['cn-field', 'Field app', 'phone'], ['cn-change', 'Change orders', 'swap', () => S.cn.cos.filter(c => c.st !== 'Approved').length],
+      ['h', 'Get paid'], ['cn-payapp', 'Pay applications', 'bill'], ['cn-jobcost', 'Job cost & WIP', 'chart'], ['cn-compliance', 'Waivers, COIs & payroll', 'shield', () => S.cn.comp.filter(c => c.need).length]],
+    tour: [
+      ['cn-jobs', 'Every job at a glance', 'Contract, billed, cost to date, margin and retainage held, with the issues that need attention today.'],
+      ['cn-estimate', 'Build a bid', 'Change a quantity or rate and the overhead, profit, bond and price per square foot update.'],
+      ['cn-schedule', 'Crews and pours', 'The week’s pours with weather. Wednesday has a 70% chance of rain: move that pour to Thursday.'],
+      ['cn-field', 'Daily log from the field', 'Foremen log hours, yards poured, notes and photos from their phone. It posts to job cost.'],
+      ['cn-change', 'Change orders', 'Price it, send it, and when the GC approves, the contract value updates everywhere.'],
+      ['cn-payapp', 'Pay applications', 'Schedule of values with this period’s percent complete, 10% retainage and the amount due, AIA style.'],
+      ['cn-jobcost', 'Job cost and WIP', 'Budget versus actual by cost code, and the over/under billing schedule your bonding agent asks for.'],
+      ['cn-compliance', 'Paperwork handled', 'Lien waivers, certificates of insurance and certified payroll, with reminders before anything lapses.']],
+    ask: [['Which jobs are underbilled?', 'Two jobs are underbilled: Sarpy County Library flatwork by about $46,300 and the District 27 sidewalks by about $3,900. Westgate and Elkhorn are overbilled, which is normal early in a job.'],
+      ['What retainage is owed to us?', '$73,230 is held across four jobs. The District 27 sidewalks ($15,050) can be released once the punch list closes; the job is 97% complete.'],
+      ['Summarize Westgate for the GC meeting', 'Westgate Medical Office is 64% complete on cost, 18% gross margin forecast. Pay app #6 is ready for $68,420. CO-014 (thickened slab edges, $8,640) is waiting on Hawthorne’s signature. Next pour: Area D slab, 62 cubic yards.']] },
+  ac: { name: 'Accountant portal', launch: 'Free for CPA firms',  org: 'Summit Ledger CPAs', place: 'Firm · 24 clients · Free', badge: 'SL', color: '#1F6F78', user: ['PS', 'Priya Shah', 'CPA, partner'], home: 'ac-firm',
+    blurb: 'A CPA firm’s view across clients on AUCTIX: close, review, reconcile, adjust, request and export for tax.',
+    nav: [['ac-firm', 'Firm home', 'home'], ['h', 'Month-end'], ['ac-close', 'Close checklist', 'check'], ['ac-review', 'Transaction review', 'search', () => S.ac.review.length], ['ac-recon', 'Bank reconciliation', 'bank'], ['ac-journal', 'Adjusting entries', 'file'],
+      ['h', 'Clients'], ['ac-requests', 'Client requests', 'send', () => S.ac.reqs.filter(r => r.st !== 'Answered').length], ['ac-tax', 'Tax mapping & export', 'tax']],
+    tour: [
+      ['ac-firm', 'One home for every client', 'Close progress, items to review, unreconciled accounts and open requests across the whole firm. Click a client to open its close.'],
+      ['ac-review', 'Review flagged transactions', 'Suggested categories with a confidence score. Approve the sure ones in bulk; send the odd ones to the client as a question.'],
+      ['ac-recon', 'Reconcile in minutes', 'Tick the cleared items until the difference is $0.00. Hint: the check and the last deposit haven’t cleared.'],
+      ['ac-close', 'Month-end close', 'A checklist per client with owners and due dates. Tick items off as you go.'],
+      ['ac-journal', 'Adjust and lock', 'Post adjusting entries that must balance, then lock October so nothing changes behind you.'],
+      ['ac-requests', 'Ask the client', 'Requests show up in the client’s AUCTIX inbox, with uploads and answers kept in one place.'],
+      ['ac-tax', 'Map to the return', 'Map each account to a tax line once and export to your tax software.']],
+    ask: [['Which clients are behind on October close?', 'Ridgeline Concrete (40%, waiting on WIP estimates) and Bluestem Animal Rescue (25%, two bank accounts unreconciled). Everyone else is on track for Nov 20.'],
+      ['Any unusual transactions at Copper Kettle?', 'Three: a $612.48 Costco charge that looks personal, a $418.60 airline ticket (no travel in prior months) and a possible duplicate $1,455.36 payment to Omaha Roasters.'],
+      ['Draft a note to Copper Kettle about the duplicate', 'Hi Maya, we see two payments of $1,455.36 to Omaha Roasters (Oct 24 and Oct 28). Could you upload the invoice or confirm whether one should be refunded? Thanks, Priya']] }
+};
+
+/* ---------- state ---------- */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+const init = () => ({
+  cur: 'np-overview', ed: 'np', modal: null, nav: false, ask: false, chat: [], tour: { on: true, i: 0, min: false },
+  np: {
+    gifts: [
+      { d: 'Nov 14', who: 'Dana Whitfield', fund: 'General operating', m: 'Card · monthly', a: 50, r: 'Sent' },
+      { d: 'Nov 13', who: 'Riverside Rotary Club', fund: 'Meal ingredients (R)', m: 'Check #2208', a: 3000, r: 'Sent' },
+      { d: 'Nov 12', who: 'Marcus & Lena Ortiz', fund: 'Holiday packing (R)', m: 'ACH', a: 250, r: 'Sent' },
+      { d: 'Nov 12', who: 'Anonymous', fund: 'General operating', m: 'Apple Pay', a: 100, r: 'Sent' },
+      { d: 'Nov 10', who: 'Great Plains Community Fund', fund: 'Packing trailer (R)', m: 'Grant · ACH', a: 10000, r: 'Grant ack due' }],
+    added: 0,
+    requests: [
+      { no: 'DR-1042', to: 'Northfield Insurance', for: 'Corporate packing event sponsorship', fund: 'Holiday packing (R)', amt: 6000, due: 'Nov 30', st: 'Sent' },
+      { no: 'DR-1041', to: 'Lincoln Grocers Co-op', for: 'Q4 ingredient pledge', fund: 'Meal ingredients (R)', amt: 4500, due: 'Nov 1', st: 'Overdue' },
+      { no: 'DR-1040', to: 'St. Mark’s Church', for: 'Youth pack night', fund: 'General operating', amt: 3000, due: 'Nov 5', st: 'Overdue' },
+      { no: 'DR-1039', to: 'Hartley Family Foundation', for: '2026 grant, installment 2', fund: 'Meal ingredients (R)', amt: 15000, due: 'Dec 15', st: 'Viewed' },
+      { no: 'DR-1038', to: 'Capitol Credit Union', for: 'Spring gala table sponsor', fund: 'General operating', amt: 2500, due: 'Oct 20', st: 'Paid' },
+      { no: 'DR-1037', to: 'Platte Hardware', for: 'Packing supplies match', fund: 'General operating', amt: 1200, due: 'Oct 15', st: 'Paid' }],
+    tx: [
+      { d: 'Nov 14', desc: 'SYSCO LINCOLN #4471', a: -1842.60, sug: 'Meal ingredients · Program', fund: 'Meal ingredients (R)', c: 97 },
+      { d: 'Nov 13', desc: 'STRIPE PAYOUT', a: 2310.25, sug: 'Gifts clearing · matched 18 gifts', fund: 'Split by gift', c: 99 },
+      { d: 'Nov 13', desc: 'U-HAUL #882 LINCOLN', a: -219.00, sug: 'Event logistics · Program', fund: 'Holiday packing (R)', c: 88 },
+      { d: 'Nov 12', desc: 'LINCOLN ELECTRIC SYSTEM', a: -311.48, sug: 'Utilities · Management', fund: 'Unrestricted', c: 95 },
+      { d: 'Nov 11', desc: 'ULINE *SHIP SUPPLIES', a: -684.20, sug: 'Packing supplies · Program', fund: 'Unrestricted', c: 91 },
+      { d: 'Nov 10', desc: 'GUSTO PAYROLL', a: -8420.17, sug: 'Payroll · split by function', fund: 'Unrestricted', c: 99 }],
+    txMore: 8,
+    q: '', seg: 'All constituents', thread: 0, draft: '', notes: [],
+    threads: [
+      { who: 'Dana Whitfield', ch: 'Email', sub: 'Matching gift form from Northfield', t: '9:12 AM', unread: true, msgs: [{ f: 'Dana Whitfield', b: 'Hi Jordan! Northfield matches employee gifts 1:1. I attached their form; can someone fill in the nonprofit section? Thanks for all you do.' }], ai: 'Hi Dana, thank you! We’ll complete Northfield’s form today and send it back to you. Your match will double this year’s gifts to $1,200. See you on the 21st!' },
+      { who: 'Lincoln Grocers Co-op', ch: 'Email', sub: 'Re: Q4 ingredient pledge', t: '8:40 AM', unread: true, msgs: [{ f: 'Erin Vogel, Lincoln Grocers', b: 'Sorry for the delay on the $4,500. Our board approved it last night. Can you resend the payment link?' }], ai: 'Hi Erin, great news, thank you! Here is the payment link for DR-1041 ($4,500, Q4 ingredient pledge). Card or bank transfer both work, and your receipt is sent automatically.' },
+      { who: '(402) 555-0148', ch: 'Text', sub: 'Is there still room Saturday morning?', t: 'Yesterday', unread: true, msgs: [{ f: '(402) 555-0148', b: 'Hi, is there still room Saturday morning for me and my two kids (12 and 14)?' }], ai: 'Hi! Shift 1 (8–10 AM) is full, but shift 2 (10:30 AM–12:30 PM) has room for all three of you. Sign up here, and since your kids are under 18, a guardian waiver is part of sign-up.' },
+      { who: 'Ben Carter', ch: 'Website chat', sub: 'Can our scout troop host a pack?', t: 'Yesterday', unread: false, msgs: [{ f: 'Ben Carter', b: 'Our troop of 40 would love to host a packing event in the spring. How does that work?' }, { f: 'You', me: true, b: 'We’d love that! Events start at 10,000 meals with about 40 volunteers. I’ll send our host packet.' }], ai: 'Following up with the host packet and three spring dates: March 14, April 11 or April 25.' },
+      { who: 'Hartley Family Foundation', ch: 'Email', sub: 'Grant report due Dec 1', t: 'Nov 13', unread: false, msgs: [{ f: 'Ruth Hartley', b: 'A reminder that the interim report for the 2026 grant is due December 1.' }], ai: 'Thank you, Ruth. Our interim report will reach you by November 26, including meals packed and spending to date from the restricted fund.' }],
+    tasks: [
+      { t: 'Call Riverside Rotary to thank them for $3,000', due: 'Today', who: 'JL', tag: 'Stewardship', done: false },
+      { t: 'Approve Holiday pack shift leaders', due: 'Today', who: 'JL', tag: 'Events', done: false },
+      { t: 'Send Great Plains grant acknowledgment', due: 'Today', who: 'AR', tag: 'Grants', done: false },
+      { t: 'Review October bank reconciliation', due: 'Tomorrow', who: 'AR', tag: 'Finance', done: false },
+      { t: 'Confirm Lancaster Event Center load-in time', due: 'Wed', who: 'KM', tag: 'Events', done: false },
+      { t: 'Draft Giving Tuesday email', due: 'Thu', who: 'KM', tag: 'Marketing', done: true },
+      { t: 'Prepare Hartley interim grant report', due: 'Nov 26', who: 'JL', tag: 'Grants', done: false }],
+    wfOn: true, camp: 0, gtSched: false, waiver: false, po: { rice: false, bags: false }, settab: 'req', portal: { give: true, donor: true, vol: true },
+    leads: [
+      { org: 'Northfield Insurance (team of 60)', who: 'Kara Nguyen', src: 'Host a packing event form', score: 92, why: 'Company of 500+, past sponsor, asked for December dates', conv: false },
+      { org: 'Troop 112, Scouts BSA', who: 'Ben Carter', src: 'Website chat', score: 71, why: '40 volunteers, flexible on dates', conv: false },
+      { org: 'Union College Service Club', who: 'Maya Ortiz', src: 'Host a packing event form', score: 64, why: 'Student group, needs sponsor match', conv: false },
+      { org: 'Bright Path Dental', who: 'Dr. Alan Fisk', src: 'Contact form', score: 58, why: 'Asked about sponsorship levels', conv: false }],
+    give: { amt: 50, monthly: true, fund: 'Where it’s needed most', cover: true, done: false },
+    recur: true, mob: 'signin', mtab: 'home', checkin: [true, true, false, false, false, true, false], scanned: 2
+  },
+  rt: {
+    loc: 'Both locations', cart: [], guest: false, pay: null, next: 2149, cat: 'Coffee', mcat: 'Coffee', off: {},
+    tickets: [
+      { no: 2144, ch: 'Counter', min: 9, items: [['Latte', 'Oat milk, 16 oz'], ['Butter croissant', 'Warmed']] },
+      { no: 2145, ch: 'Online · pickup 9:40', min: 6, items: [['Breakfast burrito', 'No salsa'], ['Cold brew', '']] },
+      { no: 2146, ch: 'Table 7', min: 3, items: [['Avocado toast', 'Add egg'], ['Breakfast burrito', ''], ['Cappuccino', '']] },
+      { no: 2147, ch: 'Counter', min: 1, items: [['Chai latte', 'Extra hot'], ['Kolache', 'Sausage & cheese']] }],
+    bumped: [],
+    online: { cart: [], time: 'ASAP (about 12 min)', done: null },
+    tables: [['T1', 2, 'seated', 2, 'Leah'], ['T2', 2, 'open', 0, 'Leah'], ['T3', 4, 'seated', 3, 'Leah'], ['T4', 4, 'check', 4, 'Leah'], ['T5', 2, 'seated', 2, 'Marco'], ['T6', 4, 'seated', 4, 'Marco'], ['T7', 4, 'seated', 4, 'Marco'], ['T8', 6, 'dirty', 0, 'Marco'], ['T9', 2, 'open', 0, 'Jess'], ['T10', 4, 'seated', 2, 'Jess'], ['T11', 6, 'open', 0, 'Jess'], ['T12', 4, 'open', 0, 'Jess']].map(t => ({ id: t[0], seats: t[1], st: t[2], party: t[3], sv: t[4] })),
+    wait: [{ n: 'Hernandez', p: 4, q: 10, w: 7 }, { n: 'Kim', p: 2, q: 5, w: 3 }, { n: 'Patel', p: 6, q: 20, w: 1 }],
+    sug: null, pt: { split: 'Full check', tip: 20, paid: false },
+    sheetsOk: false, synced: false, sent: false,
+    tx: [
+      { d: 'Nov 15', desc: 'STRIPE PAYOUT · BLACKSTONE', a: 4812.44, sug: 'Card sales clearing · matched 341 sales', c: 99 },
+      { d: 'Nov 14', desc: 'OMAHA ROASTERS INVOICE 8812', a: -1288.00, sug: 'Cost of goods · Coffee beans', c: 97 },
+      { d: 'Nov 14', desc: 'SYSCO OMAHA', a: -946.31, sug: 'Cost of goods · Food', c: 96 },
+      { d: 'Nov 13', desc: 'OPPD ELECTRIC', a: -588.20, sug: 'Utilities · Benson', c: 93 },
+      { d: 'Nov 13', desc: 'GUSTO PAYROLL', a: -11904.66, sug: 'Payroll · split by location', c: 99 }],
+    txMore: 5
+  },
+  cn: {
+    est: [
+      { d: 'Concrete, 4,000 psi', u: 'CY', q: 285, r: 168 }, { d: 'Rebar #4 at 18 in. on center', u: 'ton', q: 9.2, r: 1240 },
+      { d: 'Vapor barrier, 15 mil', u: 'sf', q: 18400, r: 0.32 }, { d: 'Pump truck', u: 'day', q: 3, r: 1650 },
+      { d: 'Place & finish labor', u: 'hr', q: 640, r: 58 }, { d: 'Laser screed & equipment', u: 'ls', q: 1, r: 4200 },
+      { d: 'Saw cutting joints', u: 'lf', q: 2300, r: 0.95 }],
+    oh: 10, pr: 8, bond: 1.2, estSent: false,
+    pay: [{ d: 'Mobilization', sv: 12000, prev: 100, cur: 0 }, { d: 'Footings', sv: 68400, prev: 100, cur: 0 }, { d: 'Foundation walls', sv: 94200, prev: 85, cur: 15 }, { d: 'Slab on grade', sv: 182600, prev: 40, cur: 25 }, { d: 'Sidewalks & curbs', sv: 71300, prev: 0, cur: 10 }, { d: 'Site paving', sv: 58000, prev: 0, cur: 0 }],
+    paySent: false,
+    cos: [
+      { no: 'CO-015', job: 'J-2615 Elkhorn Distribution Center', t: 'Two additional dock apron bays', amt: 41800, days: 4, st: 'Draft' },
+      { no: 'CO-014', job: 'J-2611 Westgate Medical Office', t: 'Thickened slab edges at canopy', amt: 8640, days: 1, st: 'Pending GC' },
+      { no: 'CO-013', job: 'J-2611 Westgate Medical Office', t: 'Exposed aggregate finish at main entry', amt: 5120, days: 0, st: 'Approved' },
+      { no: 'CO-012', job: 'J-2611 Westgate Medical Office', t: 'Delete curb at Area C', amt: -2300, days: 0, st: 'Approved' }],
+    coSel: 1, moved: false,
+    comp: [
+      { k: 'Lien waiver', what: 'Conditional progress waiver · Pay app #6 · Westgate', who: 'Ridgeline → Hawthorne Builders', st: 'Ready', need: false },
+      { k: 'Lien waiver', what: 'Unconditional progress waiver · Pay app #5 · Westgate', who: 'Ridgeline → Hawthorne Builders', st: 'Signed', need: false },
+      { k: 'Lien waiver', what: 'Supplier waiver · Metro Ready Mix · October', who: 'Metro Ready Mix → Ridgeline', st: 'Requested', need: true },
+      { k: 'COI', what: 'General liability · Plains Pumping LLC', who: 'Expires Nov 25, 2026', st: 'Expiring', need: true },
+      { k: 'COI', what: 'Workers’ comp · Ironside Rebar', who: 'Expires Jun 30, 2027', st: 'Current', need: false },
+      { k: 'Certified payroll', what: 'WH-347 · Sarpy County Library · week ending Nov 15', who: '6 workers · 214 hours', st: 'Ready', need: true },
+      { k: 'Certified payroll', what: 'WH-347 · District 27 sidewalks · week ending Nov 15', who: '4 workers · 128 hours', st: 'Submitted', need: false }],
+    field: { done: false, cy: 62, crew: [['Luis Romero', 'Foreman', 9], ['Andre Lewis', 'Finisher', 9], ['Cole Jensen', 'Finisher', 8.5], ['Mateo Diaz', 'Laborer', 8], ['Kyle Brandt', 'Laborer', 8]], photos: 3, safety: true }
+  },
+  ac: {
+    client: 'Copper Kettle Café & Market', closes: {},
+    review: [
+      { c: 'Copper Kettle', d: 'Oct 18', desc: 'Online transfer to savings', a: -2500, flag: 'Needs explanation', sug: 'Transfer · Savings', conf: 62 },
+      { c: 'Copper Kettle', d: 'Oct 21', desc: 'AMAZON MKTPLACE', a: -184.22, flag: 'Uncategorized', sug: 'Supplies · Café', conf: 91 },
+      { c: 'Copper Kettle', d: 'Oct 22', desc: 'COSTCO #1022', a: -612.48, flag: 'Possible personal', sug: 'Owner draw', conf: 44 },
+      { c: 'Copper Kettle', d: 'Oct 28', desc: 'OMAHA ROASTERS', a: -1455.36, flag: 'Possible duplicate', sug: 'Cost of goods · Coffee beans', conf: 86 },
+      { c: 'Copper Kettle', d: 'Oct 27', desc: 'SQUARESPACE', a: -23.00, flag: 'Uncategorized', sug: 'Software · Website', conf: 95 },
+      { c: 'Copper Kettle', d: 'Oct 29', desc: 'DELTA AIR LINES', a: -418.60, flag: 'Unusual for client', sug: 'Travel', conf: 55 },
+      { c: 'Prairie Meals', d: 'Oct 30', desc: 'WALMART SUPERCENTER', a: -96.14, flag: 'Uncategorized', sug: 'Event supplies · Program', conf: 89 }],
+    recon: [
+      { d: 'Oct 2', desc: 'Stripe payout', a: 6240.18, on: true }, { d: 'Oct 3', desc: 'Sysco Omaha', a: -1284.40, on: true },
+      { d: 'Oct 9', desc: 'Stripe payout', a: 7105.92, on: true }, { d: 'Oct 15', desc: 'Gusto payroll', a: -9866.31, on: true },
+      { d: 'Oct 16', desc: 'Stripe payout', a: 6880.44, on: true }, { d: 'Oct 21', desc: 'Rent · Blackstone Properties', a: -4200.00, on: false },
+      { d: 'Oct 23', desc: 'Stripe payout', a: 7412.07, on: false }, { d: 'Oct 28', desc: 'Check #1189 · Omaha Roasters', a: -1455.36, on: false },
+      { d: 'Oct 30', desc: 'OPPD electric', a: -612.20, on: false }, { d: 'Oct 31', desc: 'Deposit · catering check', a: 950.00, on: false }],
+    reconDone: false,
+    reqs: [
+      { c: 'Copper Kettle Café & Market', t: 'Invoice for Omaha Roasters $1,455.36 (Oct 28), possible duplicate', sent: 'Nov 12', st: 'Waiting on client' },
+      { c: 'Prairie Meals Alliance', t: 'Restriction letter for the Great Plains Community Fund grant', sent: 'Nov 10', st: 'Answered' },
+      { c: 'Ridgeline Concrete Co.', t: 'Updated estimates to complete for J-2615 Elkhorn', sent: 'Nov 4', st: 'Overdue' },
+      { c: 'Bluestem Animal Rescue', t: 'Signed 2026 engagement letter', sent: 'Nov 3', st: 'Waiting on client' },
+      { c: 'Harbor & Pine Outfitters', t: 'Q3 Nebraska sales tax return confirmation', sent: 'Oct 29', st: 'Answered' }],
+    taxc: 'Copper Kettle Café & Market (1120-S)', maps: null,
+    jes: [
+      { no: 'AJE-1', d: 'Oct 31', memo: 'October depreciation, espresso machines and buildout', amt: 1233.33, st: 'Posted' },
+      { no: 'AJE-2', d: 'Oct 31', memo: 'Accrue October utilities, Benson', amt: 540.00, st: 'Posted' },
+      { no: 'AJE-3', d: 'Oct 31', memo: 'Reclass owner’s Costco purchase to draws', amt: 612.48, st: 'Draft' }],
+    je: [{ acct: '6300 Depreciation expense', dr: '', cr: '' }, { acct: '1590 Accumulated depreciation', dr: '', cr: '' }], jeMemo: '', locked: false
+  }
+});
+let S = init();
+
+/* ---------- products ---------- */
+const PROD = {
+  Coffee: [['Drip coffee', 3.25], ['Latte', 5.25], ['Cappuccino', 4.95], ['Cold brew', 4.75], ['Chai latte', 5.00], ['Hot chocolate', 4.25]],
+  Bakery: [['Butter croissant', 3.95], ['Blueberry muffin', 3.50], ['Kolache', 4.25], ['Cinnamon roll', 4.50], ['Breakfast burrito', 8.75], ['Avocado toast', 9.50]],
+  Market: [['House blend, 12 oz', 16.00], ['Local honey, 12 oz', 11.00], ['Ceramic mug', 18.00], ['Granola, 1 lb', 9.00]],
+  Merch: [['Kettle tee', 26.00], ['Knit beanie', 22.00], ['Canvas tote', 18.00]]
+};
+const KITCHEN = new Set([...PROD.Coffee, ...PROD.Bakery].map(p => p[0]));
+const TAX = 0.07;
+
+/* ---------- screens ---------- */
+const SC = {};
+const SOON = { 'rt-kds': 'Later', 'rt-floor': 'Later', 'rt-paytable': 'Later' };
+const def = (id, ed, t, r) => { SC[id] = { ed, t, r }; };
+const DATE = 'Monday, November 16, 2026';
+
+/* ===== NONPROFIT ===== */
+def('np-overview', 'np', 'Overview', () => {
+  const n = S.np, open = n.requests.filter(r => r.st !== 'Paid'), over = open.filter(r => r.st === 'Overdue');
+  const ytd = 148320 + n.added;
+  const mo = [14.2, 9.8, 12.5, 18.1, 11.4, 8.9, 10.2, 13.6, 16.8, 22.4, 21.5 + n.added / 1000];
+  const funds = [['Unrestricted, operating', 52410.18], ['Restricted, meal ingredients', 23950], ['Restricted, holiday packing', 9640], ['Board-designated reserve', 15000]];
+  const attn = [[n.tx.length + n.txMore, 'wn', 'Bank transactions to categorize', 'np-finance'], [over.length, 'bd', `Donation requests overdue · ${money(sum(over, 'amt'))}`, 'np-requests'], [18, 'wn', 'Open volunteer spots · Holiday pack, shift 2', 'np-events'], [n.waiver ? 0 : 3, 'wn', 'Minor volunteers missing guardian waiver', 'np-events'], [n.threads.filter(t => t.unread).length, 'ok', 'Unread messages in the shared inbox', 'np-inbox']];
+  return head('Overview', DATE, G('New request', 'np-requests') + B('+ Record gift', 'giftModal', '', 'p')) +
+    kpis(kpi('Gifts received · YTD', money(ytd), '▲ 18% vs. same period 2025', 'up'), kpi('Open donation requests', money(sum(open, 'amt')), `${open.length} open · <span class="bad">${over.length} overdue</span>`), kpi('Cash on hand', m2(78514.58), '3 accounts · synced 9:04 AM'), kpi('Meals packed · YTD', '412,600', '15 packing events · 2,140 volunteers')) +
+    `<div class="g2">${card('Gifts received by month, 2026', vbars(MONTHS.map((m, i) => [m, mo[i]]), v => '$' + v.toFixed(1) + 'K', 10, 'Monthly gifts in thousands of dollars, January to November 2026'), '<span class="sub">all funds, $ thousands · November to date</span>' + X('View report', 'np-board'))}
+    ${card('Needs attention', `<div class="list">${attn.map(a => `<button type="button" class="li" data-go="${a[3]}"><span class="cntb pill ${a[1]}">${a[0]}</span><span class="f">${a[2]}</span>›</button>`).join('')}</div>`)}</div>
+    <div class="g2">${card('Recent gifts', tbl([{ l: 'Date', k: 'd' }, { l: 'Donor', f: g => `<span class="strong">${g.who}</span>` }, { l: 'Fund', k: 'fund' }, { l: 'Method', k: 'm' }, { l: 'Amount', r: 1, f: g => `<span class="num">${m2(g.a)}</span>` }, { l: 'Receipt', f: g => g.r === 'Sent' ? pill('✓ Sent', 'ok') : pill(g.r, 'wn') }], n.gifts.slice(0, 6), { go: g => g.who === 'Dana Whitfield' ? 'np-person' : 'np-crm' }), X('All constituents', 'np-crm'))}
+    <div class="col">${card('Fund balances', funds.map(f => `<div><div class="row" style="font-size:13px;justify-content:space-between"><span>${f[0]}</span><span class="num">${m2(f[1])}</span></div>${meter(f[1] / 52410.18 * 100)}</div>`).join(''))}
+    ${card('Upcoming packing events', `<div class="list"><button type="button" class="li" data-go="np-events"><span class="cntb pill wn">NOV 21</span><span class="f"><b>Holiday Meal Packing</b><small>156 of 180 volunteers · goal 30,000 meals</small></span></button><button type="button" class="li" data-go="np-events"><span class="cntb pill">DEC 3</span><span class="f"><b>Corporate pack · Northfield Insurance</b><small>60 of 60 · sponsor request sent</small></span></button></div>`)}</div></div>`;
+});
+
+def('np-requests', 'np', 'Donations & requests', () => {
+  const r = S.np.requests, open = r.filter(x => x.st !== 'Paid');
+  return head('Donation requests', 'Pledges, sponsorships and grant installments, paid online by card or bank', B('+ New request', 'reqModal', '', 'p')) +
+    kpis(kpi('Open', money(sum(open, 'amt')), `${open.length} requests`), kpi('Overdue', money(sum(r.filter(x => x.st === 'Overdue'), 'amt')), `${r.filter(x => x.st === 'Overdue').length} requests`, 'bad'), kpi('Paid last 30 days', money(sum(r.filter(x => x.st === 'Paid'), 'amt')), `${r.filter(x => x.st === 'Paid').length} requests`), kpi('Average days to pay', '9', 'down from 23 with paper invoices')) +
+    `<div class="g2">${card('All requests', tbl([{ l: 'Number', f: x => `<span class="mono">${x.no}</span>` }, { l: 'Donor', f: x => `<b>${x.to}</b><br><span class="sub">${x.for}</span>` }, { l: 'Fund', k: 'fund' }, { l: 'Due', k: 'due' }, { l: 'Amount', r: 1, f: x => `<span class="num">${m2(x.amt)}</span>` }, { l: 'Status', f: x => statusPill(x.st) }, { l: '', f: (x, i) => x.st === 'Paid' ? `<button class="btn s" data-act="toastMsg" data-arg="Receipt for ${x.no} re-sent to ${x.to}">Receipt</button>` : `<span class="row" style="justify-content:flex-end;gap:6px">${B('Remind', 'remind', i, 's')}${B('Mark paid', 'reqPaid', i, 's p')}</span>` }], r))}
+    ${card('How a request works', `<div class="tl">${[['doc', 'Create from a template', 'Pick the donor, amount and fund. The organization’s logo and wording come from Templates & branding.'], ['send', 'Donor pays online', 'Email with a secure link. Card, Apple Pay or bank transfer through Stripe; reminders go out on their own.'], ['bank', 'Books and receipt update', 'The payment posts to the right fund, the request closes and the IRS-compliant receipt is sent.']].map(s => `<div class="tli"><span class="dot">${ico(s[0], 16)}</span><div><b>${s[1]}</b><small>${s[2]}</small></div></div>`).join('')}</div>` + `<button class="btn" data-go="np-settings">Edit the template</button>`)}</div>`;
+});
+
+const FIN = {
+  np: { acc: [['Pinnacle Bank · Operating', 61204.33], ['Pinnacle Bank · Savings reserve', 15000.00], ['Stripe balance', 2310.25]], stmtT: 'Statement of activities · year to date',
+    stmt: [['Contributions', 118420], ['Grants', 41000], ['Event sponsorships', 22900], ['In-kind food donations', 14300], ['Program services', -142880], ['Management & general', -18640], ['Fundraising', -8220]], net: 'Change in net assets' },
+  rt: { acc: [['First National · Operating', 48212.66], ['First National · Payroll', 12840.00], ['Stripe balance (pending payouts)', 3104.92]], stmtT: 'Profit & loss · October 2026',
+    stmt: [['Café sales', 61248], ['Market & merch sales', 8824], ['Cost of goods sold', -24123], ['Wages & payroll taxes', -20806], ['Rent', -8400], ['Card processing', -1987], ['Utilities & other', -4318]], net: 'Net income' }
+};
+const fin = k => {
+  const f = S[k], D = FIN[k], net = sum(D.stmt, s => s[1]);
+  return head(k === 'np' ? 'Finance' : 'Books & bank', 'General ledger with bank feeds; replaces QuickBooks', B('Accept all suggestions', 'txAll', k, 'p', !f.tx.length)) +
+    kpis(...D.acc.map(a => kpi(a[0], m2(a[1]), 'synced 9:04 AM')), kpi('To categorize', String(f.tx.length + f.txMore), f.tx.length ? 'with AI suggestions' : 'all caught up', f.tx.length ? '' : 'good')) +
+    `<div class="g2">${card('Bank feed · to categorize', f.tx.length ? tbl([{ l: 'Date', k: 'd' }, { l: 'Description', f: t => `<b>${t.desc}</b>` }, { l: 'Suggested', f: t => `${t.sug}${t.fund ? `<br><span class="sub">${t.fund}</span>` : ''}<br><span class="ai">${ico('spark', 13)} ${t.c}% sure</span>` }, { l: 'Amount', r: 1, f: t => `<span class="num ${t.a > 0 ? 'good' : ''}">${m2(t.a)}</span>` }, { l: '', r: 1, f: (t, i) => B('Accept', 'txOk', k + ':' + i, 's') }], f.tx) + (f.txMore ? `<p class="sub" style="margin:0">+ ${f.txMore} more from earlier this month</p>` : '') : `<div class="empty">${ico('ok', 28)}<br><b>All caught up.</b> Every transaction is categorized and in the books.</div>`)}
+    ${card(D.stmtT, `<div class="tw"><table class="t"><tbody>${D.stmt.map(s => `<tr><td>${s[0]}</td><td class="r num">${money(s[1])}</td></tr>`).join('')}</tbody><tfoot><tr><td>${D.net}</td><td class="r num">${money(net)}</td></tr></tfoot></table></div>`, k === 'np' ? X('Board view', 'np-board') : '')}</div>`;
+};
+def('np-finance', 'np', 'Finance', () => fin('np'));
+
+def('np-board', 'np', 'Board dashboard', () => {
+  const rows = [['Contributions & grants', 112200, 47220], ['Event sponsorships', 22900, 0], ['In-kind food', 14300, 0], ['Net assets released', 38600, -38600], ['Program services', -142880, 0], ['Management & general', -18640, 0], ['Fundraising', -8220, 0]];
+  const tU = sum(rows, r => r[1]), tR = sum(rows, r => r[2]);
+  return head('Board dashboard', 'Prepared for the November 18 board meeting', B('Generate board packet', 'toastMsg', 'Board packet generated: dashboard, statements and minutes draft (demo)', 'p')) +
+    kpis(kpi('Months of operating reserve', '4.2', 'policy minimum is 3.0', 'up'), kpi('Program expense ratio', '84%', 'of total expenses YTD'), kpi('Donor retention', '61%', 'national average about 43%'), kpi('Meals packed · YTD', '412,600', '92% of 450,000 goal')) +
+    `<div class="g2">${card('Statement of activities by restriction · YTD', tbl([{ l: 'Line', k: 0 }, { l: 'Without restrictions', r: 1, f: r => `<span class="num">${money(r[1])}</span>` }, { l: 'With restrictions', r: 1, f: r => `<span class="num">${money(r[2])}</span>` }, { l: 'Total', r: 1, f: r => `<span class="num">${money(r[1] + r[2])}</span>` }], rows, { foot: ['Change in net assets', money(tU), money(tR), money(tU + tR)] }))}
+    ${card('Budget vs. actual · YTD', hbars([['Contributions', 0.94], ['Grants', 1.08], ['Events', 0.81], ['Program costs', 0.88], ['Admin costs', 0.79], ['Fundraising', 0.71]].map(r => [r[0], r[1] * 100, r[1] > 1 ? '#2F8A5B' : '']), v => v.toFixed(0) + '%', 110) + '<p class="sub" style="margin:0">Percent of year-to-date budget</p>')}</div>
+    ${card('Meals packed by quarter', vbars([['Q1 25', 88], ['Q2 25', 74], ['Q3 25', 96], ['Q4 25', 131], ['Q1 26', 102], ['Q2 26', 91], ['Q3 26', 118], ['Q4 26*', 101.6]], v => v.toFixed(1) + 'K', 7, 'Meals packed by quarter in thousands'), '<span class="sub">thousands · *Q4 to date</span>')}`;
+});
+
+const PEOPLE = [
+  ['Dana Whitfield', 'Individual', 4860, 'Nov 14', 82, 'Monthly donor, Volunteer'], ['Riverside Rotary Club', 'Organization', 12500, 'Nov 13', 77, 'Corporate partner'], ['Marcus & Lena Ortiz', 'Household', 2150, 'Nov 12', 69, 'Volunteer'],
+  ['Great Plains Community Fund', 'Foundation', 35000, 'Nov 10', 74, 'Grantor'], ['Hartley Family Foundation', 'Foundation', 60000, 'Aug 2', 88, 'Grantor, Major donor'], ['Northfield Insurance', 'Organization', 18000, 'Mar 30', 71, 'Corporate partner'],
+  ['Kevin Brandt', 'Individual', 340, 'Jun 8, 2025', 21, 'Lapsed'], ['Sofia Ramirez', 'Individual', 1200, 'Oct 30', 64, 'Monthly donor'], ['St. Mark’s Church', 'Organization', 7400, 'Apr 19', 58, 'Faith partner'], ['Ben Carter', 'Individual', 0, '—', 44, 'Volunteer, Lead']];
+def('np-crm', 'np', 'CRM', () => {
+  const n = S.np, q = n.q.toLowerCase();
+  const segs = [['All constituents', 2418], ['Monthly donors', 186], ['Major donors', 48], ['Volunteers', 1127], ['Corporate partners', 36], ['Grantors', 22], ['Lapsed', 342]];
+  const tagMap = { 'Monthly donors': 'Monthly', 'Major donors': 'Major', Volunteers: 'Volunteer', 'Corporate partners': 'Corporate', Grantors: 'Grantor', Lapsed: 'Lapsed' };
+  const rows = PEOPLE.filter(p => (n.seg === 'All constituents' || p[5].includes(tagMap[n.seg])) && (!q || (p[0] + p[5]).toLowerCase().includes(q)));
+  return head('CRM', '2,418 constituents · donors, volunteers, companies and foundations', B('Import contacts', 'toastMsg', 'Import from CSV, Zoho, Bloomerang or Little Green Light (demo)') + B('+ Add contact', 'toastMsg', 'New contact form (demo)', 'p')) +
+    `<div class="g12">${card('Segments', `<div class="list">${segs.map(s => `<button type="button" class="li" data-act="seg" data-arg="${s[0]}" ${n.seg === s[0] ? 'style="font-weight:800;color:var(--ry)"' : ''}><span class="f">${s[0]}</span><span class="num sub">${s[1].toLocaleString()}</span></button>`).join('')}</div><button class="btn" data-act="toastMsg" data-arg="Segment builder: combine giving, events, tags and engagement (demo)">+ New segment</button>`)}
+    ${card(n.seg, `<label class="srch" style="display:flex;max-width:none"><span style="position:absolute;left:-9999px">Search constituents</span>${ico('search', 16)}<input id="crmq" placeholder="Search by name or tag" value="${n.q}" data-in="crmQ"></label>` + tbl([{ l: 'Name', f: p => `<b>${p[0]}</b>` }, { l: 'Type', k: 1 }, { l: 'Lifetime giving', r: 1, f: p => `<span class="num">${money(p[2])}</span>` }, { l: 'Last gift', k: 3 }, { l: 'Engagement', f: p => `<div class="row" style="gap:8px;flex-wrap:nowrap"><span class="num" style="width:22px">${p[4]}</span><div style="width:70px">${meter(p[4], p[4] < 40 ? 'b' : p[4] < 60 ? 'w' : '')}</div></div>` }, { l: 'Tags', f: p => p[5].split(', ').map(t => pill(t)).join(' ') }], rows, { go: p => p[0] === 'Dana Whitfield' ? 'np-person' : 'np-person', empty: 'No one matches that search' }), '<span class="sub">Click a row to open the profile</span>')}</div>`;
+});
+
+def('np-person', 'np', 'Constituent profile', () => {
+  const tl = [...S.np.notes.map(x => ['doc', 'Note · ' + x, 'Just now · Jordan Lee']), ['heart', 'Gift · $50.00 to General operating', 'Nov 14 · monthly card gift · receipt sent'], ['inbox', 'Email · Matching gift form from Northfield', 'Nov 16 · in the shared inbox'], ['cal', 'Signed up · Holiday Meal Packing, shift 1', 'Nov 9 · with Chris Whitfield'], ['mega', 'Opened · November newsletter', 'Nov 5 · clicked “Host a packing event”'], ['user', 'Volunteered · Youth pack night, 3 hours', 'Nov 7 · checked in by Kim M.'], ['bank', 'Year-end statement 2025 sent', 'Jan 14']];
+  return head('Dana Whitfield', 'Constituent profile · Individual · Lincoln, NE', B('Log note', 'noteModal') + B('Send email', 'toastMsg', 'Email composer opens with Dana’s history alongside (demo)') + B('+ Record gift', 'giftModal', 'Dana Whitfield', 'p')) +
+    kpis(kpi('Lifetime giving', '$4,860', 'since March 2021'), kpi('This year', '$600', '12 monthly gifts'), kpi('Volunteer hours', '46', '11 events'), kpi('Engagement score', '82', 'top 10% of supporters', 'up')) +
+    `<div class="g2">${card('Activity', `<div class="tl">${tl.map(t => `<div class="tli"><span class="dot">${ico(t[0], 16)}</span><div><b>${t[1]}</b><small>${t[2]}</small></div></div>`).join('')}</div>`)}
+    <div class="col">${card('Details', `<div class="list" style="font-size:14px">${[['Email', 'dana.whitfield@example.com'], ['Phone', '(402) 555-0193'], ['Household', 'Chris Whitfield (spouse)'], ['Employer', 'Northfield Insurance · matches 1:1'], ['Prefers', 'Email, no phone calls'], ['Recurring', '$50 monthly · card']].map(d => `<div class="li" style="cursor:default"><span class="sub" style="width:92px">${d[0]}</span><span class="f">${d[1]}</span></div>`).join('')}</div>`)}
+    ${card('Suggested next step', `<p style="margin:0;font-size:14px"><span class="ai">${ico('spark', 13)} AUCTIX suggests</span><br>Submit Northfield’s matching gift form: it would add $600 this year. Dana has volunteered 11 times; invite her to lead a shift.</p>${B('Create task', 'toastMsg', 'Task created for Jordan: submit Northfield matching gift form')}`)}</div></div>`;
+});
+
+def('np-inbox', 'np', 'Inbox', () => {
+  const n = S.np, th = n.threads[n.thread];
+  return head('Inbox', 'One shared inbox for email, texts and website chat, linked to each person', B('Compose', 'toastMsg', 'New message: email, text or both (demo)', 'p')) +
+    `<div class="g12" style="grid-template-columns:minmax(0,1fr) minmax(0,1.8fr)">${card('Conversations', `<div class="list">${n.threads.map((t, i) => `<button type="button" class="li" data-act="thread" data-arg="${i}" style="${i === n.thread ? 'background:var(--sf2);' : ''}padding-left:8px"><span class="av" style="background:${t.unread ? '#0D459F' : '#8A93AE'}">${t.who.replace(/[^A-Z0-9(]/g, '').slice(0, 2)}</span><span class="f"><b style="${t.unread ? '' : 'font-weight:600'}">${t.who}</b><small>${t.ch} · ${t.sub}</small></span><span class="sub" style="white-space:nowrap">${t.t}</span></button>`).join('')}</div>`)}
+    ${card(th.sub, `<p class="sub" style="margin:0">${th.who} · ${th.ch}</p><div class="col" style="gap:10px">${th.msgs.map(m => `<div class="bub ${m.me ? 'me' : ''}"><b style="font-size:12px">${m.f}</b><br>${m.b}</div>`).join('')}</div>
+      <div class="note"><span class="ai">${ico('spark', 13)} Suggested reply</span><br>${th.ai}<div style="margin-top:8px">${B('Use this draft', 'useDraft', '', 's')}</div></div>
+      <label class="fld">Reply<textarea class="inp" id="reply" data-in="draft" placeholder="Write a reply…">${n.draft}</textarea></label><div class="acts">${B('Send reply', 'sendReply', '', 'p')}</div>`)}</div>`;
+});
+
+def('np-tasks', 'np', 'Tasks & calendar', () => {
+  const n = S.np, days = ['Mon 16', 'Tue 17', 'Wed 18', 'Thu 19', 'Fri 20', 'Sat 21', 'Sun 22'];
+  const cal = { 'Mon 16': [['Staff stand-up 9:00', '']], 'Tue 17': [['Sysco delivery 10:00', 'w']], 'Wed 18': [['Board meeting 6:00 PM', 'b']], 'Thu 19': [['Northfield call 2:00', '']], 'Fri 20': [['Load trailer 3:00', 'w']], 'Sat 21': [['Holiday Meal Packing', 'g'], ['Shifts 8 AM–3 PM', 'g']], 'Sun 22': [] };
+  const groups = ['Today', 'Tomorrow', 'Later'];
+  const grp = t => t.due === 'Today' ? 'Today' : t.due === 'Tomorrow' ? 'Tomorrow' : 'Later';
+  return head('Tasks & calendar', `${n.tasks.filter(t => !t.done).length} open · assigned across 3 staff`, B('+ New task', 'toastMsg', 'New task with due date, owner and linked record (demo)', 'p')) +
+    `<div class="g2"><div class="col">${groups.map(g => card(g, `<div class="list">${n.tasks.map((t, i) => [t, i]).filter(([t]) => grp(t) === g).map(([t, i]) => `<div class="li" style="cursor:default">${cb(t.done, 'task', i, t.t)}<span class="f" style="${t.done ? 'text-decoration:line-through;color:var(--mu)' : ''}">${t.t}<small>${t.due} · ${t.tag}</small></span><span class="av" style="width:28px;height:28px;font-size:11px">${t.who}</span></div>`).join('') || '<div class="empty">Nothing due</div>'}</div>`)).join('')}</div>
+    <div class="col">${card('This week', `<div class="list">${days.map(d => `<div class="li" style="cursor:default;align-items:flex-start"><b style="width:56px;font-size:13px">${d}</b><span class="f">${(cal[d] || []).map(c => `<span class="sh ${c[1]}">${c[0]}</span>`).join('') || '<span class="sub">Free</span>'}</span></div>`).join('')}</div>`)}
+    ${card('Ask AUCTIX to plan', `<p style="margin:0;font-size:14px">“Create the to-dos for the Holiday Meal Packing event.”</p>${B(ico('spark', 15) + ' Create event tasks', 'aiTasks', '', 'p', n.tasks.length > 7)}<p class="sub" style="margin:0">Adds load-in, volunteer reminder and thank-you tasks with owners and dates.</p>`)}</div></div>`;
+});
+
+def('np-workflows', 'np', 'Workflows', () => {
+  const on = S.np.wfOn;
+  const node = (ic, t, s, cls = '') => `<div class="node ${cls}"><span class="dot">${ico(ic, 16)}</span><div><b>${t}</b><small>${s}</small></div></div>`;
+  return head('Workflows', 'Automations that run on their own: no Zapier needed', B('Test run', 'toastMsg', 'Test run with a sample donor: 5 steps passed, nothing was sent') + B('+ New workflow', 'toastMsg', 'Start from a template or a blank trigger (demo)', 'p')) +
+    `<div class="g12">${card('Workflows', `<div class="list">${[['First-time donor welcome', '214 runs', on], ['Lapsed donor win-back', '88 runs', true], ['Volunteer shift reminder', '1,902 runs', true], ['Grant report reminders', '12 runs', true], ['Minor waiver follow-up', '41 runs', false]].map((w, i) => `<div class="li" style="cursor:default"><span class="f"><b>${w[0]}</b><small>${w[1]} this year</small></span>${i === 0 ? tog(on, 'wf', '', 'Turn workflow on or off') : pill(w[2] ? 'On' : 'Off', w[2] ? 'gn' : '')}</div>`).join('')}</div>`)}
+    ${card('First-time donor welcome', `<div class="row">${pill(on ? 'On' : 'Off', on ? 'gn' : '')}<span class="sub">Last run today 9:14 AM · 214 donors welcomed this year</span></div><div class="flow">${node('heart', 'When a gift is received', 'and it is the donor’s first gift', 'tr')}<div class="conn"></div>${node('clock', 'Wait 1 day', 'so the receipt arrives first')}<div class="conn"></div>${node('send', 'Send “Welcome to the table” email', 'from Jordan Lee · personalized')}<div class="conn"></div>${node('funnel', 'Is the gift $250 or more?', 'branch')}
+      <div class="branch"><div><span class="lbl">Yes</span>${node('phone', 'Create call task for Jordan', 'due in 3 days')}<div class="conn"></div>${node('people', 'Add to “Major prospects”', 'segment')}</div><div><span class="lbl">No</span>${node('mega', 'Add to newsletter list', 'monthly')}<div class="conn"></div>${node('cal', 'Invite to next packing event', 'after 14 days')}</div></div></div>`)}</div>`;
+});
+
+def('np-marketing', 'np', 'Marketing', () => {
+  const n = S.np;
+  const camps = [['Giving Tuesday 2026', 'Email + text', n.gtSched ? 'Scheduled' : 'Draft', 'Dec 1', '—', '—', '—'], ['November newsletter', 'Email', 'Sent', 'Nov 5', '48%', '6.1%', '$1,840'], ['Volunteer recruitment · Holiday pack', 'Text', 'Sent', 'Nov 2', '—', '22%', '64 sign-ups'], ['Lapsed donor win-back', 'Email sequence', 'Active', 'Ongoing', '41%', '4.4%', '$2,310']];
+  return head('Marketing', 'Email and text campaigns to the segments in your CRM', B('+ New campaign', 'toastMsg', 'Campaign builder: audience, message, schedule (demo)', 'p')) +
+    kpis(kpi('Email list', '2,104', '1,230 opted in to texts'), kpi('Average open rate', '47%', 'last 6 campaigns'), kpi('Raised from email · YTD', '$18,420', 'tracked to the gift'), kpi('Unsubscribe rate', '0.2%', 'healthy')) +
+    `<div class="g2">${card('Campaigns', tbl([{ l: 'Campaign', f: c => `<b>${c[0]}</b><br><span class="sub">${c[1]}</span>` }, { l: 'Status', f: c => statusPill(c[2]) }, { l: 'Date', k: 3 }, { l: 'Opens', r: 1, k: 4 }, { l: 'Clicks', r: 1, k: 5 }, { l: 'Result', r: 1, k: 6 }], camps, { act: 'camp' }), '<span class="sub">Click a campaign to preview</span>')}
+    ${card('Preview · ' + camps[n.camp][0], `<div class="doc" style="padding:0;overflow:hidden"><div style="background:#B4462B;color:#fff;padding:18px 20px"><b style="font-size:18px">Prairie Meals Alliance</b></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><b style="font-size:18px">${n.camp === 0 ? 'Double your impact this Giving Tuesday' : n.camp === 2 ? 'Join us Saturday, Nov 21' : 'This month around the table'}</b><span>Hi Dana, ${n.camp === 0 ? 'a local family foundation will match every gift up to $10,000 on December 1. Every $1 packs about four meals.' : 'here’s what your support made possible: 32,400 meals packed in October and two new school partners.'}</span><span style="display:inline-block;background:#B4462B;color:#fff;border-radius:8px;padding:10px 16px;font-weight:800;width:max-content">${n.camp === 2 ? 'Pick a shift' : 'Give now'}</span></div></div>` + (n.camp === 0 ? B(n.gtSched ? 'Scheduled for Dec 1, 7:00 AM' : 'Schedule for Dec 1', 'gt', '', 'p', n.gtSched) : ''))}</div>`;
+});
+
+def('np-leads', 'np', 'Forms & leads', () => {
+  const n = S.np;
+  return head('Forms & leads', 'Website forms feed the CRM and score each lead', B('+ New form', 'toastMsg', 'Form builder: fields, routing and thank-you page (demo)', 'p')) +
+    `<section class="g3">${[['Volunteer sign-up', 312, '41% to shift'], ['Host a packing event', 9, '3 converted'], ['Newsletter', 88, '12% gave later'], ['Contact us', 27, 'avg reply 2 hr']].slice(0, 3).map(f => card(f[0], `<span class="kv">${f[1]}</span><span class="sub">submissions this month · ${f[2]}</span>`)).join('')}</section>` +
+    `<div class="g2">${card('New leads · packing event hosts', tbl([{ l: 'Organization', f: l => `<b>${l.org}</b><br><span class="sub">${l.who} · ${l.src}</span>` }, { l: 'Score', f: l => `<div class="row" style="gap:8px;flex-wrap:nowrap"><b class="num">${l.score}</b><div style="width:60px">${meter(l.score, l.score < 60 ? 'w' : '')}</div></div>` }, { l: 'Why', f: l => `<span class="sub">${l.why}</span>` }, { l: '', r: 1, f: (l, i) => l.conv ? pill('Opportunity', 'gn') : B('Convert', 'conv', i, 's p') }], n.leads))}
+    ${card('Scoring rules', `<div class="list">${[['+30', 'Company with 100+ employees'], ['+25', 'Past sponsor or donor'], ['+15', 'Asked for specific dates'], ['+10', 'Opened 3+ emails'], ['−10', 'Student group without sponsor']].map(r => `<div class="li" style="cursor:default"><b class="num" style="width:40px">${r[0]}</b><span class="f">${r[1]}</span></div>`).join('')}</div>`)}</div>`;
+});
+
+def('np-events', 'np', 'Events & volunteers', () => {
+  const n = S.np;
+  const shifts = [['Shift 1 · 8:00–10:00 AM', 60, 60], ['Shift 2 · 10:30 AM–12:30 PM', 42, 60], ['Shift 3 · 1:00–3:00 PM', 54, 60]];
+  const vol = [['Dana & Chris Whitfield', 'Shift 1', 'Signed', 'Adult'], ['Ortiz family (4)', 'Shift 1', 'Signed', '2 minors'], ['Riverside Rotary (12)', 'Shift 2', 'Signed', 'Adult'], ['Jamie Fox', 'Shift 2', n.waiver ? 'Requested' : 'Missing', 'Minor, 15'], ['Lincoln East Key Club (18)', 'Shift 3', n.waiver ? 'Requested' : 'Missing', '2 minors'], ['Sofia Ramirez', 'Shift 3', 'Signed', 'Adult']];
+  const mats = [['Long-grain rice', '1,950 lb', '1,420 lb', !n.po.rice], ['Soy protein', '690 lb', '1,150 lb', false], ['Dehydrated vegetables', '600 lb', '980 lb', false], ['Vitamin packets', '5,000', '31,500', false], ['Meal bags', '5,000', '4,600', !n.po.bags]];
+  return head('Holiday Meal Packing', 'Saturday, November 21 · Lancaster Event Center · goal 30,000 meals', B('Copy sign-up link', 'toastMsg', 'Sign-up link copied: prairiemeals.org/volunteer/holiday') + B('Check-in mode', 'goMobile', 'checkin', 'p')) +
+    kpis(kpi('Volunteers', '156 / 180', '87% filled', 'up'), kpi('Meals goal', '30,000', '5,000 bags · 139 boxes'), kpi('Sponsorships', '$9,500', 'Northfield, Rotary, Capitol CU'), kpi('Waivers missing', n.waiver ? '0 open' : '3', n.waiver ? 'reminders sent today' : 'all are minors', n.waiver ? 'good' : 'bad')) +
+    `<div class="g2"><div class="col">${card('Shifts', `<div class="col" style="gap:12px">${shifts.map(s => `<div><div class="row" style="justify-content:space-between;font-size:14px"><b>${s[0]}</b><span class="num">${s[1]} / ${s[2]}</span></div>${meter(s[1] / s[2] * 100, s[1] < s[2] * .8 ? 'w' : '')}</div>`).join('')}</div>`)}
+    ${card('Volunteers', tbl([{ l: 'Name', f: v => `<b>${v[0]}</b>` }, { l: 'Shift', k: 1 }, { l: 'Age', k: 3 }, { l: 'Waiver', f: v => statusPill(v[2]) }], vol), B(n.waiver ? 'Reminders sent' : 'Send waiver reminders', 'waiver', '', 's', n.waiver))}</div>
+    ${card('Materials for 30,000 meals', tbl([{ l: 'Item', f: m => `<b>${m[0]}</b>` }, { l: 'Needed', r: 1, k: 1 }, { l: 'On hand', r: 1, k: 2 }, { l: '', r: 1, f: m => m[3] ? pill('Short', 'bd') : pill('OK', 'gn') }], mats), X('Open inventory', 'np-inventory'))}</div>`;
+});
+
+def('np-inventory', 'np', 'Inventory', () => {
+  const p = S.np.po;
+  const items = [['Long-grain rice', 'lb', 1420, 1950, p.rice ? 'On order' : 'Short', 'rice'], ['Soy protein', 'lb', 1150, 690, 'OK'], ['Dehydrated vegetables', 'lb', 980, 600, 'OK'], ['Vitamin packets', 'each', 31500, 5000, 'OK'], ['Meal bags', 'each', 4600, 5000, p.bags ? 'On order' : 'Short', 'bags'], ['Shipping boxes', 'each', 900, 139, 'OK']];
+  return head('Inventory', 'Ingredients, packaging and finished meals, by lot', B('Receive delivery', 'goMobile', 'scan') + B('+ Production run', 'toastMsg', 'Production run: components in, finished meals out, lot assigned (demo)', 'p')) +
+    kpis(kpi('Items tracked', '38', '6 ingredients · 9 packaging'), kpi('Inventory value', '$41,280', 'at average cost'), kpi('Short for next run', String(items.filter(i => i[4] === 'Short').length), items.some(i => i[4] === 'Short') ? 'order this week' : 'covered', items.some(i => i[4] === 'Short') ? 'bad' : 'good'), kpi('Next production', 'Nov 21', '30,000 meals planned')) +
+    `<div class="g2">${card('Stock vs. next production run', tbl([{ l: 'Item', f: i => `<b>${i[0]}</b>` }, { l: 'On hand', r: 1, f: i => `<span class="num">${i[2].toLocaleString()} ${i[1]}</span>` }, { l: 'Needed Nov 21', r: 1, f: i => `<span class="num">${i[3].toLocaleString()} ${i[1]}</span>` }, { l: 'Status', f: i => statusPill(i[4]) }, { l: '', r: 1, f: i => i[4] === 'Short' ? B('Order', 'po', i[5], 's p') : '' }], items))}
+    <div class="col">${card('Recipe · meal bag (6 servings)', `<div class="list">${[['Rice', '0.39 lb'], ['Soy protein', '0.14 lb'], ['Vegetables', '0.12 lb'], ['Vitamin packet', '1'], ['Meal bag', '1']].map(r => `<div class="li" style="cursor:default"><span class="f">${r[0]}</span><span class="num">${r[1]}</span></div>`).join('')}</div><p class="sub" style="margin:0">36 bags per box · lot assigned at each run</p>`)}
+    ${card('Recent production', `<div class="list"><button type="button" class="li" data-go="np-lots"><span class="f"><b>Youth pack night · Nov 7</b><small>12,960 meals · 60 boxes · lot L-261107-A</small></span>›</button><div class="li" style="cursor:default"><span class="f"><b>Capitol CU staff pack · Oct 24</b><small>10,080 meals · 47 boxes · lot L-261024-A</small></span></div></div>`)}</div></div>`;
+});
+
+def('np-lots', 'np', 'Lot traceability', () => {
+  const box = (t, rows) => `<div class="card" style="padding:14px;gap:8px"><b style="font-size:14px">${t}</b>${rows.map(r => `<div style="font-size:13px"><b class="mono">${r[0]}</b><br><span class="sub">${r[1]}</span></div>`).join('')}</div>`;
+  return head('Lot L-261107-A', 'Youth pack night · November 7, 2026 · 12,960 meals', B('Start recall notice', 'recall') + B('Print lot labels', 'toastMsg', 'Lot labels sent to the warehouse printer (demo)', 'p')) +
+    `<label class="srch" style="display:flex;max-width:520px">${ico('search', 16)}<input id="lotq" value="L-261107-A" aria-label="Search lots" readonly></label>` +
+    card('Trace: ingredients in, meals out', `<div class="trace">${box('Ingredient lots in', [['R-2611 · rice', 'Sysco Lincoln · received Oct 30 · 842 lb used'], ['SP-0918 · soy protein', 'Midwest Protein Co. · 302 lb used'], ['DV-1022 · vegetables', 'Plains Produce · 259 lb used'], ['VP-77 · vitamin packets', 'Nutrient Supply · 2,160 used']])}<div class="arrow" aria-hidden="true">→</div>${box('Production run', [['PR-0142', 'Nov 7 · St. Mark’s Church hall · 94 volunteers'], ['2,160 bags · 60 boxes', 'Quality check passed · Kim M.']])}<div class="arrow" aria-hidden="true">→</div>${box('Shipped to', [['Food Bank of the Heartland region', '34 boxes · Nov 10'], ['Lincoln school backpack program', '18 boxes · Nov 12'], ['On hand · warehouse B2', '8 boxes']])}</div>`) +
+    `<div class="note">If a supplier recalls an ingredient lot, AUCTIX lists every box that contains it and every partner it went to, and drafts the notices.</div>`;
+});
+
+def('np-settings', 'np', 'Templates & branding', () => {
+  const n = S.np, t = n.settab;
+  const tabs = [['req', 'Donation request'], ['rec', 'Receipts'], ['brand', 'Brand kit & portals']];
+  const vars = ['{{donor.first_name}}', '{{gift.amount}}', '{{gift.date}}', '{{fund.name}}', '{{org.ein}}'].map(v => `<span class="pill mono">${v}</span>`).join(' ');
+  let body;
+  if (t === 'req') body = `<div class="g11"><div class="doc"><div class="row" style="justify-content:space-between"><b style="font-size:18px;color:#B4462B">Prairie Meals Alliance</b><span class="mono" style="font-size:12px">DR-1042</span></div><span style="font-size:12px;color:#6B635C">2100 O Street, Lincoln, NE 68508 · EIN 12-3456789 (sample)</span><b>Donation request for Northfield Insurance</b><table style="width:100%;font-size:13px;border-collapse:collapse"><tr><td style="padding:6px 0;border-bottom:1px solid #eee">Corporate packing event sponsorship · Dec 3</td><td style="text-align:right">$6,000.00</td></tr><tr><td style="padding:6px 0"><b>Total due by Nov 30</b></td><td style="text-align:right"><b>$6,000.00</b></td></tr></table><span style="background:#B4462B;color:#fff;border-radius:8px;padding:10px 14px;font-weight:800;width:max-content">Pay online</span><span style="font-size:12px;color:#6B635C">Your sponsorship provides 24,000 meals. A receipt follows payment.</span></div>
+    <div class="col">${field('Template name', inp('tn', 'Corporate sponsorship'))}${field('Message', '<textarea class="inp" id="tm">Thank you for partnering with us. Your sponsorship provides {{meals}} meals.</textarea>')}<div class="fld">Fields you can use<div>${vars}</div></div>${B('Save template', 'toastMsg', 'Template saved', 'p')}</div></div>`;
+  else if (t === 'rec') body = `<div class="g11"><div class="doc"><b style="font-size:18px;color:#B4462B">Prairie Meals Alliance</b><b>Thank you, Marcus and Lena</b><span>Thank you for your gift of <b>$250.00</b> on November 12, 2026 to the Holiday packing fund. It will help pack about 1,000 meals for families in our area.</span><span style="font-size:13px">No goods or services were provided in exchange for this contribution. Prairie Meals Alliance is a 501(c)(3) organization, EIN 12-3456789 (sample). Please keep this receipt for your tax records.</span><span style="font-size:13px">Jordan Lee, Executive director</span></div>
+    <div class="col">${field('Send receipts', sel('rs', ['Immediately after each gift', 'Monthly summary', 'Year-end statement only'], 'Immediately after each gift'))}${field('Year-end statement', sel('ry', ['January 15', 'January 31'], 'January 15'))}<div class="note">Receipts include the IRS-required wording for gifts over $250, quid pro quo disclosures for event tickets, and in-kind descriptions without a value.</div>${B('Save receipt settings', 'toastMsg', 'Receipt settings saved', 'p')}</div></div>`;
+  else body = `<div class="g11"><div class="col">${card('Brand kit', `<div class="row"><div style="width:64px;height:64px;border-radius:12px;background:#B4462B;color:#fff;display:grid;place-items:center;font-weight:800;font-size:22px">PM</div><div><b>Logo</b><br><span class="sub">PNG or SVG · shown on pages, receipts, emails</span></div></div><div class="row">${['#B4462B', '#26221F', '#F4E9DF', '#FFFFFF'].map(c => `<div style="text-align:center"><div class="sw" style="background:${c}"></div><span class="mono" style="font-size:11px">${c}</span></div>`).join('')}</div><div class="sub">Font: Source Sans 3 · Buttons: rounded</div>`)}</div>
+    ${card('Portals', `<div class="list">${[['give', 'Public giving page', 'prairiemeals.org/give'], ['donor', 'Donor portal', 'receipts, recurring gifts, history'], ['vol', 'Volunteer portal', 'shifts, hours, waivers']].map(p => `<div class="li" style="cursor:default"><span class="f"><b>${p[1]}</b><small>${p[2]}</small></span>${tog(n.portal[p[0]], 'portal', p[0], p[1])}</div>`).join('')}</div>${G('Preview giving page', 'np-give')}`)}</div>`;
+  return head('Templates & branding', 'Your look on every request, receipt, email and portal', '') + `<div class="tabs" role="tablist">${tabs.map(x => `<button role="tab" aria-selected="${t === x[0]}" data-act="settab" data-arg="${x[0]}">${x[1]}</button>`).join('')}</div>` + body;
+});
+
+def('np-website', 'np', 'Website & security', () => {
+  const log = [['9:14 AM', 'Jordan Lee', 'Signed in · passkey · Lincoln, NE'], ['9:02 AM', 'System', 'Bank feed synced · 3 accounts'], ['Yesterday', 'Alex Rivera', 'Exported October general ledger'], ['Nov 14', 'Kim Morales', 'Changed role: volunteer coordinator → staff'], ['Nov 13', 'System', 'Blocked sign-in attempt · leaked password']];
+  return head('Website & security', 'Your site, your domain and who can see what', B('Edit website', 'toastMsg', 'Page editor opens with your brand kit (demo)', 'p')) +
+    kpis(kpi('Website visits · 30 days', '4,812', '▲ 12%', 'up'), kpi('Domain', 'prairiemeals.org', 'SSL active · auto-renews'), kpi('Two-step sign-in', '9 of 9', 'staff accounts protected', 'good'), kpi('Last backup', '3:00 AM', 'daily, kept 30 days')) +
+    `<div class="g11">${card('Pages', tbl([{ l: 'Page', f: p => `<b>${p[0]}</b><br><span class="sub mono">${p[1]}</span>` }, { l: 'Status', f: p => statusPill(p[2]) }, { l: 'Views', r: 1, k: 3 }], [['Home', '/', 'Published', '2,140'], ['Give', '/give', 'Published', '1,206'], ['Volunteer', '/volunteer', 'Published', '988'], ['Host a packing event', '/host', 'Published', '312'], ['Annual report 2026', '/report', 'Draft', '—']]))}
+    ${card('Audit log', tbl([{ l: 'When', k: 0 }, { l: 'Who', f: l => `<b>${l[1]}</b>` }, { l: 'What', k: 2 }], log), XA('Export', 'toastMsg', 'Audit log exported (demo)'))}</div>`;
+});
+
+def('np-give', 'np', 'Public giving page', () => {
+  const g = S.np.give, fee = g.cover ? Math.round(g.amt * 0.032 * 100) / 100 : 0, tot = g.amt + fee;
+  const inner = g.done ? `<div class="pub" style="--pc:#B4462B"><div class="hero" style="background:#26221F"><h2>Thank you, Taylor!</h2><p>Your ${g.monthly ? 'monthly ' : ''}gift of ${m2(tot)} will pack about ${Math.round(g.amt * 4)} meals${g.monthly ? ' every month' : ''}. Your receipt is on its way to your inbox.</p></div><div class="pubw"><div style="display:flex;flex-direction:column;gap:12px"><b>What happened behind the scenes</b><span>✓ Payment captured through Stripe<br>✓ Gift posted to “${g.fund}” in the books<br>✓ IRS-compliant receipt emailed<br>✓ First-time donor welcome workflow started</span><div class="row"><button class="btn" data-act="giveAgain">Make another gift</button><button class="btn p" data-go="np-overview">See it on the Overview</button></div></div></div></div>`
+    : `<div class="pub" style="--pc:#B4462B;--pcl:#FBEDE8"><div class="hero" style="background:linear-gradient(120deg,#26221F 0%,#5A2A1C 60%,#B4462B 100%)"><b style="font-size:14px;opacity:.85">Prairie Meals Alliance</b><h2>Every $1 packs about four meals.</h2><p>Help us pack 30,000 meals for families in our community this holiday season.</p><div style="max-width:420px;margin-top:16px"><div style="height:10px;border-radius:5px;background:rgba(255,255,255,.25)"><div style="width:68%;height:100%;border-radius:5px;background:#F4E9DF"></div></div><span style="font-size:13px">$20,400 of $30,000 raised</span></div></div>
+      <div class="pubw"><div style="display:flex;flex-direction:column;gap:14px"><div class="seg">${['One time', 'Monthly'].map((x, i) => `<button type="button" aria-pressed="${g.monthly === (i === 1)}" data-act="giveMo" data-arg="${i}">${x}</button>`).join('')}</div>
+      <div class="amts">${[25, 50, 100, 250, 500, 1000].map(a => `<button type="button" aria-pressed="${g.amt === a}" data-act="giveAmt" data-arg="${a}">$${a}</button>`).join('')}</div>
+      <label class="fld" style="color:#1F1C1A">Direct my gift to<select class="inp" id="gfund" data-ch="giveFund" style="background:#fff;color:#1F1C1A;border-color:#E2DDD8">${['Where it’s needed most', 'Holiday packing', 'Meal ingredients', 'Packing trailer'].map(f => `<option${f === g.fund ? ' selected' : ''}>${f}</option>`).join('')}</select></label>
+      <label class="row" style="font-size:14px;cursor:pointer"><input type="checkbox" id="gcover" data-ch="giveCover" ${g.cover ? 'checked' : ''} style="width:20px;height:20px"> Add ${m2(Math.round(g.amt * 0.032 * 100) / 100)} to cover card fees</label>
+      <button class="pbtn" data-act="giveNow">Give ${m2(tot)}${g.monthly ? ' monthly' : ''}</button><span style="font-size:12px;color:#6B635C">Secure payment by Stripe · Apple Pay, Google Pay, card or bank · Prairie Meals Alliance is a 501(c)(3)</span></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><div style="height:160px;border-radius:14px;background:linear-gradient(135deg,#F4E9DF,#E8C9B4);display:grid;place-items:end start;padding:14px"><b style="color:#5A2A1C">Volunteers packed 32,400 meals in October</b></div><b>Your gift at work</b><span style="font-size:14px;color:#4A433D">$25 packs 100 meals · $100 fills two boxes for a school backpack program · $500 sponsors a youth pack night</span></div></div></div>`;
+  return head('Public giving page', 'What donors see at prairiemeals.org/give: try a gift', '') + browser('prairiemeals.org/give', inner);
+});
+
+def('np-donor', 'np', 'Donor portal', () => {
+  const r = S.np.recur;
+  const inner = `<div class="pub" style="padding:clamp(18px,4vw,36px);display:flex;flex-direction:column;gap:18px"><div class="row" style="justify-content:space-between"><b style="color:#B4462B;font-size:18px">Prairie Meals Alliance</b><span style="font-size:14px">Signed in as Dana Whitfield</span></div><h2 style="margin:0;font-size:30px;letter-spacing:-.02em">Hi Dana, thank you for 5 years at the table.</h2>
+    <div class="kpis">${[['Given in 2026', '$600'], ['Meals your gifts packed', 'about 2,400'], ['Volunteer hours', '46']].map(k => `<div style="border:1px solid #E7E1DB;border-radius:12px;padding:14px"><span style="font-size:13px;color:#6B635C">${k[0]}</span><br><b style="font-size:24px">${k[1]}</b></div>`).join('')}</div>
+    <div class="g11"><div style="border:1px solid #E7E1DB;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px"><b>Monthly gift</b><span>${r ? '$50.00 on the 14th · card ending 4242' : 'Paused · resumes when you’re ready'}</span><div class="row"><button class="btn s" data-act="toastMsg" data-arg="Change amount (demo)" style="color:#1F1C1A;background:#fff;border-color:#E2DDD8">Change amount</button><button class="btn s" data-act="recur" style="color:#1F1C1A;background:#fff;border-color:#E2DDD8">${r ? 'Pause' : 'Resume'}</button></div></div>
+    <div style="border:1px solid #E7E1DB;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px"><b>Your next shift</b><span>Holiday Meal Packing · Sat, Nov 21 · 8:00 AM<br>Lancaster Event Center</span><button class="btn s" data-act="toastMsg" data-arg="Added to calendar (demo)" style="color:#1F1C1A;background:#fff;border-color:#E2DDD8;width:max-content">Add to calendar</button></div></div>
+    <div><b>Receipts</b><table class="t" style="margin-top:6px;color:#1F1C1A"><tbody>${[['2026 giving to date', '$600.00'], ['2025 year-end statement', '$600.00'], ['2024 year-end statement', '$1,250.00']].map(x => `<tr><td style="border-color:#EEE8E2">${x[0]}</td><td class="r num" style="border-color:#EEE8E2">${x[1]}</td><td class="r" style="border-color:#EEE8E2"><button class="btn s" data-act="toastMsg" data-arg="Receipt PDF ready (demo)" style="color:#1F1C1A;background:#fff;border-color:#E2DDD8">Download</button></td></tr>`).join('')}</tbody></table></div></div>`;
+  return head('Donor portal', 'Donors sign in to see their giving, receipts and shifts', '') + browser('prairiemeals.org/account', inner);
+});
+
+const VOLS = ['Dana Whitfield', 'Chris Whitfield', 'Marcus Ortiz', 'Lena Ortiz', 'Jamie Fox', 'Sofia Ramirez', 'Erin Vogel'];
+const mobNP = () => {
+  const n = S.np;
+  if (n.mob === 'signin') return `<div class="pbody" style="justify-content:center;gap:16px;padding:28px"><div class="mark" style="width:56px;height:56px;border-radius:14px;background:var(--nv)">${LOGO('#fff', 30)}</div><h2 style="margin:0;font-size:26px;letter-spacing:-.02em">Sign in to AUCTIX</h2><span class="sub">Prairie Meals Alliance</span>${field('Email', inp('mem', 'jordan@prairiemeals.org', 'type="email"'))}<button class="btn p" data-act="mob" data-arg="app" style="justify-content:center;min-height:50px">Continue with passkey</button><button class="btn" data-act="mob" data-arg="app" style="justify-content:center">Sign in with Google</button><span class="sub" style="text-align:center">Two-step sign-in is required for staff</span></div>`;
+  const t = n.mtab;
+  if (t === 'sup') return `<div class="pbar" style="background:#B4462B"><b>Prairie Meals</b><button class="btn s" data-act="mtab" data-arg="home" style="margin-left:auto;background:transparent;color:#fff;border-color:rgba(255,255,255,.5)">Staff app</button></div><div class="pbody"><b style="font-size:20px">Hi Dana 👋</b><div class="pcard"><b>Your next shift</b><span>Holiday Meal Packing · Sat, Nov 21, 8:00 AM</span><span class="sub">Lancaster Event Center · Hall B</span><button class="btn p s" data-act="toastMsg" data-arg="Directions open in Maps (demo)">Directions</button></div><div class="pcard"><b>Your impact</b><span style="font-size:28px;font-weight:800">2,400 meals</span><span class="sub">46 volunteer hours · 5 years giving</span></div><div class="pcard"><b>Give</b><div class="row">${[25, 50, 100].map(a => `<button class="btn s" data-act="toastMsg" data-arg="Gift of $${a} with Apple Pay (demo)">$${a}</button>`).join('')}</div></div><span class="sub" style="text-align:center">Supporter app · for donors and volunteers</span></div>`;
+  const tabs = [['home', 'Home', 'home'], ['inbox', 'Inbox', 'inbox'], ['tasks', 'Tasks', 'check'], ['checkin', 'Check-in', 'people'], ['scan', 'Scan', 'scan']];
+  let body = '';
+  if (t === 'home') body = `<b style="font-size:20px">Good morning, Jordan</b><div class="pcard"><span class="sub">Gifts this week</span><b style="font-size:26px">$13,700</b><span class="sub">22 gifts · 3 new donors</span></div><div class="pcard"><b>Today</b>${n.tasks.filter(x => x.due === 'Today').map(x => `<span style="font-size:14px">${x.done ? '✓ ' : '○ '}${x.t}</span>`).join('')}</div><button class="btn" data-act="mtab" data-arg="sup">Preview the supporter app</button>`;
+  if (t === 'inbox') body = n.threads.map(th => `<div class="pcard" style="gap:2px"><b>${th.who}</b><span class="sub">${th.ch} · ${th.sub}</span></div>`).join('');
+  if (t === 'tasks') body = n.tasks.map((x, i) => `<div class="pcard" style="flex-direction:row;align-items:center">${cb(x.done, 'task', i, x.t)}<span style="flex:1;font-size:14px;${x.done ? 'text-decoration:line-through;color:var(--mu)' : ''}">${x.t}<br><span class="sub">${x.due}</span></span></div>`).join('');
+  if (t === 'checkin') { const c = n.checkin.filter(Boolean).length; body = `<div class="pcard"><b>Holiday Meal Packing · Shift 1</b><span class="sub">${c} of ${VOLS.length} checked in</span>${meter(c / VOLS.length * 100)}</div>` + VOLS.map((v, i) => `<div class="pcard" style="flex-direction:row;align-items:center"><span style="flex:1"><b>${v}</b>${i === 4 ? '<br><span class="bad" style="font-size:12px">Minor · waiver needed</span>' : ''}</span>${n.checkin[i] ? pill('✓ In', 'gn') : B('Check in', 'chk', i, 's p')}</div>`).join(''); }
+  if (t === 'scan') { const lines = [['Long-grain rice', 'lot R-2614', '40 × 50 lb'], ['Meal bags', 'lot MB-0931', '10 cases'], ['Vitamin packets', 'lot VP-81', '6 cases'], ['Soy protein', 'lot SP-1002', '12 × 50 lb']]; body = `<div class="pcard"><b>Receive PO-2219 · Sysco Lincoln</b><span class="sub">${Math.min(n.scanned, 4)} of 4 lines received</span>${meter(Math.min(n.scanned, 4) / 4 * 100)}</div><button class="btn p" data-act="scan" style="justify-content:center;min-height:56px" ${n.scanned >= 4 ? 'disabled' : ''}>${ico('scan', 20)} ${n.scanned >= 4 ? 'All lines received' : 'Scan next barcode'}</button>` + lines.map((l, i) => `<div class="pcard" style="flex-direction:row;align-items:center"><span style="flex:1"><b>${l[0]}</b><br><span class="sub">${l[2]} · ${l[1]}</span></span>${i < n.scanned ? pill('✓ Received', 'gn') : pill('Expected')}</div>`).join(''); }
+  return `<div class="pbar">${LOGO('#fff', 22)}<b>${tabs.find(x => x[0] === t)[1]}</b><span class="av" style="margin-left:auto;width:30px;height:30px">JL</span></div><div class="pbody">${body}</div><div class="ptabs" role="tablist">${tabs.map(x => `<button role="tab" aria-selected="${t === x[0]}" data-act="mtab" data-arg="${x[0]}">${ico(x[2], 20)}${x[1]}</button>`).join('')}</div>`;
+};
+def('np-mobile', 'np', 'Mobile apps', () => head('Mobile apps', 'iPhone and Android: a staff app and a supporter app', S.np.mob === 'app' ? B('Sign out', 'mob', 'signin') : '') +
+  `<div class="stage">${phone(mobNP(), 'AUCTIX mobile app')}<div class="side-note">${card('Staff app', `<div class="list">${[['Home', 'Gifts this week and today’s tasks'], ['Inbox', 'Reply to email and texts on the go'], ['Tasks', 'Your queue, checked off anywhere'], ['Check-in', 'Volunteers at the door, waivers flagged'], ['Scan', 'Receive deliveries by barcode with lots']].map(x => `<div class="li" style="cursor:default"><b style="width:76px">${x[0]}</b><span class="f sub">${x[1]}</span></div>`).join('')}</div>`)}${card('Supporter app', '<span class="sub">Donors and volunteers see their next shift, impact and give with Apple Pay. Open it from the Home tab.</span>')}<div class="note">Store devices keep working offline and sync when the connection returns.</div></div></div>`);
+
+/* ===== RETAIL ===== */
+const LOCS = ['Both locations', 'Blackstone', 'Benson'];
+def('rt-dash', 'rt', 'Dashboard', () => {
+  const k = { 'Both locations': 1, Blackstone: 0.58, Benson: 0.42 }[S.rt.loc];
+  const hrs = [['6a', 210], ['7a', 520], ['8a', 690], ['9a', 610], ['10a', 430], ['11a', 380], ['12p', 460], ['1p', 340], ['2p', 260], ['3p', 220], ['4p', 140], ['5p', 90]].map(h => [h[0], h[1] * k]);
+  const top = [['Latte', 148], ['Breakfast burrito', 96], ['Cold brew', 88], ['Drip coffee', 81], ['Kolache', 64], ['Butter croissant', 57]].map(t => [t[0], Math.round(t[1] * k)]);
+  return head('Good morning, Maya', DATE + ' · sales through 5:00 PM', `<div class="seg">${LOCS.map(l => `<button type="button" aria-pressed="${S.rt.loc === l}" data-act="loc" data-arg="${l}">${l}</button>`).join('')}</div>`) +
+    kpis(kpi('Net sales today', money(4286 * k), '▲ 12% vs. last Monday', 'up'), kpi('Orders', String(Math.round(312 * k)), 'average ticket $13.74'), kpi('Labor', '24.8%', 'of sales · target 28%', 'up'), kpi('Loyalty sales', '44%', 'from Kettle Club members')) +
+    `<div class="g2">${card('Sales by hour', vbars(hrs, v => money(v), 2, 'Sales by hour today'), '<span class="sub">peak 8–9 AM</span>')}
+    ${card('Channel mix', hbars([['Counter', 62], ['Online pickup', 21], ['Table', 17]], v => v + '%', 100) + `<div class="note">Online orders carry no marketplace commission: about $310 saved this week versus a 25% delivery-app fee.</div>`)}</div>
+    <div class="g11">${card('Top items today', tbl([{ l: 'Item', f: t => `<b>${t[0]}</b>` }, { l: 'Sold', r: 1, f: t => `<span class="num">${t[1]}</span>` }], top), X('Menu', 'rt-menu'))}
+    ${card('Needs attention', `<div class="list">${[['wn', '2 days', 'Oat milk running low at Blackstone', 'rt-menu'], ['ok', String(S.rt.tickets.length), 'Open tickets on the kitchen display', 'rt-kds'], ['wn', '6', 'Timesheets waiting for approval', 'rt-shifts'], ['bd', String(S.rt.tx.length + S.rt.txMore), 'Bank transactions to categorize', 'rt-books']].map(a => `<button type="button" class="li" data-go="${a[3]}"><span class="cntb pill ${a[0]}">${a[1]}</span><span class="f">${a[2]}</span>›</button>`).join('')}</div>`)}</div>`;
+});
+
+def('rt-register', 'rt', 'Counter register', () => {
+  const r = S.rt, sub = sum(r.cart, c => c.p * c.q), tax = Math.round(sub * TAX * 100) / 100;
+  return head('Counter register', 'Blackstone · Register 1 · Stripe Reader S700 connected', `${pill('● Online', 'gn')} ${B('Open drawer', 'toastMsg', 'Cash drawer opened (demo)')}`) +
+    `<div class="pos"><div class="col"><div class="seg">${Object.keys(PROD).map(c => `<button type="button" aria-pressed="${r.cat === c}" data-act="cat" data-arg="${c}">${c}</button>`).join('')}</div><div class="pgrid">${PROD[r.cat].map(p => `<button type="button" class="pbtn2" data-act="add" data-arg="${p[0]}">${p[0]}<span class="num">${m2(p[1])}</span></button>`).join('')}</div></div>
+    ${card('Order #' + r.next, `${r.guest ? `<div class="note"><b>Rachel Kim</b> · Kettle Club · 82 points (18 to a free drink)</div>` : B('+ Add guest by phone', 'guest', '', 's')}<div class="list">${r.cart.length ? r.cart.map((c, i) => `<div class="li" style="cursor:default"><span class="f"><b>${c.n}</b><small>${m2(c.p)} each</small></span><button class="ib" style="width:34px;height:34px" data-act="dec" data-arg="${i}" aria-label="Remove one">${ico('minus', 14)}</button><b class="num">${c.q}</b><button class="ib" style="width:34px;height:34px" data-act="add" data-arg="${c.n}" aria-label="Add one">${ico('plus', 14)}</button><span class="num" style="width:62px;text-align:right">${m2(c.p * c.q)}</span></div>`).join('') : '<div class="empty">Tap items to start an order</div>'}</div>
+      <div class="list" style="font-size:14px"><div class="li" style="cursor:default"><span class="f">Subtotal</span><span class="num">${m2(sub)}</span></div><div class="li" style="cursor:default"><span class="f">Tax (7%)</span><span class="num">${m2(tax)}</span></div><div class="li" style="cursor:default;font-size:18px"><b class="f">Total</b><b class="num">${m2(sub + tax)}</b></div></div>
+      <div class="row">${B('Clear', 'clear', '', '', !r.cart.length)}<button class="btn p" data-act="charge" style="flex:1;justify-content:center;min-height:52px;font-size:16px" ${r.cart.length ? '' : 'disabled'}>Charge ${m2(sub + tax)}</button></div>`)}</div>`;
+});
+
+def('rt-kds', 'rt', 'Kitchen display', () => {
+  const t = S.rt.tickets;
+  return head('Kitchen display', 'Blackstone · bar and kitchen · all channels', B('Recall last', 'recallTk', '', '', !S.rt.bumped.length)) +
+    (t.length ? `<div class="kds">${t.map((k, i) => `<div class="tk"><div class="tkh ${k.min >= 8 ? 'b' : k.min >= 5 ? 'w' : ''}"><span>#${k.no}</span><span style="font-weight:600;font-size:13px">${k.ch}</span><span class="num" style="margin-left:auto">${k.min}:00</span></div><ul>${k.items.map(x => `<li>${x[0]}${x[1] ? `<small>${x[1]}</small>` : ''}</li>`).join('')}</ul><div style="padding:10px 12px">${B('Bump · ready', 'bump', i, 'p')}</div></div>`).join('')}</div>` : card('', `<div class="empty">${ico('ok', 28)}<br><b>All caught up.</b> New orders appear here from the register, online ordering and tables.</div>`)) +
+    `<div class="row sub" style="font-size:13px">${pill('Under 5 min')} ${pill('5–8 min', 'wn')} ${pill('Over 8 min', 'bd')} · Tickets are timed from when the order was paid</div>`;
+});
+
+def('rt-online', 'rt', 'Online ordering', () => {
+  const o = S.rt.online, items = [['Latte', 5.25, '#C99B6D'], ['Cold brew', 4.75, '#6B4430'], ['Breakfast burrito', 8.75, '#D9A441'], ['Kolache', 4.25, '#E3B577'], ['Avocado toast', 9.50, '#8DA05A'], ['Cinnamon roll', 4.50, '#C9824A']];
+  const sub = sum(o.cart, c => c.p * c.q);
+  const inner = o.done ? `<div class="pub" style="padding:40px clamp(18px,5vw,56px);display:flex;flex-direction:column;gap:12px;--pc:#B8642E"><h2 style="margin:0;font-size:32px;letter-spacing:-.02em">Order #${o.done} is in!</h2><span>Pickup at Copper Kettle Blackstone · ${o.time}. We’ll text you when it’s ready.</span><div class="row"><button class="btn" data-act="onAgain" style="color:#1F1C1A;background:#fff;border-color:#E2DDD8">Order again</button><button class="btn p" data-go="rt-kds">See it on the kitchen display</button></div></div>`
+    : `<div class="pub" style="--pc:#B8642E"><div class="hero" style="background:linear-gradient(120deg,#2B1D16,#6B3A1F 70%,#B8642E)"><b style="font-size:14px;opacity:.85">Copper Kettle Café & Market</b><h2>Order ahead, skip the line.</h2><p>Blackstone · open until 6 PM · ready in about 12 minutes</p></div><div class="pubw"><div class="menuc">${items.map(i => `<div class="mi"><span class="ph2" style="background:linear-gradient(135deg,${i[2]},#2B1D16)"></span><b>${i[0]}</b><span class="num" style="color:#6B635C">${m2(i[1])}</span><button class="btn s" data-act="onAdd" data-arg="${i[0]}|${i[1]}" style="background:#B8642E;border-color:#B8642E;color:#fff;justify-content:center">Add</button></div>`).join('')}</div>
+      <div style="border:1px solid #E7E1DB;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;align-self:start"><b>Your order</b>${o.cart.length ? o.cart.map(c => `<div class="row" style="justify-content:space-between;font-size:14px"><span>${c.q} × ${c.n}</span><span class="num">${m2(c.p * c.q)}</span></div>`).join('') : '<span style="color:#6B635C;font-size:14px">Add something tasty</span>'}<label class="fld" style="color:#1F1C1A">Pickup time<select class="inp" id="otime" data-ch="onTime" style="background:#fff;color:#1F1C1A;border-color:#E2DDD8">${['ASAP (about 12 min)', '9:45 AM', '10:00 AM', '10:15 AM'].map(x => `<option${x === o.time ? ' selected' : ''}>${x}</option>`).join('')}</select></label><div class="row" style="justify-content:space-between"><b>Total with tax</b><b class="num">${m2(sub * (1 + TAX))}</b></div><button class="pbtn" data-act="onPlace" ${o.cart.length ? '' : 'disabled style="opacity:.5"'}>Pay with Apple Pay</button><span style="font-size:12px;color:#6B635C">Earn Kettle Club points on every order</span></div></div></div>`;
+  return head('Online ordering', 'The café’s own ordering page at order.copperkettle.coffee: place an order', '') + browser('order.copperkettle.coffee', inner);
+});
+
+const suggest = () => {
+  const r = S.rt, party = r.wait[0]; if (!party) return null;
+  const covers = {}; r.tables.forEach(t => { covers[t.sv] = (covers[t.sv] || 0) + (t.st === 'seated' || t.st === 'check' ? t.party : 0); });
+  const opts = r.tables.filter(t => t.st === 'open' && t.seats >= party.p).sort((a, b) => (covers[a.sv] - covers[b.sv]) || (a.seats - b.seats));
+  return opts[0] ? { id: opts[0].id, sv: opts[0].sv, covers } : null;
+};
+def('rt-floor', 'rt', 'AI host station', () => {
+  const r = S.rt, sg = r.sug;
+  const covers = {}; r.tables.forEach(t => { covers[t.sv] = (covers[t.sv] || 0) + (t.st === 'seated' || t.st === 'check' ? t.party : 0); });
+  return head('AI host station', 'Blackstone dining room · tap a table to change its status', B(ico('spark', 15) + ' Suggest a table', 'sug', '', 'p', !r.wait.length)) +
+    `<div class="g2"><div class="col">${card('Floor', `<div class="floor">${r.tables.map(t => `<button type="button" class="tbl ${t.st} ${sg && sg.id === t.id ? 'sug' : ''}" data-act="tblc" data-arg="${t.id}"><span class="row" style="justify-content:space-between"><b>${t.id}</b><span class="sub">${t.seats} seats</span></span><span>${{ open: 'Open', seated: `Seated · ${t.party}`, check: 'Check dropped', dirty: 'Needs bussing' }[t.st]}</span><span class="sub">${t.sv}</span></button>`).join('')}</div>`)}
+      <div class="row">${['Leah', 'Marco', 'Jess'].map(s => `<div class="kpi" style="flex:1 1 140px"><span class="kl">${s}’s section</span><span class="kv">${covers[s]} covers</span></div>`).join('')}</div></div>
+    <div class="col">${card('Waitlist', `<div class="list">${r.wait.length ? r.wait.map((w, i) => `<div class="li" style="cursor:default"><span class="f"><b>${w.n} · party of ${w.p}</b><small>quoted ${w.q} min · waiting ${w.w} min</small></span>${i === 0 && sg ? B('Seat at ' + sg.id, 'seat', '', 's p') : ''}</div>`).join('') : '<div class="empty">No one waiting</div>'}</div>${B('+ Add party', 'addParty', '', 's')}`)}
+    ${sg ? card('Why ' + sg.id, `<p style="margin:0;font-size:14px">${sg.id} is the best fit for the ${r.wait[0].n} party: right size, and ${sg.sv}’s section has the fewest covers right now (${sg.covers[sg.sv]}).</p><div class="note">The host station balances seating only. It never moves tips or changes how tips are shared.</div>`) : ''}</div></div>`;
+});
+
+def('rt-paytable', 'rt', 'Pay at table', () => {
+  const p = S.rt.pt, items = [['Breakfast burrito', 8.75], ['Breakfast burrito', 8.75], ['Avocado toast', 9.50], ['Cappuccino', 4.95]];
+  const sub = sum(items, i => i[1]), tax = Math.round(sub * TAX * 100) / 100, share = p.split === 'Split 2 ways' ? (sub + tax) / 2 : sub + tax, tip = Math.round(share * p.tip) / 100;
+  const inner = p.paid ? `<div class="pbar"><b>Table 7</b></div><div class="pbody" style="justify-content:center;align-items:center;text-align:center;gap:14px"><div class="dot" style="width:72px;height:72px;background:var(--gnb);color:var(--gn)">${ico('ok', 34)}</div><b style="font-size:24px">Approved</b><span>${m2(share + tip)} · card ending 4242<br>Receipt texted to the guest</span>${p.split === 'Split 2 ways' ? '<span class="sub">1 of 2 payments complete</span>' : ''}<button class="btn" data-act="ptReset">Next check</button></div>`
+    : `<div class="pbar"><b>Table 7 · Marco</b><span class="sub" style="margin-left:auto;color:#A9B4D6">4 guests</span></div><div class="pbody"><div class="pcard">${items.map(i => `<div class="row" style="justify-content:space-between;font-size:14px"><span>${i[0]}</span><span class="num">${m2(i[1])}</span></div>`).join('')}<div class="row" style="justify-content:space-between;font-size:14px;color:var(--mu)"><span>Tax</span><span class="num">${m2(tax)}</span></div></div>
+      <div class="seg">${['Full check', 'Split 2 ways'].map(s => `<button type="button" aria-pressed="${p.split === s}" data-act="ptSplit" data-arg="${s}">${s}</button>`).join('')}</div>
+      <b>Add a tip</b><div class="amts" style="grid-template-columns:repeat(4,minmax(0,1fr))">${[15, 18, 20, 22].map(t => `<button type="button" aria-pressed="${p.tip === t}" data-act="ptTip" data-arg="${t}" style="font-size:15px">${t}%</button>`).join('')}</div>
+      <div class="row" style="justify-content:space-between;font-size:20px"><b>Total</b><b class="num">${m2(share + tip)}</b></div><button class="btn p" data-act="ptPay" style="justify-content:center;min-height:56px;font-size:17px">${ico('card', 20)} Tap to pay</button><span class="sub" style="text-align:center">Works offline up to $150 per card</span></div>`;
+  return head('Pay at table', 'Handheld for servers: split, tip and tap at the table', '') + `<div class="stage">${phone(inner, 'Pay at table handheld')}<div class="side-note">${card('Why it matters', '<span class="sub">Tables turn faster, the card never leaves the guest, and tips go straight to the server who earned them, recorded for payroll.</span>')}</div></div>`;
+});
+
+def('rt-menu', 'rt', 'Menu & products', () => {
+  const r = S.rt, c = r.mcat;
+  const station = c === 'Coffee' ? 'Bar' : c === 'Bakery' ? 'Kitchen' : 'None';
+  const opt = { Coffee: '12 / 16 / 20 oz · milk choice', Bakery: 'Warm it up', Market: '—', Merch: 'Size · color' };
+  return head('Menu & products', 'One menu for the counter, online ordering and tables', B('+ New item', 'toastMsg', 'New item: price, options, station and channels (demo)', 'p')) +
+    `<div class="g12" style="grid-template-columns:minmax(0,220px) minmax(0,1fr)">${card('Categories', `<div class="list">${Object.keys(PROD).map(k => `<button type="button" class="li" data-act="mcat" data-arg="${k}" ${k === c ? 'style="font-weight:800;color:var(--ry)"' : ''}><span class="f">${k}</span><span class="sub">${PROD[k].length}</span></button>`).join('')}</div>`)}
+    <div class="col">${card(c, tbl([{ l: 'Item', f: p => `<b>${p[0]}</b>` }, { l: 'Price', r: 1, f: p => `<span class="num">${m2(p[1])}</span>` }, { l: 'Options', f: () => `<span class="sub">${opt[c]}</span>` }, { l: 'Station', f: () => station }, { l: 'Sold on', f: () => c === 'Merch' ? pill('Counter') + ' ' + pill('Online') : pill('Counter') + ' ' + pill('Online') + ' ' + pill('Table') }, { l: 'Available', r: 1, f: p => tog(!r.off[p[0]], 'off', p[0], 'Available: ' + p[0]) }], PROD[c]), '<span class="sub">Turn an item off to hide it everywhere at once</span>')}
+    ${c === 'Merch' ? card('Kettle tee · stock by variant', tbl([{ l: 'Color', f: v => `<b>${v[0]}</b>` }, ...['S', 'M', 'L', 'XL', '2XL'].map((s, i) => ({ l: s, r: 1, f: v => `<span class="num ${v[1][i] < 4 ? 'bad' : ''}">${v[1][i]}</span>` }))], [['Black', [6, 14, 11, 3, 2]], ['Oat', [4, 9, 12, 7, 1]], ['Copper', [8, 10, 6, 5, 3]]]), '<span class="sub">red = reorder</span>') : card('Oat milk at Blackstone', `<div class="row"><span class="f">About 2 days left at current pace</span>${B('Draft reorder', 'toastMsg', 'Purchase order drafted to Hiland Dairy (demo)', 's')}</div>`)}</div></div>`;
+});
+
+def('rt-loyalty', 'rt', 'Loyalty & guests', () => {
+  const g = [['Rachel Kim', 48, 612, 82, 'Regular', 'Nov 16', 'Oat latte'], ['Tom Becker', 31, 402, 46, 'Regular', 'Nov 15', 'Drip coffee'], ['Aisha Grant', 22, 288, 12, 'New', 'Nov 14', 'Cold brew'], ['Luke Novak', 9, 96, 96, 'Lapsed', 'Sep 28', 'Kolache'], ['Mia Torres', 64, 941, 41, 'VIP', 'Nov 16', 'Cappuccino'], ['Sam Patel', 14, 170, 70, 'Lapsed', 'Oct 2', 'Chai latte']];
+  return head('Loyalty & guests', 'Kettle Club: 1 point per $1, 100 points = a free drink', B(S.rt.sent ? 'Win-back sent to 214 guests' : 'Send win-back offer', 'winback', '', 'p', S.rt.sent)) +
+    kpis(kpi('Members', '1,842', '▲ 96 this month', 'up'), kpi('Repeat visit rate', '38%', 'within 30 days'), kpi('Member share of sales', '44%', 'members spend 2.1× more'), kpi('Lapsed 30+ days', S.rt.sent ? '214 · offer sent' : '214', 'free pastry win-back ready')) +
+    `<div class="g2">${card('Guests', tbl([{ l: 'Guest', f: x => `<b>${x[0]}</b><br><span class="sub">usually ${x[6]}</span>` }, { l: 'Visits', r: 1, k: 1 }, { l: 'Spend', r: 1, f: x => `<span class="num">${money(x[2])}</span>` }, { l: 'Points', r: 1, k: 3 }, { l: 'Status', f: x => pill(x[4], x[4] === 'Lapsed' ? 'wn' : x[4] === 'VIP' ? 'ok' : '') }, { l: 'Last visit', k: 5 }], g))}
+    ${card('Rewards', `<div class="list">${[['Free drink', '100 points'], ['Birthday pastry', 'automatic'], ['Double points Tuesdays', 'on'], ['Win-back: free pastry', 'after 30 days away']].map(x => `<div class="li" style="cursor:default"><span class="f">${x[0]}</span><span class="sub">${x[1]}</span></div>`).join('')}</div>`)}</div>`;
+});
+
+def('rt-shifts', 'rt', 'Shifts & hours', () => {
+  const r = S.rt, days = ['Mon 16', 'Tue 17', 'Wed 18', 'Thu 19', 'Fri 20', 'Sat 21', 'Sun 22'];
+  const staff = [['Luis Romero', 'Shift lead', ['6a–2p', '6a–2p', '', '6a–2p', '6a–2p', '7a–3p', '']], ['Hannah Brooks', 'Barista', ['6a–12p', '', '6a–2p', '6a–2p', '', '7a–1p', '8a–2p']], ['DeShawn Miller', 'Barista', ['12p–6p', '12p–6p', '12p–6p', '', '12p–6p', '', '8a–2p']], ['Grace Liu', 'Barista', ['', '2p–6p', '2p–6p', '12p–6p', '2p–6p', '1p–6p', '']], ['Tom Ostrowski', 'Kitchen', ['6a–2p', '6a–2p', '6a–2p', '6a–2p', '', '', '7a–1p']], ['Sofia Alvarez', 'Kitchen', ['', '', '9a–3p', '9a–3p', '6a–2p', '7a–3p', '7a–1p']]];
+  const ts = [['Luis Romero', 38.5, 0], ['Hannah Brooks', 31, 0], ['DeShawn Miller', 29.5, 0], ['Grace Liu', 22, 0], ['Tom Ostrowski', 41.5, 1.5], ['Sofia Alvarez', 34, 0]];
+  return head('Shifts & hours', 'Blackstone · week of November 16 · forecast sales $27,400', B('Publish schedule', 'toastMsg', 'Schedule published: staff notified by text') + B('Auto-fill from forecast', 'toastMsg', 'Draft schedule built from forecast sales and availability (demo)', 'p')) +
+    card('Schedule', `<div class="tw"><div class="sched"><div class="hd">Team</div>${days.map(d => `<div class="hd">${d}</div>`).join('')}${staff.map(s => `<div><b>${s[0]}</b><br><span class="sub">${s[1]}</span></div>${s[2].map(x => `<div>${x ? `<span class="sh ${s[1] === 'Kitchen' ? 'g' : ''}">${x}</span>` : ''}</div>`).join('')}`).join('')}<div class="hd" style="border-top:1px solid var(--ln2)">Labor % forecast</div>${['26%', '31%', '27%', '25%', '24%', '22%', '27%'].map(p => `<div><span class="sh ${parseInt(p) > 29 ? 'w' : ''}">${p}</span></div>`).join('')}</div></div>`) +
+    `<div class="g2">${card('Timesheets · Nov 9–15', tbl([{ l: 'Employee', f: t => `<b>${t[0]}</b>` }, { l: 'Hours', r: 1, f: t => `<span class="num">${t[1]}</span>` }, { l: 'Overtime', r: 1, f: t => t[2] ? `<span class="num warn">${t[2]}</span>` : '<span class="sub">—</span>' }, { l: 'Status', f: () => r.sheetsOk ? pill('Approved', 'gn') : pill('Needs approval', 'wn') }], ts, { foot: ['Total', '196.5', '1.5', ''] }), B(r.sheetsOk ? 'Approved' : 'Approve all', 'sheets', '', 's', r.sheetsOk))}
+    ${card('Gusto payroll sync ' + pill('Coming soon', 'wn'), `<p style="margin:0;font-size:14px">${r.synced ? '✓ Synced 6 employees and 196.5 hours (1.5 overtime) to Gusto. Your payroll draft for Nov 9–15 is updated, and payroll will post back to the books as a journal entry.' : 'Approved hours, tips and overtime go to Gusto for payroll; when payroll runs, the journal entry posts back here.'}</p>${B(r.synced ? 'Synced just now' : 'Send hours to Gusto', 'sync', '', 'p', !r.sheetsOk || r.synced)}${r.sheetsOk ? '' : '<span class="sub">Approve timesheets first</span>'}`)}</div>`;
+});
+def('rt-books', 'rt', 'Books & bank', () => fin('rt'));
+
+/* ===== CONSTRUCTION ===== */
+const JOBS = [
+  ['J-2611', 'Westgate Medical Office · slab & walks', 'Hawthorne Builders', 486500, 398900, 255300, 296800, 29680, 'On track'],
+  ['J-2608', 'Sarpy County Library flatwork', 'Mason & Reyes Construction', 212800, 176400, 151700, 136200, 13620, 'Prevailing wage'],
+  ['J-2615', 'Elkhorn Distribution Center · dock aprons', 'Prairie Point Contractors', 744000, 618500, 92800, 148800, 14880, 'Starting'],
+  ['J-2603', 'District 27 school sidewalks', 'District 27 Public Schools', 158400, 131200, 127900, 150500, 15050, 'Punch list'],
+  ['J-2617', 'Lindqvist residence · stamped patio', 'Homeowner', 24600, 18900, 6100, 12300, 0, 'Deposit received']];
+def('cn-jobs', 'cn', 'Jobs', () => {
+  const backlog = sum(JOBS, j => j[3] * (1 - j[5] / j[4]));
+  return head('Jobs', DATE + ' · 5 active jobs', G('+ New estimate', 'cn-estimate', 'p')) +
+    kpis(kpi('Backlog', money(backlog), 'contract left to earn'), kpi('Billed this month', '$184,350', '3 pay apps'), kpi('Retainage receivable', money(sum(JOBS, 7)), '4 jobs'), kpi('Forecast gross margin', pct((sum(JOBS, 3) - sum(JOBS, 4)) / sum(JOBS, 3), 1), 'across active jobs', 'up')) +
+    `<div class="g2">${card('Active jobs', tbl([{ l: 'Job', f: j => `<b>${j[1]}</b><br><span class="sub mono">${j[0]}</span> <span class="sub">· ${j[2]}</span>` }, { l: 'Contract', r: 1, f: j => `<span class="num">${money(j[3])}</span>` }, { l: '% complete', f: j => `<div style="min-width:90px"><span class="num" style="font-size:13px">${pct(j[5] / j[4])}</span>${meter(j[5] / j[4] * 100)}</div>` }, { l: 'Margin', r: 1, f: j => `<span class="num">${pct((j[3] - j[4]) / j[3], 1)}</span>` }, { l: 'Status', f: j => pill(j[8], j[8] === 'On track' ? 'gn' : j[8] === 'Punch list' ? 'wn' : '') }], JOBS, { go: j => j[0] === 'J-2611' ? 'cn-jobcost' : 'cn-jobcost' }))}
+    ${card('Needs attention', `<div class="list">${[['wn', 'CO', 'CO-014 waiting on Hawthorne’s signature', 'cn-change'], ['bd', 'COI', 'Plains Pumping insurance expires Nov 25', 'cn-compliance'], ['wn', 'Rain', 'Wednesday pour at Westgate: 70% rain', 'cn-schedule'], ['ok', '#6', 'Pay app #6 ready for Westgate', 'cn-payapp'], ['wn', 'WH-347', 'Certified payroll due for Sarpy County', 'cn-compliance']].map(a => `<button type="button" class="li" data-go="${a[3]}"><span class="cntb pill ${a[0]}">${a[1]}</span><span class="f">${a[2]}</span>›</button>`).join('')}</div>`)}</div>`;
+});
+
+def('cn-estimate', 'cn', 'Estimates & bids', () => {
+  const c = S.cn, direct = sum(c.est, l => l.q * l.r), oh = direct * c.oh / 100, pr = (direct + oh) * c.pr / 100, bond = (direct + oh + pr) * c.bond / 100, tot = direct + oh + pr + bond;
+  return head('Northpoint Retail Pad · 18,400 sf slab on grade', 'Estimate E-0388 · bid due Nov 20 to Prairie Point Contractors', B('Convert to job', 'toastMsg', 'Won it? The estimate becomes job J-2618 with its budget by cost code (demo)') + B(c.estSent ? 'Proposal sent' : 'Send proposal', 'estSend', '', 'p', c.estSent)) +
+    kpis(kpi('Bid price', money(tot), money(tot / 18400, 2) + ' per sq ft'), kpi('Direct cost', money(direct), c.est.length + ' line items'), kpi('Markup', money(oh + pr), `${c.oh}% overhead · ${c.pr}% profit`), kpi('Concrete', c.est[0].q + ' CY', 'at 6 in. average thickness')) +
+    `<div class="g2">${card('Line items', `<div class="tw"><table class="t stack"><thead><tr><th>Item</th><th class="r">Qty</th><th>Unit</th><th class="r">Rate</th><th class="r">Amount</th></tr></thead><tbody>${c.est.map((l, i) => `<tr><td data-l="Item"><b>${l.d}</b></td><td data-l="Qty" class="r"><input class="inp sm num" id="eq${i}" inputmode="decimal" value="${l.q}" data-ch="estQ" data-arg="${i}" style="width:96px;text-align:right" aria-label="Quantity, ${l.d}"></td><td data-l="Unit">${l.u}</td><td data-l="Rate" class="r"><input class="inp sm num" id="er${i}" inputmode="decimal" value="${l.r}" data-ch="estR" data-arg="${i}" style="width:96px;text-align:right" aria-label="Rate, ${l.d}"></td><td data-l="Amount" class="r num">${m2(l.q * l.r)}</td></tr>`).join('')}</tbody></table></div>${B('+ Add line', 'estAdd', '', 's')}`)}
+    ${card('Summary', `<div class="tw"><table class="t"><tbody><tr><td>Direct cost</td><td class="r num">${m2(direct)}</td></tr><tr><td>Overhead <input class="inp sm" id="eoh" inputmode="decimal" value="${c.oh}" data-ch="estOh" style="width:56px;display:inline-block" aria-label="Overhead percent">%</td><td class="r num">${m2(oh)}</td></tr><tr><td>Profit <input class="inp sm" id="epr" inputmode="decimal" value="${c.pr}" data-ch="estPr" style="width:56px;display:inline-block" aria-label="Profit percent">%</td><td class="r num">${m2(pr)}</td></tr><tr><td>Bond (${c.bond}%)</td><td class="r num">${m2(bond)}</td></tr></tbody><tfoot><tr><td>Bid price</td><td class="r num">${m2(tot)}</td></tr></tfoot></table></div><div class="note">Rates come from your cost history: last 6 slab jobs averaged $56.40/hr labor and $165/CY delivered.</div>`)}</div>`;
+});
+
+def('cn-payapp', 'cn', 'Pay applications', () => {
+  const c = S.cn, L = c.pay.map(l => { const done = l.sv * (l.prev + l.cur) / 100; return { ...l, done, prevAmt: l.sv * l.prev / 100 }; });
+  const sv = sum(L, 'sv'), done = sum(L, 'done'), prevAmt = sum(L, 'prevAmt'), ret = done * 0.10, prevCert = prevAmt * 0.9, due = done - ret - prevCert;
+  return head('Pay application #6', 'J-2611 Westgate Medical Office · to Hawthorne Builders · period ending Nov 30, 2026', c.paySent ? pill('Submitted Nov 16', 'ok') : B('Submit to Hawthorne', 'paySend', '', 'p')) +
+    kpis(kpi('Current payment due', m2(due), 'after 10% retainage', 'up'), kpi('Completed to date', m2(done), pct(done / sv) + ' of contract'), kpi('Retainage held', m2(ret), '10% of work completed'), kpi('Contract sum', m2(sv), 'original plus approved changes')) +
+    card('Continuation sheet (schedule of values)', `<div class="tw"><table class="t stack"><thead><tr><th>Item</th><th class="r">Scheduled value</th><th class="r">Previous %</th><th class="r">This period %</th><th class="r">Completed to date</th><th class="r">Balance to finish</th></tr></thead><tbody>${L.map((l, i) => `<tr><td data-l="Item"><b>${l.d}</b></td><td data-l="Scheduled value" class="r num">${m2(l.sv)}</td><td data-l="Previous %" class="r num">${l.prev}%</td><td data-l="This period %" class="r">${c.paySent ? `<span class="num">${l.cur}%</span>` : `<input class="inp sm num" id="pc${i}" inputmode="decimal" value="${l.cur}" data-ch="payCur" data-arg="${i}" style="width:74px;text-align:right" aria-label="This period percent, ${l.d}">`}</td><td data-l="Completed to date" class="r num">${m2(l.done)}</td><td data-l="Balance to finish" class="r num">${m2(l.sv - l.done)}</td></tr>`).join('')}</tbody><tfoot><tr><td data-l="">Totals</td><td data-l="Scheduled value" class="r num">${m2(sv)}</td><td data-l=""></td><td data-l=""></td><td data-l="Completed" class="r num">${m2(done)}</td><td data-l="Balance" class="r num">${m2(sv - done)}</td></tr></tfoot></table></div>`) +
+    `<div class="g11">${card('Application summary', `<div class="tw"><table class="t"><tbody><tr><td>Total completed to date</td><td class="r num">${m2(done)}</td></tr><tr><td>Less retainage (10%)</td><td class="r num">−${m2(ret)}</td></tr><tr><td>Total earned less retainage</td><td class="r num">${m2(done - ret)}</td></tr><tr><td>Less previous certificates</td><td class="r num">−${m2(prevCert)}</td></tr></tbody><tfoot><tr><td>Current payment due</td><td class="r num">${m2(due)}</td></tr></tfoot></table></div>`)}
+    ${card('Goes with it', `<div class="list"><div class="li" style="cursor:default">${ico('file')}<span class="f">Conditional progress lien waiver<small>auto-filled for ${m2(due)}</small></span>${pill('Attached', 'ok')}</div><div class="li" style="cursor:default">${ico('cam')}<span class="f">Progress photos<small>18 from field logs this period</small></span>${pill('Attached', 'ok')}</div><div class="li" style="cursor:default">${ico('doc')}<span class="f">Approved change orders<small>CO-012, CO-013</small></span>${pill('Included', 'ok')}</div></div>`)}</div>`;
+});
+
+def('cn-jobcost', 'cn', 'Job cost & WIP', () => {
+  const codes = [['03-100 Formwork', 46200, 31800, 4200], ['03-200 Reinforcing', 52800, 36900, 9100], ['03-300 Concrete material', 128400, 84600, 21200], ['03-350 Place & finish labor', 112600, 72300, 0], ['01-500 Equipment', 31900, 18600, 2400], ['01-700 Pump & trucking', 27000, 11100, 3800]];
+  const wip = JOBS.map(j => { const p = j[5] / j[4], earned = j[3] * p; return [j[0], j[1].split(' ·')[0], j[3], j[4], j[5], p, earned, j[6], j[6] - earned]; });
+  return head('Job cost & WIP', 'Westgate Medical Office by cost code, and work in progress across all jobs', B('Export WIP for bonding', 'toastMsg', 'WIP schedule exported for your surety (demo)', 'p')) +
+    card('J-2611 Westgate · budget vs. actual', tbl([{ l: 'Cost code', f: c => `<b>${c[0]}</b>` }, { l: 'Budget', r: 1, f: c => `<span class="num">${money(c[1])}</span>` }, { l: 'Actual', r: 1, f: c => `<span class="num">${money(c[2])}</span>` }, { l: 'Committed', r: 1, f: c => `<span class="num">${money(c[3])}</span>` }, { l: 'Used', f: c => `<div style="min-width:110px"><span class="num" style="font-size:13px">${pct((c[2] + c[3]) / c[1])}</span>${meter((c[2] + c[3]) / c[1] * 100, (c[2] + c[3]) / c[1] > .85 ? 'w' : '')}</div>` }], codes, { foot: ['Total', money(sum(codes, 1)), money(sum(codes, 2)), money(sum(codes, 3)), ''] })) +
+    card('Work in progress schedule', tbl([{ l: 'Job', f: w => `<b>${w[1]}</b><br><span class="sub mono">${w[0]}</span>` }, { l: 'Contract', r: 1, f: w => `<span class="num">${money(w[2])}</span>` }, { l: 'Est. cost', r: 1, f: w => `<span class="num">${money(w[3])}</span>` }, { l: 'Cost to date', r: 1, f: w => `<span class="num">${money(w[4])}</span>` }, { l: '% complete', r: 1, f: w => `<span class="num">${pct(w[5])}</span>` }, { l: 'Earned', r: 1, f: w => `<span class="num">${money(w[6])}</span>` }, { l: 'Billed', r: 1, f: w => `<span class="num">${money(w[7])}</span>` }, { l: 'Over / (under)', r: 1, f: w => `<span class="num ${w[8] < 0 ? 'bad' : ''}">${w[8] < 0 ? '(' + money(-w[8]) + ')' : money(w[8])}</span>` }], wip), '<span class="sub">% complete by cost to cost</span>');
+});
+
+def('cn-change', 'cn', 'Change orders', () => {
+  const c = S.cn, co = c.cos[c.coSel];
+  const brk = [['Labor', 0.42], ['Materials', 0.38], ['Equipment', 0.08], ['Markup (12%)', 0.12]];
+  return head('Change orders', '4 this quarter · $53,260 in approved and pending changes', B('+ New change order', 'toastMsg', 'New change order from a field note, RFI or photo (demo)', 'p')) +
+    `<div class="g2">${card('All change orders', tbl([{ l: 'Number', f: x => `<span class="mono">${x.no}</span>` }, { l: 'Description', f: x => `<b>${x.t}</b><br><span class="sub">${x.job}</span>` }, { l: 'Amount', r: 1, f: x => `<span class="num">${money(x.amt)}</span>` }, { l: 'Days', r: 1, k: 'days' }, { l: 'Status', f: x => statusPill(x.st) }], c.cos, { act: 'coSel' }), '<span class="sub">Click to open</span>')}
+    ${card(co.no + ' · ' + co.t, `<span class="sub">${co.job}</span><div class="row">${statusPill(co.st)}<b class="num" style="font-size:22px">${money(co.amt)}</b><span class="sub">· ${co.days} day schedule impact</span></div><div class="tw"><table class="t"><tbody>${brk.map(b => `<tr><td>${b[0]}</td><td class="r num">${money(co.amt * b[1])}</td></tr>`).join('')}</tbody></table></div>
+      ${co.st === 'Draft' ? B('Send to GC for signature', 'coSend', '', 'p') : co.st === 'Pending GC' ? B('Record GC approval', 'coOk', '', 'p') + '<span class="sub">Sent Nov 12 to Hawthorne Builders · viewed twice</span>' : '<span class="sub">Approved and added to the contract and schedule of values</span>'}`)}</div>`;
+});
+
+def('cn-compliance', 'cn', 'Waivers, COIs & payroll', () => {
+  const c = S.cn;
+  return head('Waivers, COIs & certified payroll', 'Paperwork that keeps you paid and on the job', B('Send all reminders', 'compAll', '', 'p', !c.comp.some(x => x.need))) +
+    kpis(kpi('Lien waivers', String(c.comp.filter(x => x.k === 'Lien waiver' && x.need).length) + ' open', 'all others signed'), kpi('Certificates of insurance', String(c.comp.filter(x => x.k === 'COI' && x.need).length) + ' expiring', 'within 30 days'), kpi('Certified payroll', String(c.comp.filter(x => x.k === 'Certified payroll' && x.need).length) + ' due', 'prevailing wage jobs'), kpi('Prevailing wage jobs', '2', 'Sarpy County, District 27')) +
+    card('Documents', tbl([{ l: 'Type', f: x => pill(x.k) }, { l: 'Document', f: x => `<b>${x.what}</b><br><span class="sub">${x.who}</span>` }, { l: 'Status', f: x => statusPill(x.st) }, { l: '', r: 1, f: (x, i) => x.need ? B(x.k === 'Certified payroll' ? 'Generate WH-347' : x.k === 'COI' ? 'Request new COI' : 'Remind supplier', 'comp', i, 's') : '' }], c.comp));
+});
+
+def('cn-schedule', 'cn', 'Crew & pour schedule', () => {
+  const m = S.cn.moved, days = ['Mon 16', 'Tue 17', 'Wed 18', 'Thu 19', 'Fri 20', 'Sat 21'];
+  const wx = [['48°', 'Sunny'], ['44°', 'Cloudy'], ['39°', 'Rain 70%'], ['46°', 'Sunny'], ['50°', 'Sunny'], ['42°', 'Cloudy']];
+  const rows = [['Crew A · Luis', ['Westgate · form Area D', 'Westgate · rebar Area D', m ? '' : 'POUR · Westgate slab D · 62 CY', m ? 'POUR · Westgate slab D · 62 CY' : 'Westgate · strip forms', 'Westgate · walks', '']], ['Crew B · Tessa', ['Elkhorn · excavation', 'Elkhorn · excavation', 'Elkhorn · forms', 'Elkhorn · forms', 'POUR · Elkhorn dock 1 · 48 CY', '']], ['Finishing · Andre', ['Library · walks', 'Library · walks', m ? 'Library · saw cut' : 'Westgate slab D', m ? 'Westgate slab D' : 'Library · saw cut', 'Elkhorn dock 1', 'District 27 punch list']], ['Pump & trucks', ['', '', m ? '' : 'Plains Pumping · 38 m', m ? 'Plains Pumping · 38 m' : '', 'Plains Pumping · 32 m', '']]];
+  return head('Crew & pour schedule', 'Week of November 16 · Metro Ready Mix confirmed for 2 pours', m ? pill('Wednesday pour moved to Thursday', 'gn') : B('Move Wednesday pour to Thursday', 'move', '', 'p')) +
+    card('This week', `<div class="tw"><div class="sched" style="grid-template-columns:150px repeat(6,minmax(110px,1fr))"><div class="hd">Crew</div>${days.map((d, i) => `<div class="hd">${d}<br><span class="${i === 2 ? 'warn' : ''}">${wx[i][0]} · ${wx[i][1]}</span></div>`).join('')}${rows.map(r => `<div><b>${r[0]}</b></div>${r[1].map((x, i) => `<div>${x ? `<span class="sh ${x.startsWith('POUR') ? (i === 2 ? 'b' : 'g') : ''}" style="white-space:normal">${x}</span>` : ''}</div>`).join('')}`).join('')}</div></div>`) +
+    (m ? '<div class="note">Metro Ready Mix, Plains Pumping and the finishing crew were notified of the new date. Hawthorne’s superintendent got the updated look-ahead.</div>' : `<div class="note"><span class="ai">${ico('spark', 13)} Weather check</span> Wednesday has a 70% chance of rain at the Westgate site. Thursday is sunny and 46°, and the pump and finishing crew are free.</div>`);
+});
+
+def('cn-field', 'cn', 'Field app', () => {
+  const f = S.cn.field, hrs = sum(f.crew, c => c[2]);
+  const inner = f.done ? `<div class="pbar" style="background:#3D4A5C"><b>Daily log</b></div><div class="pbody" style="justify-content:center;align-items:center;text-align:center;gap:14px"><div class="dot" style="width:72px;height:72px;background:var(--gnb);color:var(--gn)">${ico('ok', 34)}</div><b style="font-size:22px">Log submitted</b><span>${hrs} crew hours and ${f.cy} CY posted to J-2611 job cost. ${f.photos} photos added to the project.</span><button class="btn" data-act="fieldReset">Start tomorrow’s log</button></div>`
+    : `<div class="pbar" style="background:#3D4A5C"><b>Westgate · Mon Nov 16</b></div><div class="pbody"><div class="pcard" style="flex-direction:row;align-items:center"><span style="font-size:26px">⛅</span><span style="flex:1"><b>48° partly cloudy</b><br><span class="sub">auto-filled from the job address</span></span></div>
+      <div class="pcard"><b>Crew on site · ${hrs} hrs</b>${f.crew.map((c, i) => `<div class="row" style="flex-wrap:nowrap"><span style="flex:1;font-size:14px"><b>${c[0]}</b><br><span class="sub">${c[1]}</span></span><button class="ib" style="width:34px;height:34px" data-act="hr" data-arg="${i}:-0.5" aria-label="Less time">${ico('minus', 14)}</button><b class="num" style="width:34px;text-align:center">${c[2]}</b><button class="ib" style="width:34px;height:34px" data-act="hr" data-arg="${i}:0.5" aria-label="More time">${ico('plus', 14)}</button></div>`).join('')}</div>
+      <div class="pcard"><label class="fld">Concrete placed (CY)<input class="inp" id="fcy" inputmode="decimal" value="${f.cy}" data-ch="fcy"></label><label class="fld">Notes<textarea class="inp" id="fn" placeholder="Delays, deliveries, visitors…">Area C walks poured and broom finished. Inspector signed off rebar at Area D.</textarea></label></div>
+      <div class="pcard"><b>Photos</b><div class="row">${Array.from({ length: f.photos }, (_, i) => `<span style="width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,${['#8E9AAF', '#B0A08A', '#7D8B7A', '#A39E96', '#9AA6B8'][i % 5]},#3D4A5C)"></span>`).join('')}<button class="ib" style="width:64px;height:64px" data-act="photo" aria-label="Add photo">${ico('cam', 22)}</button></div></div>
+      <label class="pcard" style="flex-direction:row;align-items:center;cursor:pointer">${tog(f.safety, 'safety', '', 'Toolbox talk held')}<span style="font-size:14px">Toolbox safety talk held</span></label><button class="btn p" data-act="fieldDone" style="justify-content:center;min-height:52px">Submit daily log</button></div>`;
+  return head('Field app', 'Foremen log the day from their phone; it works offline on site', '') + `<div class="stage">${phone(inner, 'Field daily log')}<div class="side-note">${card('Where it goes', '<div class="list"><div class="li" style="cursor:default"><b style="width:90px">Hours</b><span class="f sub">job cost labor and certified payroll</span></div><div class="li" style="cursor:default"><b style="width:90px">Quantities</b><span class="f sub">percent complete for the next pay app</span></div><div class="li" style="cursor:default"><b style="width:90px">Photos</b><span class="f sub">attached to pay apps and change orders</span></div></div>')}</div></div>`;
+});
+
+/* ===== ACCOUNTANT ===== */
+const CLIENTS = [['Copper Kettle Café & Market', 'Retail', 70, 6, 1, 1], ['Prairie Meals Alliance', 'Nonprofit', 85, 1, 0, 0], ['Ridgeline Concrete Co.', 'Construction', 40, 0, 1, 1], ['Bluestem Animal Rescue', 'Nonprofit', 25, 14, 2, 1], ['Harbor & Pine Outfitters', 'Retail', 100, 0, 0, 0], ['Midtown Arts Collective', 'Nonprofit', 60, 9, 1, 0], ['Keystone Mechanical', 'Construction', 55, 22, 1, 0]];
+const CLOSE_T = [['Bank & cards', 'Reconcile operating account'], ['Bank & cards', 'Reconcile Stripe clearing'], ['Bank & cards', 'Reconcile credit card'], ['Revenue', 'Tie sales and gifts to deposits'], ['Revenue', 'Review sales tax liability'], ['Payroll', 'Post Gusto payroll journal entries'], ['Adjustments', 'Record depreciation'], ['Adjustments', 'Accrue unpaid bills'], ['Review', 'Flux review against September'], ['Review', 'Lock October']];
+const closeOf = c => { if (!S.ac.closes[c]) { const p = (CLIENTS.find(x => x[0] === c) || [0, 0, 50])[2]; S.ac.closes[c] = CLOSE_T.map((t, i) => ({ g: t[0], t: t[1], done: i < Math.round(p / 10), who: i % 3 ? 'PS' : 'DK' })); } return S.ac.closes[c]; };
+def('ac-firm', 'ac', 'Firm home', () => {
+  const rev = S.ac.review.length;
+  return head('Good morning, Priya', 'October close · due November 20', B('+ Invite a client', 'toastMsg', 'Invite a client to AUCTIX; they’re billed directly or through your firm at 30% off (demo)', 'p')) +
+    kpis(kpi('Clients on AUCTIX', '24', '7 shown below'), kpi('Closes due this week', '6', '2 behind'), kpi('Transactions to review', String(rev + 130), 'across all clients'), kpi('Open client requests', String(S.ac.reqs.filter(r => r.st !== 'Answered').length), '1 overdue')) +
+    card('Clients · October close', tbl([{ l: 'Client', f: c => `<b>${c[0]}</b>` }, { l: 'Edition', f: c => pill(c[1]) }, { l: 'Close progress', f: c => { const p = Math.round(closeOf(c[0]).filter(x => x.done).length / CLOSE_T.length * 100); return `<div style="min-width:120px"><span class="num" style="font-size:13px">${p}%</span>${meter(p, p < 50 ? 'w' : p === 100 ? 'g' : '')}</div>`; } }, { l: 'To review', r: 1, f: c => `<span class="num">${c[0].startsWith('Copper') ? S.ac.review.filter(r => r.c === 'Copper Kettle').length : c[3]}</span>` }, { l: 'Unreconciled', r: 1, f: c => `<span class="num">${c[0].startsWith('Copper') && S.ac.reconDone ? 0 : c[4]}</span>` }, { l: 'Requests', r: 1, k: 5 }], CLIENTS, { act: 'openClient' }), '<span class="sub">Click a client to open its close</span>');
+});
+
+def('ac-close', 'ac', 'Close checklist', () => {
+  const c = S.ac.client, L = closeOf(c), done = L.filter(x => x.done).length, groups = [...new Set(L.map(x => x.g))];
+  return head('October close · ' + c, `${done} of ${L.length} done · due Nov 20`, `<select class="inp" id="clsel" data-ch="client" style="width:auto" aria-label="Client">${CLIENTS.map(x => `<option${x[0] === c ? ' selected' : ''}>${x[0]}</option>`).join('')}</select>`) +
+    `<div class="card">${meter(done / L.length * 100, done === L.length ? 'g' : '')}<span class="sub">${done === L.length ? 'Closed and locked. Nice work.' : 'Tick items as you finish them. Linked items open the right screen.'}</span></div>` +
+    `<div class="g11">${groups.map(g => card(g, `<div class="list">${L.map((x, i) => [x, i]).filter(([x]) => x.g === g).map(([x, i]) => `<div class="li" style="cursor:default">${cb(x.done, 'closeT', i, x.t)}<span class="f" style="${x.done ? 'color:var(--mu);text-decoration:line-through' : ''}">${x.t}</span>${x.t.startsWith('Reconcile operating') ? X('Open', 'ac-recon') : x.t.startsWith('Record dep') || x.t.startsWith('Lock') ? X('Open', 'ac-journal') : ''}<span class="av" style="width:28px;height:28px;font-size:11px">${x.who}</span></div>`).join('')}</div>`)).join('')}</div>`;
+});
+
+def('ac-review', 'ac', 'Transaction review', () => {
+  const R = S.ac.review;
+  return head('Transaction review', 'Flagged by AUCTIX across your clients · October', B('Approve all 85%+ sure', 'revAll', '', 'p', !R.some(r => r.conf >= 85))) +
+    card(`${R.length} to review`, R.length ? tbl([{ l: 'Client', f: r => `<b>${r.c}</b>` }, { l: 'Date', k: 'd' }, { l: 'Description', f: r => `<b>${r.desc}</b><br>${pill(r.flag, r.flag.includes('dup') || r.flag.includes('personal') ? 'bd' : 'wn')}` }, { l: 'Amount', r: 1, f: r => `<span class="num">${m2(r.a)}</span>` }, { l: 'Suggested', f: r => `${r.sug}<br><span class="ai">${ico('spark', 13)} ${r.conf}% sure</span>` }, { l: '', r: 1, f: (r, i) => `<span class="row" style="justify-content:flex-end;gap:6px">${B('Ask client', 'revAsk', i, 's')}${B('Approve', 'revOk', i, 's p')}</span>` }], R) : `<div class="empty">${ico('ok', 28)}<br><b>Review queue is empty.</b></div>`);
+});
+
+def('ac-recon', 'ac', 'Bank reconciliation', () => {
+  const a = S.ac, begin = 41380.12, stmt = 53055.82, cleared = begin + sum(a.recon.filter(r => r.on), 'a'), diff = Math.round((stmt - cleared) * 100) / 100;
+  return head('Bank reconciliation', 'Copper Kettle Café & Market · First National Operating · October 31, 2026', a.reconDone ? pill('Reconciled Nov 16', 'gn') : B('Finish reconciliation', 'reconDone', '', 'p', diff !== 0)) +
+    kpis(kpi('Statement ending balance', m2(stmt), 'from the October statement'), kpi('Cleared balance', m2(cleared), 'beginning ' + m2(begin)), kpi('Difference', m2(diff), diff === 0 ? 'balanced' : 'tick cleared items', diff === 0 ? 'good' : 'bad'), kpi('Outstanding', String(a.recon.filter(r => !r.on).length), 'items not cleared')) +
+    card('Transactions · October', tbl([{ l: 'Cleared', f: (r, i) => a.reconDone ? (r.on ? '✓' : '') : cb(r.on, 'rec', i, 'Cleared: ' + r.desc) }, { l: 'Date', k: 'd' }, { l: 'Description', f: r => `<b>${r.desc}</b>` }, { l: 'Deposit', r: 1, f: r => r.a > 0 ? `<span class="num">${m2(r.a)}</span>` : '' }, { l: 'Payment', r: 1, f: r => r.a < 0 ? `<span class="num">${m2(-r.a)}</span>` : '' }], a.recon), '<span class="sub">Bank feed already matched most items</span>');
+});
+
+const ACCTS = ['1000 Operating cash', '1200 Accounts receivable', '1590 Accumulated depreciation', '2000 Accounts payable', '2100 Accrued expenses', '3100 Owner draws', '5000 Cost of goods sold', '6100 Rent', '6300 Depreciation expense', '6700 Utilities'];
+def('ac-journal', 'ac', 'Adjusting entries', () => {
+  const a = S.ac, dr = sum(a.je, l => +l.dr || 0), cr = sum(a.je, l => +l.cr || 0), ok = dr > 0 && Math.abs(dr - cr) < 0.005;
+  return head('Adjusting entries & period lock', 'Copper Kettle Café & Market · October 2026', '') +
+    `<div class="g2"><div class="col">${card('Entries', tbl([{ l: 'Number', f: j => `<span class="mono">${j.no}</span>` }, { l: 'Date', k: 'd' }, { l: 'Memo', f: j => `<b>${j.memo}</b>` }, { l: 'Amount', r: 1, f: j => `<span class="num">${m2(j.amt)}</span>` }, { l: 'Status', f: j => pill(j.st, j.st === 'Posted' ? 'gn' : '') }], a.jes))}
+    ${card('New adjusting entry', `<div class="tw"><table class="t stack"><thead><tr><th>Account</th><th class="r">Debit</th><th class="r">Credit</th></tr></thead><tbody>${a.je.map((l, i) => `<tr><td data-l="Account">${sel('ja' + i, ACCTS, l.acct, 'jeA', i, 'sm')}</td><td data-l="Debit" class="r"><input class="inp sm num" id="jd${i}" inputmode="decimal" value="${l.dr}" data-ch="jeD" data-arg="${i}" style="width:110px;text-align:right" aria-label="Debit"></td><td data-l="Credit" class="r"><input class="inp sm num" id="jc${i}" inputmode="decimal" value="${l.cr}" data-ch="jeC" data-arg="${i}" style="width:110px;text-align:right" aria-label="Credit"></td></tr>`).join('')}</tbody><tfoot><tr><td data-l="">Totals</td><td data-l="Debit" class="r num">${m2(dr)}</td><td data-l="Credit" class="r num">${m2(cr)}</td></tr></tfoot></table></div>
+      <div class="row">${B('+ Line', 'jeAdd', '', 's')}<span class="${ok ? 'good' : 'sub'}" style="font-size:13px">${ok ? '✓ Balanced' : dr || cr ? 'Out of balance by ' + m2(Math.abs(dr - cr)) : 'Try 1,233.33 on both lines'}</span><span style="margin-left:auto"></span>${B('Post entry', 'jePost', '', 'p', !ok || a.locked)}</div>`)}</div>
+    ${card('Period lock', `<div class="row">${ico('lock', 22)}<b>${a.locked ? 'Locked through Oct 31, 2026' : 'Locked through Sep 30, 2026'}</b></div><p class="sub" style="margin:0">When a period is locked, the client can’t add or change entries in it without your approval. Changes you approve are logged.</p>${a.locked ? pill('October locked by Priya Shah', 'gn') : B('Lock October', 'lockAsk', '', 'p')}`)}</div>`;
+});
+
+def('ac-requests', 'ac', 'Client requests', () => {
+  const R = S.ac.reqs;
+  return head('Client requests', 'Questions and documents, answered in the client’s own AUCTIX inbox', B('+ New request', 'acReqModal', '', 'p')) +
+    kpis(kpi('Waiting on clients', String(R.filter(r => r.st === 'Waiting on client').length), 'reminders every 3 days'), kpi('Overdue', String(R.filter(r => r.st === 'Overdue').length), 'over 10 days', 'bad'), kpi('Answered this month', String(R.filter(r => r.st === 'Answered').length), 'average 1.8 days'), kpi('Emails avoided', '86', 'answers stay with the transaction')) +
+    card('All requests', tbl([{ l: 'Client', f: r => `<b>${r.c}</b>` }, { l: 'Request', k: 't' }, { l: 'Sent', k: 'sent' }, { l: 'Status', f: r => statusPill(r.st) }, { l: '', r: 1, f: (r, i) => r.st !== 'Answered' ? B('Nudge', 'toastMsg', 'Reminder sent to ' + r.c, 's') : '' }], R));
+});
+
+const TAXL = { ck: ['Line 1a Gross receipts', 'Line 1b Returns and allowances', 'Form 1125-A Purchases', 'Line 7 Compensation of officers', 'Line 8 Salaries and wages', 'Line 11 Rents', 'Line 12 Taxes and licenses', 'Line 14 Depreciation', 'Line 16 Advertising', 'Line 19 Other deductions', 'Sch. M-1 Nondeductible'],
+  pm: ['Part VIII 1h Contributions', 'Part VIII 1f Government grants', 'Part VIII 8a Special events', 'Part IX col. B Program services', 'Part IX col. C Management', 'Part IX col. D Fundraising'],
+  rc: ['Line 1a Gross receipts', 'Form 1125-A Cost of labor', 'Form 1125-A Materials', 'Line 7 Compensation of officers', 'Line 14 Depreciation', 'Line 19 Other deductions'] };
+const TAXC = { 'Copper Kettle Café & Market (1120-S)': 'ck', 'Prairie Meals Alliance (990)': 'pm', 'Ridgeline Concrete Co. (1120-S)': 'rc' };
+const mapsInit = () => ({
+  ck: [['4000 Sales · café', 612480, 0], ['4100 Sales · market & merch', 88240, 0], ['4900 Refunds & discounts', -9860, 1], ['5000 Cost of goods · food & beverage', 201330, 2], ['5100 Cost of goods · merchandise', 39900, 2], ['6000 Officer compensation', 72000, 3], ['6010 Wages', 186420, 4], ['6100 Rent', 50400, 5], ['6200 Payroll taxes', 21640, 6], ['6300 Depreciation', 14800, 7], ['6400 Advertising', 6240, 8], ['6500 Card processing fees', 19870, 9], ['6600 Meals', 1180, -1], ['6999 Ask my accountant', 2500, -1]],
+  pm: [['4000 Contributions', 118420, 0], ['4100 Grants', 41000, -1], ['4200 Event sponsorships', 22900, 2], ['7000 Program services', 142880, 3], ['7100 Management & general', 18640, 4], ['7200 Fundraising', 8220, 5]],
+  rc: [['4000 Contract revenue', 1814200, 0], ['5000 Direct labor', 612400, 1], ['5100 Concrete & materials', 704300, 2], ['6000 Officer compensation', 96000, 3], ['6300 Depreciation', 88200, 4], ['6500 Insurance & bonds', 41600, -1]] });
+def('ac-tax', 'ac', 'Tax mapping & export', () => {
+  const a = S.ac; if (!a.maps) a.maps = mapsInit();
+  const k = TAXC[a.taxc], rows = a.maps[k], un = rows.filter(r => r[2] < 0).length;
+  return head('Tax mapping & export', 'Map each account to a line on the return once; it carries forward every year', `<select class="inp" id="taxc" data-ch="taxc" style="width:auto" aria-label="Client">${Object.keys(TAXC).map(x => `<option${x === a.taxc ? ' selected' : ''}>${x}</option>`).join('')}</select>` + B('Export to tax software', 'toastMsg', un ? 'Map the remaining accounts first' : 'Trial balance exported for UltraTax CS, Lacerte, ProConnect or Drake (demo)', 'p')) +
+    kpis(kpi('Accounts mapped', `${rows.length - un} / ${rows.length}`, un ? un + ' to map' : 'ready to export', un ? 'bad' : 'good'), kpi('Tax year', '2026', 'through October, books open'), kpi('Prior year', 'Carried forward', 'from 2025 mappings')) +
+    card('Account mapping', tbl([{ l: 'Account', f: r => `<b>${r[0]}</b>` }, { l: 'Balance YTD', r: 1, f: r => `<span class="num">${money(r[1])}</span>` }, { l: 'Tax line', f: (r, i) => `<select class="inp sm" id="tx${i}" data-ch="taxMap" data-arg="${i}" aria-label="Tax line for ${r[0]}" style="${r[2] < 0 ? 'border-color:var(--bd)' : ''}"><option${r[2] < 0 ? ' selected' : ''}>Choose a line…</option>${TAXL[k].map((o, j) => `<option${j === r[2] ? ' selected' : ''}>${o}</option>`).join('')}</select>` }], rows));
+});
+
+/* ---------- modals ---------- */
+const M = {
+  welcome: () => `<h2>See what running a business on AUCTIX looks like</h2><p class="sub" style="margin:0">Pick a sample business. Everything is clickable, the numbers react, and a short guided tour shows the highlights. All names and figures are sample data.</p><div class="wel">${Object.entries(ED).map(([k, e]) => `<button type="button" class="welc" data-act="pickEd" data-arg="${k}"><span class="row"><span class="badge" style="background:${e.color}">${e.badge}</span><b>${e.name}</b><span class="pill ${k === 'np' ? 'ok' : ''}" style="margin-left:auto">${e.launch}</span></span><span><b style="color:var(--ink)">${e.org}</b> · ${e.blurb}</span></button>`).join('')}</div>`,
+  gift: d => `<h2>Record a gift</h2>${field('Donor', inp('gd', d || 'Taylor Brooks'))}<div class="g11">${field('Amount', inp('ga', '100', 'inputmode="decimal"'))}${field('Method', sel('gm', ['Check', 'Cash', 'ACH', 'Card · in person', 'Stock'], 'Check'))}</div>${field('Fund', sel('gf', ['General operating', 'Meal ingredients (R)', 'Holiday packing (R)', 'Packing trailer (R)'], 'General operating'))}<div class="acts">${B('Cancel', 'close')}${B('Save and send receipt', 'saveGift', '', 'p')}</div>`,
+  req: () => `<h2>New donation request</h2>${field('Donor or company', inp('rd', 'Capitol Credit Union'))}${field('For', inp('rf', 'Holiday Meal Packing sponsorship'))}<div class="g11">${field('Amount', inp('ra', '2500', 'inputmode="decimal"'))}${field('Due', inp('rdu', 'Dec 15'))}</div>${field('Fund', sel('rfu', ['Holiday packing (R)', 'General operating', 'Meal ingredients (R)'], 'Holiday packing (R)'))}<div class="acts">${B('Cancel', 'close')}${B('Send request', 'saveReq', '', 'p')}</div>`,
+  note: () => `<h2>Log a note for Dana</h2>${field('Note', '<textarea class="inp" id="nt">Talked at the Rotary lunch. Interested in leading a shift in December.</textarea>')}<div class="acts">${B('Cancel', 'close')}${B('Save note', 'saveNote', '', 'p')}</div>`,
+  charge: () => S.rt.pay === 'ok' ? `<div style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center"><div class="dot" style="width:72px;height:72px;background:var(--gnb);color:var(--gn)">${ico('ok', 34)}</div><h2>Approved</h2><span>Order #${S.rt.next - 1} · card ending 4242${S.rt.lastKitchen ? '<br>Sent to the kitchen display' : ''}</span><div class="acts" style="justify-content:center">${B('Text receipt', 'toastMsg', 'Receipt texted (demo)')}${S.rt.lastKitchen ? G('See kitchen display', 'rt-kds') : ''}${B('New order', 'close', '', 'p')}</div></div>`
+    : `<div style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center"><div class="dot" style="width:72px;height:72px">${ico('card', 32)}</div><h2>Tap, insert or swipe</h2><span>Waiting on Stripe Reader S700 · ${m2(S.rt.payAmt)}</span><div class="acts" style="justify-content:center">${B('Cancel', 'close')}${B('Simulate card tap', 'tap', '', 'p')}</div></div>`,
+  recall: () => `<h2>Recall notice · lot L-261107-A</h2><p style="margin:0">If ingredient lot R-2611 (rice) were recalled, these partners would be notified:</p>${tbl([{ l: 'Partner', f: r => `<b>${r[0]}</b>` }, { l: 'Boxes', r: 1, k: 1 }, { l: 'Shipped', k: 2 }], [['Food Bank of the Heartland region', 34, 'Nov 10'], ['Lincoln school backpack program', 18, 'Nov 12'], ['Warehouse B2 (hold)', 8, 'On hand']])}<div class="acts">${B('Cancel', 'close')}${B('Send notices', 'recallSend', '', 'p')}</div>`,
+  lock: () => `<h2>Lock October 2026?</h2><p style="margin:0">Copper Kettle won’t be able to add or edit entries dated on or before October 31 without your approval. You can unlock later; every change is logged.</p><div class="acts">${B('Cancel', 'close')}${B('Lock October', 'lock', '', 'p')}</div>`,
+  acReq: () => `<h2>New client request</h2>${field('Client', sel('aqc', CLIENTS.map(c => c[0]), 'Copper Kettle Café & Market'))}${field('Request', '<textarea class="inp" id="aqt">Please upload the October statement for the business credit card.</textarea>')}<div class="acts">${B('Cancel', 'close')}${B('Send to client', 'saveAcReq', '', 'p')}</div>`
+};
+const modal = (k, arg) => { S.modal = { k, arg }; R(); setTimeout(() => { const f = document.querySelector('.mdl input, .mdl textarea, .mdl button'); if (f) f.focus(); }, 0); };
+
+/* ---------- actions ---------- */
+const A = {
+  close: () => { S.modal = null; R(); },
+  toastMsg: m => toast(m),
+  pickEd: k => { S.modal = null; S.tour = { on: true, i: 0, min: false }; go(ED[k].home); },
+  edTab: k => { S.tour.i = 0; go(ED[k].home); },
+  welcome: () => modal('welcome'),
+  reset: () => { const c = S.cur; S = init(); S.cur = c; S.ed = SC[c].ed; R(); toast('Demo reset to the original sample data'); },
+  nav: () => { S.nav = !S.nav; R(); },
+  ask: () => { S.ask = !S.ask; R(); },
+  askQ: i => { const q = ED[S.ed].ask[i]; S.chat.push([q[0], q[1]]); R(); },
+  tourNext: () => { const t = ED[S.ed].tour; if (S.tour.i < t.length - 1) { S.tour.i++; go(t[S.tour.i][0], true); } else { S.tour.on = false; R(); toast('Tour complete. Keep exploring, or press Get started to see your plan and price.'); } },
+  tourBack: () => { if (S.tour.i > 0) { S.tour.i--; go(ED[S.ed].tour[S.tour.i][0], true); } },
+  tourMin: () => { S.tour.min = true; R(); },
+  tourOpen: () => { S.tour.on = true; S.tour.min = false; const t = ED[S.ed].tour, j = t.findIndex(x => x[0] === S.cur); if (j >= 0) S.tour.i = j; else go(t[S.tour.i][0], true); R(); },
+  // nonprofit
+  giftModal: d => modal('gift', d),
+  saveGift: () => { const a = parseFloat(val('ga')) || 0, who = val('gd') || 'Anonymous'; if (a <= 0) { toast('Enter an amount'); return; } S.np.gifts.unshift({ d: 'Nov 16', who, fund: val('gf'), m: val('gm'), a, r: 'Sent' }); S.np.added += a; S.modal = null; R(); toast(`Gift of ${m2(a)} recorded · receipt emailed to ${who}`); },
+  reqModal: () => modal('req'),
+  saveReq: () => { const n = S.np.requests.length + 1037; S.np.requests.unshift({ no: 'DR-' + (1043 + S.np.requests.length - 6), to: val('rd'), for: val('rf'), fund: val('rfu'), amt: parseFloat(val('ra')) || 0, due: val('rdu'), st: 'Sent' }); S.modal = null; R(); toast('Request sent with a secure payment link'); },
+  remind: i => toast(`Friendly reminder sent to ${S.np.requests[i].to}`),
+  reqPaid: i => { const r = S.np.requests[i]; r.st = 'Paid'; S.np.gifts.unshift({ d: 'Nov 16', who: r.to, fund: r.fund, m: 'Request · ACH', a: r.amt, r: 'Sent' }); S.np.added += r.amt; R(); toast(`${r.no} paid · ${m2(r.amt)} posted to ${r.fund} · receipt sent`); },
+  txOk: s => { const [k, i] = s.split(':'); const t = S[k].tx.splice(+i, 1)[0]; R(); toast('Categorized: ' + t.sug); },
+  txAll: k => { const n = S[k].tx.length + S[k].txMore; S[k].tx = []; S[k].txMore = 0; R(); toast(`${n} transactions categorized and posted`); },
+  seg: s => { S.np.seg = s; R(); },
+  crmQ: v => { S.np.q = v; R(); },
+  noteModal: () => modal('note'),
+  saveNote: () => { S.np.notes.unshift(val('nt')); S.modal = null; R(); toast('Note saved to Dana’s timeline'); },
+  thread: i => { S.np.thread = +i; S.np.threads[i].unread = false; S.np.draft = ''; R(); },
+  useDraft: () => { S.np.draft = S.np.threads[S.np.thread].ai; R(); },
+  draft: v => { S.np.draft = v; },
+  sendReply: () => { const d = S.np.draft.trim(); if (!d) { toast('Write a reply first'); return; } const th = S.np.threads[S.np.thread]; th.msgs.push({ f: 'You', me: true, b: d }); th.unread = false; S.np.draft = ''; R(); toast('Reply sent and logged on the contact’s timeline'); },
+  task: i => { const t = S.np.tasks[i]; t.done = !t.done; R(); },
+  aiTasks: () => { S.np.tasks.push({ t: 'Text shift reminders to 156 volunteers', due: 'Fri', who: 'KM', tag: 'Events', done: false }, { t: 'Load packing trailer at warehouse', due: 'Fri', who: 'JL', tag: 'Events', done: false }, { t: 'Send thank-you emails to Holiday pack volunteers', due: 'Nov 23', who: 'KM', tag: 'Stewardship', done: false }); R(); toast('3 tasks created with owners and due dates'); },
+  wf: () => { S.np.wfOn = !S.np.wfOn; R(); toast(S.np.wfOn ? 'Workflow turned on' : 'Workflow paused'); },
+  camp: i => { S.np.camp = +i; R(); },
+  gt: () => { S.np.gtSched = true; R(); toast('Giving Tuesday scheduled for Dec 1, 7:00 AM to 2,104 people'); },
+  conv: i => { S.np.leads[i].conv = true; R(); toast('Opportunity created on the Partnerships pipeline'); },
+  waiver: () => { S.np.waiver = true; R(); toast('Waiver reminders texted and emailed to 3 guardians'); },
+  po: k => { S.np.po[k] = true; R(); toast('Purchase order sent to Sysco Lincoln'); },
+  recall: () => modal('recall'),
+  recallSend: () => { S.modal = null; R(); toast('Recall drill complete: 3 notices drafted (nothing was sent)'); },
+  settab: t => { S.np.settab = t; R(); },
+  portal: k => { S.np.portal[k] = !S.np.portal[k]; R(); },
+  giveAmt: a => { S.np.give.amt = +a; R(); },
+  giveMo: i => { S.np.give.monthly = i === '1'; R(); },
+  giveFund: v => { S.np.give.fund = v; },
+  giveCover: (v, el) => { S.np.give.cover = el.checked; R(); },
+  giveNow: () => { const g = S.np.give, tot = g.amt + (g.cover ? Math.round(g.amt * 0.032 * 100) / 100 : 0); S.np.gifts.unshift({ d: 'Nov 16', who: 'Taylor Brooks', fund: g.fund === 'Where it’s needed most' ? 'General operating' : g.fund + ' (R)', m: g.monthly ? 'Card · monthly' : 'Card · online', a: tot, r: 'Sent' }); S.np.added += tot; g.done = true; R(); },
+  giveAgain: () => { S.np.give.done = false; R(); },
+  recur: () => { S.np.recur = !S.np.recur; R(); toast(S.np.recur ? 'Monthly gift resumed' : 'Monthly gift paused'); },
+  mob: v => { S.np.mob = v; S.np.mtab = 'home'; R(); },
+  mtab: t => { S.np.mtab = t; R(); },
+  goMobile: t => { S.np.mob = 'app'; S.np.mtab = t; go('np-mobile'); },
+  chk: i => { S.np.checkin[i] = true; R(); toast(VOLS[i] + ' checked in'); },
+  scan: () => { S.np.scanned++; R(); toast('Scanned · lot recorded'); },
+  // retail
+  loc: l => { S.rt.loc = l; R(); },
+  cat: c => { S.rt.cat = c; R(); },
+  add: n => { const p = Object.values(PROD).flat().find(x => x[0] === n), c = S.rt.cart.find(x => x.n === n); if (c) c.q++; else S.rt.cart.push({ n, p: p[1], q: 1 }); R(); },
+  dec: i => { const c = S.rt.cart[i]; if (--c.q <= 0) S.rt.cart.splice(i, 1); R(); },
+  clear: () => { S.rt.cart = []; S.rt.guest = false; R(); },
+  guest: () => { S.rt.guest = true; R(); },
+  charge: () => { const sub = sum(S.rt.cart, c => c.p * c.q); S.rt.payAmt = sub + Math.round(sub * TAX * 100) / 100; S.rt.pay = 'wait'; modal('charge'); },
+  tap: () => { const r = S.rt, k = r.cart.filter(c => KITCHEN.has(c.n)); r.lastKitchen = k.length > 0; if (k.length) r.tickets.push({ no: r.next, ch: 'Counter', min: 0, items: k.map(c => [(c.q > 1 ? c.q + ' × ' : '') + c.n, '']) }); r.next++; r.cart = []; r.guest = false; r.pay = 'ok'; R(); },
+  bump: i => { const t = S.rt.tickets.splice(i, 1)[0]; S.rt.bumped.push(t); R(); toast(`#${t.no} ready · guest notified`); },
+  recallTk: () => { S.rt.tickets.unshift(S.rt.bumped.pop()); R(); },
+  onAdd: s => { const [n, p] = s.split('|'), c = S.rt.online.cart.find(x => x.n === n); if (c) c.q++; else S.rt.online.cart.push({ n, p: +p, q: 1 }); R(); },
+  onTime: v => { S.rt.online.time = v; },
+  onPlace: () => { const r = S.rt, o = r.online; if (!o.cart.length) return; r.tickets.push({ no: r.next, ch: 'Online · ' + (o.time.startsWith('ASAP') ? 'ASAP' : 'pickup ' + o.time), min: 0, items: o.cart.map(c => [(c.q > 1 ? c.q + ' × ' : '') + c.n, '']) }); o.done = r.next++; o.cart = []; R(); },
+  onAgain: () => { S.rt.online.done = null; R(); },
+  sug: () => { S.rt.sug = suggest(); R(); if (!S.rt.sug) toast('No open table fits yet; quote a longer wait'); },
+  seat: () => { const r = S.rt, w = r.wait.shift(), t = r.tables.find(x => x.id === r.sug.id); t.st = 'seated'; t.party = w.p; r.sug = null; R(); toast(`${w.n} party seated at ${t.id} with ${t.sv}`); },
+  tblc: id => { const t = S.rt.tables.find(x => x.id === id), nx = { open: 'seated', seated: 'check', check: 'dirty', dirty: 'open' }[t.st]; t.st = nx; t.party = nx === 'seated' ? Math.min(t.seats, 2) : nx === 'check' ? t.party : 0; S.rt.sug = null; R(); },
+  addParty: () => { const names = ['Nguyen', 'Brooks', 'Olsen', 'Garcia']; S.rt.wait.push({ n: names[S.rt.wait.length % 4], p: [2, 4, 3, 5][S.rt.wait.length % 4], q: 15, w: 0 }); R(); },
+  ptSplit: s => { S.rt.pt.split = s; R(); },
+  ptTip: t => { S.rt.pt.tip = +t; R(); },
+  ptPay: () => { S.rt.pt.paid = true; R(); },
+  ptReset: () => { S.rt.pt = { split: 'Full check', tip: 20, paid: false }; R(); },
+  mcat: c => { S.rt.mcat = c; R(); },
+  off: n => { S.rt.off[n] = !S.rt.off[n]; R(); toast(S.rt.off[n] ? `${n} hidden on the register, online and at tables` : `${n} is back on the menu`); },
+  winback: () => { S.rt.sent = true; R(); toast('Win-back offer texted to 214 guests'); },
+  sheets: () => { S.rt.sheetsOk = true; R(); toast('6 timesheets approved'); },
+  sync: () => { S.rt.synced = true; R(); toast('Hours sent to Gusto'); },
+  // construction
+  estQ: (v, el) => { S.cn.est[el.dataset.arg].q = parseFloat(v) || 0; R(); },
+  estR: (v, el) => { S.cn.est[el.dataset.arg].r = parseFloat(v) || 0; R(); },
+  estOh: v => { S.cn.oh = parseFloat(v) || 0; R(); },
+  estPr: v => { S.cn.pr = parseFloat(v) || 0; R(); },
+  estAdd: () => { S.cn.est.push({ d: 'Curing compound', u: 'sf', q: 18400, r: 0.08 }); R(); },
+  estSend: () => { S.cn.estSent = true; R(); toast('Proposal sent to Prairie Point Contractors with your terms and exclusions'); },
+  payCur: (v, el) => { const l = S.cn.pay[el.dataset.arg]; l.cur = Math.max(0, Math.min(100 - l.prev, parseFloat(v) || 0)); R(); },
+  paySend: () => { S.cn.paySent = true; R(); toast('Pay app #6 submitted to Hawthorne Builders with lien waiver and photos'); },
+  coSel: i => { S.cn.coSel = +i; R(); },
+  coSend: () => { S.cn.cos[S.cn.coSel].st = 'Pending GC'; R(); toast('Sent to the GC for e-signature'); },
+  coOk: () => { const c = S.cn.cos[S.cn.coSel]; c.st = 'Approved'; R(); toast(`${c.no} approved · contract and schedule of values updated by ${money(c.amt)}`); },
+  comp: i => { const c = S.cn.comp[i]; c.need = false; c.st = c.k === 'Certified payroll' ? 'Submitted' : 'Requested'; R(); toast(c.k === 'Certified payroll' ? 'WH-347 generated from field hours and submitted' : 'Request sent'); },
+  compAll: () => { S.cn.comp.forEach(c => { if (c.need) { c.need = false; c.st = c.k === 'Certified payroll' ? 'Submitted' : 'Requested'; } }); R(); toast('All reminders sent'); },
+  move: () => { S.cn.moved = true; R(); toast('Pour moved to Thursday · supplier, pump and crew notified'); },
+  hr: s => { const [i, d] = s.split(':'); const c = S.cn.field.crew[i]; c[2] = Math.max(0, c[2] + parseFloat(d)); R(); },
+  fcy: v => { S.cn.field.cy = parseFloat(v) || 0; },
+  photo: () => { S.cn.field.photos++; R(); },
+  safety: () => { S.cn.field.safety = !S.cn.field.safety; R(); },
+  fieldDone: () => { S.cn.field.done = true; R(); },
+  fieldReset: () => { S.cn.field.done = false; R(); },
+  // accountant
+  openClient: i => { S.ac.client = CLIENTS[i][0]; go('ac-close'); },
+  client: v => { S.ac.client = v; R(); },
+  closeT: i => { const L = closeOf(S.ac.client); L[i].done = !L[i].done; R(); },
+  revOk: i => { const r = S.ac.review.splice(i, 1)[0]; R(); toast(`Approved: ${r.desc} → ${r.sug}`); },
+  revAsk: i => { const r = S.ac.review.splice(i, 1)[0]; S.ac.reqs.unshift({ c: r.c === 'Copper Kettle' ? 'Copper Kettle Café & Market' : 'Prairie Meals Alliance', t: `What was ${r.desc} for (${m2(r.a)}, ${r.d})?`, sent: 'Nov 16', st: 'Waiting on client' }); R(); toast('Question sent to the client’s AUCTIX inbox'); },
+  revAll: () => { const n = S.ac.review.filter(r => r.conf >= 85).length; S.ac.review = S.ac.review.filter(r => r.conf < 85); R(); toast(`${n} transactions approved`); },
+  rec: i => { S.ac.recon[i].on = !S.ac.recon[i].on; R(); },
+  reconDone: () => { S.ac.reconDone = true; const L = closeOf('Copper Kettle Café & Market'); L[0].done = true; R(); toast('Reconciled · report saved and close checklist updated'); },
+  jeA: (v, el) => { S.ac.je[el.dataset.arg].acct = v; },
+  jeD: (v, el) => { S.ac.je[el.dataset.arg].dr = v; R(); },
+  jeC: (v, el) => { S.ac.je[el.dataset.arg].cr = v; R(); },
+  jeAdd: () => { S.ac.je.push({ acct: ACCTS[0], dr: '', cr: '' }); R(); },
+  jePost: () => { const a = S.ac, amt = sum(a.je, l => +l.dr || 0); a.jes.push({ no: 'AJE-' + (a.jes.length + 1), d: 'Oct 31', memo: a.je.map(l => l.acct.replace(/^\d+ /, '')).join(' / '), amt, st: 'Posted' }); a.je = [{ acct: ACCTS[8], dr: '', cr: '' }, { acct: ACCTS[2], dr: '', cr: '' }]; R(); toast('Adjusting entry posted to October'); },
+  lockAsk: () => modal('lock'),
+  lock: () => { S.ac.locked = true; S.modal = null; const L = closeOf('Copper Kettle Café & Market'); L[L.length - 1].done = true; R(); toast('October locked for Copper Kettle'); },
+  acReqModal: () => modal('acReq'),
+  saveAcReq: () => { S.ac.reqs.unshift({ c: val('aqc'), t: val('aqt'), sent: 'Nov 16', st: 'Waiting on client' }); S.modal = null; R(); toast('Request sent to the client’s inbox'); },
+  taxc: v => { S.ac.taxc = v; R(); },
+  taxMap: (v, el) => { const k = TAXC[S.ac.taxc], i = +el.dataset.arg; S.ac.maps[k][i][2] = TAXL[k].indexOf(v); R(); }
+};
+
+/* ---------- shell ---------- */
+const SITE = /(^|\.)auctixtech\.com$/.test(location.hostname) || location.hostname === 'localhost' ? '' : 'https://auctixtech.com';
+const LOGO = (c = '#191B53', s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L3.5 20h4.2l1.6-3.4h5.4l1.6 3.4h4.2L12 3zm-1.2 10.4L12 10.6l1.2 2.8z" fill="${c}"/></svg>`;
+const view = () => {
+  const sc = SC[S.cur], ed = ED[sc.ed], t = ed.tour;
+  const nav = ed.nav.map(n => n[0] === 'h' ? `<h3>${n[1]}</h3>` : `<a href="#${n[0]}" data-go="${n[0]}"${n[0] === S.cur || (n[0] === 'np-crm' && S.cur === 'np-person') ? ' aria-current="page"' : ''}>${ico(n[2])}<span>${n[1]}</span>${SOON[n[0]] ? `<span class="soon">${SOON[n[0]]}</span>` : n[3] && n[3]() ? `<span class="cnt">${n[3]()}</span>` : ''}</a>`).join('');
+  const tourStep = t[S.tour.i];
+  const tourHtml = !S.tour.on ? `<button class="tpill" data-act="tourOpen">Take the tour</button>` : S.tour.min ? `<button class="tpill" data-act="tourOpen">Tour · step ${S.tour.i + 1} of ${t.length}</button>` :
+    `<aside class="tour" aria-label="Guided tour"><div class="tm"><span>Step ${S.tour.i + 1} of ${t.length}</span><div class="tdots">${t.map((_, i) => `<i class="${i === S.tour.i ? 'on' : ''}"></i>`).join('')}</div><button data-act="tourMin" aria-label="Hide tour">Hide</button></div><h4>${tourStep[1]}</h4><p>${tourStep[2]}</p>${S.cur !== tourStep[0] ? `<p style="color:#F3C27A">You’ve wandered off. Next takes you back on the tour.</p>` : ''}<div class="row">${S.tour.i ? '<button data-act="tourBack">Back</button>' : ''}<button class="nx" data-act="tourNext">${S.tour.i === t.length - 1 ? 'Finish' : 'Next'}</button></div></aside>`;
+  const modalHtml = S.modal ? `<div class="ov" role="dialog" aria-modal="true"><div class="bdp" data-act="close"></div><div class="mdl ${S.modal.k === 'welcome' ? 'wide' : ''}">${S.modal.k !== 'welcome' && S.modal.k !== 'charge' ? `<button class="ib" data-act="close" aria-label="Close" style="position:absolute;right:14px;top:14px;width:36px;height:36px">${ico('x', 16)}</button>` : ''}${M[S.modal.k](S.modal.arg)}</div></div>` : '';
+  const askHtml = S.ask ? `<div class="scrim" style="position:fixed;inset:0;background:rgba(8,10,35,.35);z-index:54" data-act="ask"></div><aside class="drawer" aria-label="Ask AUCTIX"><div class="dh"><span class="ai">${ico('spark', 18)}</span><b>Ask AUCTIX</b><span class="pill wn">Coming soon</span><button class="ib" data-act="ask" aria-label="Close" style="margin-left:auto;width:36px;height:36px">${ico('x', 16)}</button></div><div class="db"><p class="sub" style="margin:0">Ask about your own numbers in plain English. It reads your books, CRM and schedules, and it can draft, but you approve anything it sends. Sample answers below.</p>${S.chat.map(c => `<div class="bub me">${c[0]}</div><div class="bub">${c[1]}</div>`).join('')}${ed.ask.map((q, i) => `<button class="qbtn" data-act="askQ" data-arg="${i}">${q[0]}</button>`).join('')}</div></aside>` : '';
+  return `<div class="demo"><a class="brand" href="${SITE}/" aria-label="AUCTIX home"><span class="mark">${LOGO()}</span>AUCTIX <small>Interactive demo · sample data</small></a><div class="eds" role="group" aria-label="Business type">${Object.entries(ED).map(([k, e]) => `<button type="button" aria-pressed="${k === sc.ed}" data-act="edTab" data-arg="${k}">${e.name}</button>`).join('')}</div><div class="dright"><button class="dbtn so" data-act="welcome">Start over</button><button class="dbtn" data-act="reset">Reset</button><a class="dbtn p" href="${SITE}/get-started">Get started</a></div></div>
+  <div class="shell ${S.nav ? 'open' : ''}">${S.nav ? '<div class="scrim" data-act="nav"></div>' : ''}<nav class="side" aria-label="Main"><button type="button" class="org" data-act="welcome" aria-label="Switch sample business"><span class="badge" style="background:${ed.color}">${ed.badge}</span><span style="flex:1"><b>${ed.org}</b><span>${ed.place}</span></span><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#A9B4D6"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></button><div class="nav">${nav}</div><div class="me"><span class="av">${ed.user[0]}</span><span style="flex:1"><b>${ed.user[1]}</b><span>${ed.user[2]}</span></span></div></nav>
+  <main class="main"><header class="top"><button class="ib menu" data-act="nav" aria-label="Open menu">${ico('bars')}</button><label class="srch"><span style="position:absolute;left:-9999px">Search</span>${ico('search', 16)}<input type="search" id="gsearch" placeholder="Search ${sc.ed === 'np' ? 'donors, gifts, transactions' : sc.ed === 'rt' ? 'items, guests, orders' : sc.ed === 'cn' ? 'jobs, change orders, invoices' : 'clients, transactions, requests'}…"></label><span class="chip">Sample data · ${ed.launch}</span><button class="askb" data-act="ask">${ico('spark', 16)}<span>Ask AUCTIX</span></button><button class="ib" aria-label="Notifications" data-act="toastMsg" data-arg="3 new: gift received, request viewed, task due">${ico('bell')}</button></header>
+  <div class="content">${SOON[S.cur] ? `<div class="note" style="border-style:solid;background:var(--wnb);color:var(--wn);border-color:transparent"><b>Coming later:</b> restaurant tools (kitchen display, host station and pay at table) follow the spring 2027 retail launch.</div>` : ''}${sc.r()}</div></main></div>${tourHtml}${modalHtml}${askHtml}`;
+};
+
+const R = () => {
+  const a = document.activeElement, fid = a && a.id, ss = a && a.selectionStart, se = a && a.selectionEnd;
+  app.innerHTML = view();
+  if (fid) { const n = document.getElementById(fid); if (n && n !== document.body) { n.focus({ preventScroll: true }); try { if (ss != null && n.setSelectionRange) n.setSelectionRange(ss, se); } catch (_) { } } }
+};
+const go = (id, fromTour) => {
+  if (!SC[id]) id = 'np-overview';
+  S.cur = id; S.nav = false; S.modal = S.modal && S.modal.k === 'welcome' ? null : null; S.ask = false;
+  if (SC[id].ed !== S.ed) { S.ed = SC[id].ed; S.tour.i = 0; S.chat = []; }
+  if (!fromTour && S.tour.on) { const j = ED[S.ed].tour.findIndex(x => x[0] === id); if (j >= 0) S.tour.i = j; }
+  try { if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); } catch (_) { }
+  R(); window.scrollTo(0, 0);
+};
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-go],[data-act]'); if (!el || el.disabled) return;
+  if (el.tagName === 'A' || el.dataset.go) e.preventDefault();
+  if (el.dataset.go) go(el.dataset.go);
+  else { const f = A[el.dataset.act]; if (f) f(el.dataset.arg, el, e); }
+});
+document.addEventListener('change', e => { const el = e.target.closest('[data-ch]'); if (el && A[el.dataset.ch]) A[el.dataset.ch](el.value, el); });
+document.addEventListener('input', e => { const el = e.target.closest('[data-in]'); if (el && A[el.dataset.in]) A[el.dataset.in](el.value, el); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (S.modal) A.close(); else if (S.ask) A.ask(); else if (S.nav) A.nav(); } });
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (SC[id] && id !== S.cur) go(id); });
+
+const start = location.hash.slice(1);
+if (SC[start]) { S.cur = start; S.ed = SC[start].ed; const j = ED[S.ed].tour.findIndex(x => x[0] === start); if (j >= 0) S.tour.i = j; R(); }
+else { S.cur = 'np-overview'; S.modal = { k: 'welcome' }; R(); }
+}
+</script>
+</body>
+</html>
